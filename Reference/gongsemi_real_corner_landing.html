@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>공셈이 | 실내 공간스캐닝 & 시공 자재 자동산출 솔루션</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+  <!-- Pretendard Font -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#fff7ed',
+              100: '#ffedd5',
+              500: '#f97316',
+              600: '#ea580c',
+              700: '#c2410c',
+            }
+          },
+          animation: {
+            'scan-laser': 'scanLaser 3.5s ease-in-out infinite alternate',
+            'float-slow': 'floatBadge 4s ease-in-out infinite',
+            'pulse-ring': 'pulseRing 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+          },
+          keyframes: {
+            scanLaser: {
+              '0%': { transform: 'translateY(10%)', opacity: '0.2' },
+              '50%': { opacity: '0.85' },
+              '100%': { transform: 'translateY(88%)', opacity: '0.2' },
+            },
+            floatBadge: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-6px)' },
+            },
+            pulseRing: {
+              '0%': { transform: 'scale(0.8)', opacity: '0.9' },
+              '100%': { transform: 'scale(1.8)', opacity: '0' },
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif; }
+    
+    /* AR Grid */
+    .ar-room-grid {
+      background-size: 28px 28px;
+      background-image: 
+        linear-gradient(to right, rgba(245, 158, 11, 0.16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(245, 158, 11, 0.16) 1px, transparent 1px);
+    }
+
+    /* Laser Scanner Effect */
+    .laser-beam {
+      background: linear-gradient(180deg, rgba(245, 158, 11, 0) 0%, rgba(245, 158, 11, 0.35) 60%, rgba(245, 158, 11, 0.95) 100%);
+      box-shadow: 0 0 16px rgba(245, 158, 11, 0.85);
+    }
+  </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-white/90 border-b border-slate-100 shadow-sm">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-600 to-amber-500 flex items-center justify-center text-white font-black text-xl shadow-lg shadow-brand-500/20">
+          공
+        </div>
+        <div class="flex flex-col">
+          <span class="text-2xl font-black tracking-tight text-slate-900 leading-none">공셈이</span>
+          <span class="text-[10.5px] font-semibold text-brand-600 tracking-wider mt-1">AI SPATIAL SCANNER</span>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-8 text-[15px] font-semibold text-slate-600">
+        <a href="#spatial-scan" class="hover:text-brand-600 transition flex items-center gap-1.5">
+          <i class="ph-bold ph-viewfinder text-brand-500"></i> AI 벽면 모서리 실측
+        </a>
+        <a href="#features" class="hover:text-brand-600 transition">주요 기능</a>
+        <a href="#calculator" class="hover:text-brand-600 transition">자재 계산기</a>
+        <a href="#comparison" class="hover:text-brand-600 transition">도입 효과</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <a href="#download" class="px-5 py-2.5 rounded-full bg-slate-900 hover:bg-brand-600 text-white font-bold text-sm transition-all shadow-md">
+          앱 다운로드
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative pt-16 pb-24 lg:pt-20 lg:pb-32 overflow-hidden bg-gradient-to-b from-slate-50 via-white to-orange-50/20">
+    <div class="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:24px_24px] opacity-40"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+        
+        <!-- Left: Headline & Value Proposition -->
+        <div class="lg:col-span-7 text-left">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-orange-200 bg-orange-50 text-brand-600 text-xs font-bold tracking-wide mb-6 shadow-sm">
+            <span class="flex h-2 w-2 rounded-full bg-brand-500 animate-ping"></span>
+            실내 구조체 벽면·바닥 코너 끝단 자동인식
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 leading-[1.15] tracking-tight mb-6">
+            실내 벽면 꼭짓점만 찍으면<br />
+            실제 모서리 연결해 <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-amber-500">도면 & 자재</span> 자동계산
+          </h1>
+
+          <p class="text-lg sm:text-xl text-slate-600 mb-8 leading-relaxed font-normal">
+            가구나 소품에 가려져도 실제 실내 벽면과 바닥 코너의 끝과 끝을 정확히 감지합니다.<br class="hidden sm:inline" />
+            천장 꼭짓점부터 걸레받이 끝선까지 <strong class="text-slate-900 font-semibold">완벽한 벽체·바닥 면적 산출과 자재 발주서</strong>가 3초 만에 완성됩니다.
+          </p>
+
+          <!-- Metrics Strip -->
+          <div class="grid grid-cols-3 gap-4 py-5 border-y border-slate-200 mb-8">
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-brand-600">±2mm</div>
+              <div class="text-xs sm:text-sm font-semibold text-slate-500 mt-0.5">실내 코너 정밀도</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-slate-900">3초</div>
+              <div class="text-xs sm:text-sm font-semibold text-slate-500 mt-0.5">자재 물량 산출</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-slate-900">100%</div>
+              <div class="text-xs sm:text-sm font-semibold text-slate-500 mt-0.5">현장 도면 자동화</div>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
+            <a href="#download" class="px-8 py-4 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-bold text-base transition-all shadow-xl shadow-brand-500/25 flex items-center justify-center gap-2.5">
+              <i class="ph-bold ph-download-simple text-xl"></i> 무료로 실내 스캔 시작하기
+            </a>
+            <a href="#spatial-scan" class="px-8 py-4 rounded-2xl border-2 border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-bold text-base transition-all flex items-center justify-center gap-2">
+              <i class="ph-bold ph-play text-brand-600 text-lg"></i> 벽면 실측 원리 보기
+            </a>
+          </div>
+        </div>
+
+        <!-- Right: Perfect Room Corner Alignment Phone Mockup -->
+        <div class="lg:col-span-5 flex justify-center relative">
+          
+          <!-- Outer Phone Frame -->
+          <div class="relative w-full max-w-[370px] bg-slate-900 p-3.5 rounded-[48px] shadow-2xl border-4 border-slate-800 ring-1 ring-slate-950/10">
+            
+            <!-- Floating Badge 1: 천장 높이 (실제 벽면 코너 높이) -->
+            <div class="absolute -left-6 top-24 z-30 bg-slate-900/90 backdrop-blur-md text-white px-3.5 py-2 rounded-2xl border border-slate-700 shadow-2xl animate-float-slow flex flex-col items-start">
+              <span class="text-[10px] font-medium text-slate-400">천장 높이</span>
+              <span class="text-base font-black text-white tracking-tight">2.4 m</span>
+            </div>
+
+            <!-- Floating Badge 2: 총 실측 면적 -->
+            <div class="absolute -right-6 bottom-32 z-30 bg-slate-900/90 backdrop-blur-md text-white px-3.5 py-2 rounded-2xl border border-slate-700 shadow-2xl animate-float-slow flex flex-col items-start" style="animation-delay: 1.5s;">
+              <span class="text-[10px] font-medium text-slate-400">총 실측 면적</span>
+              <span class="text-base font-black text-amber-400 tracking-tight">32.6m²</span>
+            </div>
+
+            <!-- Phone Inner Screen Display -->
+            <div class="relative w-full h-[580px] rounded-[36px] overflow-hidden bg-slate-900 select-none">
+              
+              <!-- Clean Room Photo (Clear Left Wall, Rear Main Wall, and Floor Boundaries) -->
+              <img 
+                src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80" 
+                alt="실내 거실 구조체" 
+                class="w-full h-full object-cover brightness-95 contrast-105"
+              />
+
+              <!-- AR Coordinate Grid Overlay -->
+              <div class="absolute inset-0 ar-room-grid opacity-60 pointer-events-none"></div>
+
+              <!-- Top Camera Notch -->
+              <div class="absolute top-0 inset-x-0 h-7 bg-slate-900/90 flex items-center justify-center z-20">
+                <div class="w-24 h-4 bg-slate-950 rounded-b-xl"></div>
+              </div>
+
+              <!-- Real-time Laser Beam Scan Animation -->
+              <div class="absolute inset-x-0 top-0 h-20 laser-beam animate-scan-laser pointer-events-none z-10"></div>
+
+              <!-- Real Wall & Floor Corner-to-Corner Connected Vector Layer (SVG) -->
+              <svg class="absolute inset-0 w-full h-full z-10 pointer-events-none" viewBox="0 0 342 580" fill="none" xmlns="http://www.w3.org/2000/svg">
+                
+                <!-- 1. Left Structural Wall (Cyan): Ceiling Corner -> Inner Wall Joint -> Floor Joint -> Left Bottom Corner -->
+                <polygon points="18,105 105,175 105,420 18,485" fill="rgba(56, 189, 248, 0.2)" stroke="#38bdf8" stroke-width="2.5" />
+
+                <!-- 2. Floor Area (Orange): Connected along the actual bottom floor perimeter -->
+                <polygon points="18,485 105,420 280,420 325,505" fill="rgba(245, 158, 11, 0.22)" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6 3" />
+
+                <!-- 3. Rear Wall Boundary Wireframe -->
+                <line x1="105" y1="175" x2="280" y2="175" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 2" />
+                <line x1="280" y1="175" x2="280" y2="420" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4 2" />
+
+                <!-- Height Dimension Line between Ceiling Joint & Floor Joint -->
+                <line x1="105" y1="175" x2="105" y2="420" stroke="#38bdf8" stroke-width="2.5" />
+              </svg>
+
+              <!-- Exact Physical Corner Pins with Pulsing AR Rings -->
+
+              <!-- Pin 1: Left Top Ceiling Corner (18, 105) -->
+              <div class="absolute top-[105px] left-[18px] -translate-x-1/2 -translate-y-1/2 z-20">
+                <span class="absolute -inset-2 rounded-full border-2 border-sky-400 animate-pulse-ring"></span>
+                <div class="w-4 h-4 rounded-full border-2 border-white bg-sky-400 shadow-lg flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                </div>
+              </div>
+
+              <!-- Pin 2: Inner Wall/Ceiling Joint (105, 175) -->
+              <div class="absolute top-[175px] left-[105px] -translate-x-1/2 -translate-y-1/2 z-20">
+                <div class="w-3.5 h-3.5 rounded-full border-2 border-white bg-sky-400 shadow"></div>
+              </div>
+
+              <!-- Pin 3: Inner Wall/Floor Joint (105, 420) -->
+              <div class="absolute top-[420px] left-[105px] -translate-x-1/2 -translate-y-1/2 z-20">
+                <div class="w-3.5 h-3.5 rounded-full border-2 border-white bg-amber-400 shadow"></div>
+              </div>
+
+              <!-- Pin 4: Left Floor Skirting Corner (18, 485) -->
+              <div class="absolute top-[485px] left-[18px] -translate-x-1/2 -translate-y-1/2 z-20">
+                <span class="absolute -inset-2 rounded-full border-2 border-amber-400 animate-pulse-ring"></span>
+                <div class="w-4 h-4 rounded-full border-2 border-white bg-amber-400 shadow-lg flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                </div>
+              </div>
+
+              <!-- Pin 5: Right Rear Floor Joint (280, 420) -->
+              <div class="absolute top-[420px] left-[280px] -translate-x-1/2 -translate-y-1/2 z-20">
+                <div class="w-3.5 h-3.5 rounded-full border-2 border-white bg-amber-400 shadow"></div>
+              </div>
+
+              <!-- Pin 6: Right Front Floor Corner (325, 505) -->
+              <div class="absolute top-[505px] left-[325px] -translate-x-1/2 -translate-y-1/2 z-20">
+                <span class="absolute -inset-2 rounded-full border-2 border-amber-400 animate-pulse-ring"></span>
+                <div class="w-4 h-4 rounded-full border-2 border-white bg-amber-400 shadow-lg flex items-center justify-center">
+                  <div class="w-1.5 h-1.5 rounded-full bg-white"></div>
+                </div>
+              </div>
+
+              <!-- Area Badges placed directly on the actual surfaces -->
+              
+              <!-- Left Wall Badge (Centered on left wall polygon) -->
+              <div class="absolute top-[285px] left-[62px] -translate-x-1/2 -translate-y-1/2 bg-sky-500 text-white text-[11px] font-black px-2.5 py-1 rounded-full shadow-lg z-20 flex items-center gap-1.5 border border-sky-300/40">
+                <i class="ph-bold ph-wall"></i> 벽 8.1m²
+              </div>
+
+              <!-- Floor Badge (Centered on floor polygon) -->
+              <div class="absolute top-[460px] left-[185px] -translate-x-1/2 -translate-y-1/2 bg-amber-500 text-slate-950 text-[11px] font-black px-2.5 py-1 rounded-full shadow-lg z-20 flex items-center gap-1.5 border border-amber-300/50">
+                <i class="ph-bold ph-polygon"></i> 바닥 12.4m²
+              </div>
+
+              <!-- Bottom Scan Status Pill -->
+              <div class="absolute bottom-4 inset-x-4 bg-slate-900/90 backdrop-blur-md rounded-2xl p-3.5 border border-slate-700/80 flex items-center justify-between shadow-2xl z-20">
+                <div class="flex items-center gap-2">
+                  <span class="w-2.5 h-2.5 rounded-full bg-amber-400 animate-ping"></span>
+                  <span class="text-xs font-bold text-white">벽면 모서리 자동 추적 중...</span>
+                </div>
+                <span class="text-xs font-black text-amber-400">87% 완료</span>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Section: Spatial Scanning Deep Dive -->
+  <section id="spatial-scan" class="py-24 bg-white border-y border-slate-100">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="text-center max-w-3xl mx-auto mb-20">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-orange-100 text-brand-700 text-xs font-bold mb-3">
+          <i class="ph-bold ph-aperture"></i> REAL CORNER DETECTOR
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mb-4 tracking-tight">
+          실제 벽면과 바닥의 끝과 끝을 연결합니다.<br />
+          어떤 구조의 실내도 오차 없이 3D 실측
+        </h2>
+        <p class="text-slate-600 text-base sm:text-lg">
+          가구에 가려진 코너도 AI가 벽체와 바닥의 연장선을 계산하여 구조체 꼭짓점을 정확히 스냅합니다.
+        </p>
+      </div>
+
+      <!-- 3-Step Scan Process Cards -->
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Step 1 -->
+        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200/80 hover:border-brand-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 text-brand-600 flex items-center justify-center text-2xl font-black mb-6 shadow-sm group-hover:bg-brand-500 group-hover:text-white transition">
+            1
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">벽면 꼭짓점 끝단 자동 스냅</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">
+            카메라를 실내 벽면에 비추면 천장 몰딩과 바닥 걸레받이가 만나는 실제 모서리 끝단에 핀이 고정됩니다.
+          </p>
+          <div class="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-500 font-medium flex items-center gap-2">
+            <i class="ph-bold ph-check text-emerald-500"></i> 오차범위 ±2mm 이내 정밀 스냅
+          </div>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200/80 hover:border-brand-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 text-brand-600 flex items-center justify-center text-2xl font-black mb-6 shadow-sm group-hover:bg-brand-500 group-hover:text-white transition">
+            2
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">구조체 면적(벽/바닥) 분리 계산</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">
+            모서리 선들이 연결되어 도배·도장용 벽면 면적과 타일·마루용 바닥 면적이 각각 분리되어 정확히 도면화됩니다.
+          </p>
+          <div class="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-500 font-medium flex items-center gap-2">
+            <i class="ph-bold ph-check text-emerald-500"></i> 개구부(창문, 문) 면적 자동 공제
+          </div>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200/80 hover:border-brand-500/50 hover:shadow-xl transition-all group">
+          <div class="w-12 h-12 rounded-2xl bg-white border border-slate-200 text-brand-600 flex items-center justify-center text-2xl font-black mb-6 shadow-sm group-hover:bg-brand-500 group-hover:text-white transition">
+            3
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-3">공종별 자재 물량 자동 산출</h3>
+          <p class="text-slate-600 text-sm leading-relaxed mb-4">
+            측정된 실측 데이터를 기반으로 타일, 석고보드, 페인트, 마루 등 필요한 자재 발주량을 로스율 포함 3초 만에 산출합니다.
+          </p>
+          <div class="p-3 bg-white rounded-xl border border-slate-200 text-xs text-slate-500 font-medium flex items-center gap-2">
+            <i class="ph-bold ph-check text-emerald-500"></i> 부자재(본드, 부속) 소요량 자동 가산
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Interactive Material Calculator Demo -->
+  <section id="calculator" class="py-24 bg-slate-50">
+    <div class="max-w-5xl mx-auto px-6">
+      
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <span class="text-brand-600 font-bold text-xs uppercase tracking-widest bg-orange-100 px-3 py-1 rounded-full">Interactive Demo</span>
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mt-3 mb-3">스캔된 실내 면적으로 자재 계산해보기</h2>
+        <p class="text-slate-600 text-base">원하는 공종과 실측 면적을 입력하고 산출 결과를 확인해 보세요.</p>
+      </div>
+
+      <!-- Calculator Box -->
+      <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200 shadow-xl">
+        <div class="grid sm:grid-cols-2 gap-6 mb-8">
+          
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">시공 공종 선택</label>
+            <div class="relative">
+              <select id="calc-type" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition text-sm appearance-none">
+                <option value="tile">바닥 타일 시공 (600 × 600 포세린)</option>
+                <option value="board">벽체 석고보드 시공 (9.5T 단식)</option>
+                <option value="paint">벽체/천장 친환경 페인트 (2회 도장)</option>
+                <option value="flooring">강마루 바닥 시공 (친환경 황토본드)</option>
+              </select>
+              <i class="ph-bold ph-caret-down absolute right-4 top-4 text-slate-400 pointer-events-none"></i>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">실측 면적 입력</label>
+            <div class="relative">
+              <input type="number" id="calc-area" value="32.6" step="0.1" min="1" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3.5 text-slate-800 font-bold focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition text-sm" />
+              <div class="absolute right-4 top-3.5 text-xs text-slate-500 font-bold bg-slate-200 px-2.5 py-1 rounded-md">
+                약 <span id="calc-pyeong">9.8</span>평
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <button id="calc-btn" class="w-full py-4 rounded-2xl bg-brand-500 hover:bg-brand-600 text-white font-black text-base transition-all shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2">
+          <i class="ph-bold ph-calculator text-xl"></i> AI 최적 자재 발주량 계산하기
+        </button>
+
+        <!-- Calculation Live Result View -->
+        <div id="calc-result" class="mt-8 p-6 rounded-2xl bg-slate-50 border border-slate-200/90">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200 gap-2 mb-6">
+            <div>
+              <span class="text-xs font-black text-brand-600 uppercase tracking-wide">AI 산출 리포트</span>
+              <h4 id="res-type" class="text-lg font-black text-slate-900 mt-0.5">바닥 타일 시공 (600x600)</h4>
+            </div>
+            <span class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-600 bg-white px-3 py-1.5 rounded-full border border-slate-200">
+              <i class="ph-fill ph-check-circle text-emerald-500"></i> 현장 로스율(10%) 자동 가산
+            </span>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="res-items">
+            <!-- Main Material -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-bold text-slate-400">메인 자재 소요량</span>
+              <p class="text-2xl font-black text-slate-900 mt-1" id="res-main">25 박스</p>
+              <p class="text-[11px] text-slate-500 mt-1" id="res-main-sub">1박스당 1.44m² 기준 (총 36m²)</p>
+            </div>
+            <!-- Sub Material 1 -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-bold text-slate-400">필요 접착/부자재</span>
+              <p class="text-2xl font-black text-brand-600 mt-1" id="res-sub">8 포</p>
+              <p class="text-[11px] text-slate-500 mt-1" id="res-sub-sub">타일 압착시멘트 (20kg)</p>
+            </div>
+            <!-- Sub Material 2 -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+              <span class="text-xs font-bold text-slate-400">마감 부자재</span>
+              <p class="text-2xl font-black text-slate-800 mt-1" id="res-extra">3 포</p>
+              <p class="text-[11px] text-slate-500 mt-1" id="res-extra-sub">항균 줄눈 홈멘트 (5kg)</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Core Features Grid -->
+  <section id="features" class="py-24 bg-white">
+    <div class="max-w-7xl mx-auto px-6">
+      
+      <div class="text-center max-w-2xl mx-auto mb-20">
+        <h2 class="text-3xl sm:text-4xl font-black text-slate-900 mb-4">현장 시공팀이 공셈이를 선택하는 이유</h2>
+        <p class="text-slate-600 text-base sm:text-lg">기술자가 현장에만 온전히 집중할 수 있도록 서류와 계산은 AI가 처리합니다.</p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <!-- Feature 1 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:shadow-lg transition">
+          <div class="w-14 h-14 rounded-2xl bg-orange-100 text-brand-600 flex items-center justify-center text-3xl mb-6">
+            <i class="ph-bold ph-corners-out"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2.5">벽체·바닥 끝단 정확 인식</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            실내 구조체 코너를 따라 선을 이어 도배·도장용 벽면과 마루·타일용 바닥 면적을 완벽히 분리 실측합니다.
+          </p>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:shadow-lg transition">
+          <div class="w-14 h-14 rounded-2xl bg-amber-100 text-amber-600 flex items-center justify-center text-3xl mb-6">
+            <i class="ph-bold ph-microphone"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2.5">음성 인식 공정일보 자동화</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            "오늘 목공 3명 투입, 천장틀 완료"라고 말하면 정형화된 작업일보로 자동 변환되어 저장됩니다.
+          </p>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:shadow-lg transition">
+          <div class="w-14 h-14 rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center text-3xl mb-6">
+            <i class="ph-bold ph-receipt"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2.5">실시간 단가 연동 견적서</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            산출된 자재량에 최신 시중 단가와 노무비를 연동하여 원클릭으로 클라이언트 제출용 견적서를 만듭니다.
+          </p>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:shadow-lg transition">
+          <div class="w-14 h-14 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-6">
+            <i class="ph-bold ph-cloud-arrow-up"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2.5">현장별 클라우드 아카이브</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            시공 전/중/후 사진과 검측 데이터가 공사 현장별로 자동 분류되어 영구 보관됩니다.
+          </p>
+        </div>
+
+        <!-- Feature 5 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:shadow-lg transition">
+          <div class="w-14 h-14 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-3xl mb-6">
+            <i class="ph-bold ph-users-three"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2.5">반장님 - 본사 실시간 공유</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            카카오톡 단체방에서 흩어지던 현장 이슈와 진척도를 링크 하나로 실시간 동기화합니다.
+          </p>
+        </div>
+
+        <!-- Feature 6 -->
+        <div class="p-8 rounded-3xl bg-slate-50 border border-slate-200/80 hover:shadow-lg transition">
+          <div class="w-14 h-14 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center text-3xl mb-6">
+            <i class="ph-bold ph-file-pdf"></i>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900 mb-2.5">원클릭 보고서 PDF 출력</h3>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            감리 보고서, 준공 사진첩, 자재 인수증 등 복잡한 문서 양식을 표준 템플릿으로 바로 출력합니다.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CTA Download Section -->
+  <section id="download" class="py-24 bg-gradient-to-b from-white via-orange-50/50 to-orange-100/40 border-t border-slate-200">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      
+      <div class="w-16 h-16 rounded-3xl bg-brand-500 text-white flex items-center justify-center text-3xl mx-auto mb-6 shadow-xl shadow-brand-500/30">
+        <i class="ph-bold ph-cube"></i>
+      </div>
+
+      <h2 class="text-3xl sm:text-5xl font-black text-slate-900 mb-6 tracking-tight leading-tight">
+        지금 바로 실내 모서리 실측과<br />자재 계산을 3초 만에 끝내보세요
+      </h2>
+
+      <p class="text-slate-600 text-lg mb-10 max-w-xl mx-auto">
+        시공 기술자의 퇴근 시간을 2시간 앞당겨 드립니다.<br />
+        공셈이 앱을 무료로 다운로드하고 스마트한 시공을 시작하세요.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#" class="px-8 py-4 rounded-2xl bg-slate-900 hover:bg-slate-800 text-white font-bold text-base transition shadow-xl flex items-center gap-3">
+          <i class="ph-bold ph-apple-logo text-2xl"></i> App Store 다운로드
+        </a>
+        <a href="#" class="px-8 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-900 border-2 border-slate-300 font-bold text-base transition shadow-md flex items-center gap-3">
+          <i class="ph-bold ph-google-play-logo text-2xl text-brand-600"></i> Google Play 다운로드
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="py-12 bg-white border-t border-slate-200 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-7 h-7 rounded-lg bg-brand-500 text-white flex items-center justify-center font-bold text-sm">
+          공
+        </div>
+        <div>
+          <p class="font-bold text-slate-800 text-sm">공셈이 (Gongsemi)</p>
+          <p class="text-slate-400 mt-0.5">AI 공간스캔 & 시공 자동화 솔루션 • gongsemi.kr</p>
+        </div>
+      </div>
+      <p class="text-slate-400">© 2026 Gongsemi Inc. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Interactive Demo Script -->
+  <script>
+    const areaInput = document.getElementById('calc-area');
+    const pyeongSpan = document.getElementById('calc-pyeong');
+    const typeSelect = document.getElementById('calc-type');
+    const calcBtn = document.getElementById('calc-btn');
+
+    const resType = document.getElementById('res-type');
+    const resMain = document.getElementById('res-main');
+    const resMainSub = document.getElementById('res-main-sub');
+    const resSub = document.getElementById('res-sub');
+    const resSubSub = document.getElementById('res-sub-sub');
+    const resExtra = document.getElementById('res-extra');
+    const resExtraSub = document.getElementById('res-extra-sub');
+
+    function updatePyeong() {
+      const area = parseFloat(areaInput.value) || 0;
+      pyeongSpan.textContent = (area * 0.3025).toFixed(1);
+    }
+
+    function calculate() {
+      const area = parseFloat(areaInput.value) || 0;
+      const type = typeSelect.value;
+      const effectiveArea = area * 1.10; // 10% 로스율 반영
+
+      if (type === 'tile') {
+        resType.textContent = '바닥 타일 시공 (600x600 포세린)';
+        const boxes = Math.ceil(effectiveArea / 1.44);
+        resMain.textContent = `${boxes} 박스`;
+        resMainSub.textContent = `1박스(4장/1.44㎡) 기준 • 총 ${effectiveArea.toFixed(1)}㎡ 분량`;
+        resSub.textContent = `${Math.ceil(effectiveArea / 4.5)} 포`;
+        resSubSub.textContent = `타일 압착시멘트 20kg`;
+        resExtra.textContent = `${Math.ceil(effectiveArea / 12)} 포`;
+        resExtraSub.textContent = `항균 탄성 줄눈제 5kg`;
+      } else if (type === 'board') {
+        resType.textContent = '벽체 석고보드 시공 (9.5T)';
+        const sheets = Math.ceil(effectiveArea / (0.9 * 1.8));
+        resMain.textContent = `${sheets} 장`;
+        resMainSub.textContent = `규격 900×1800mm 기준`;
+        resSub.textContent = `${Math.ceil(sheets * 2.5)} 박스`;
+        resSubSub.textContent = `석고 매거진 피스 (1000P)`;
+        resExtra.textContent = `${Math.ceil(effectiveArea / 18)} 통`;
+        resExtraSub.textContent = `조인트 퍼티 20kg (줄퍼티)`;
+      } else if (type === 'paint') {
+        resType.textContent = '친환경 수성 페인트 (2회 도장)';
+        const liters = (effectiveArea * 0.28).toFixed(1);
+        const cans = Math.ceil(liters / 4);
+        resMain.textContent = `${liters} L (${cans} 캔)`;
+        resMainSub.textContent = `1L당 약 3.5㎡ 도포 기준`;
+        resSub.textContent = `${Math.ceil(liters / 8)} 세트`;
+        resSubSub.textContent = `롤러 / 붓 / 트레이 키트`;
+        resExtra.textContent = `3 롤`;
+        resExtraSub.textContent = `커버링 & 마스킹 테이프`;
+      } else if (type === 'flooring') {
+        resType.textContent = '친환경 강마루 바닥 시공';
+        const boxes = Math.ceil(effectiveArea / 3.24);
+        resMain.textContent = `${boxes} 박스`;
+        resMainSub.textContent = `1박스(1평/3.24㎡) 기준`;
+        resSub.textContent = `${Math.ceil(effectiveArea / 10)} 세트`;
+        resSubSub.textContent = `친환경 에폭시 황토본드 (10kg)`;
+        resExtra.textContent = `${Math.ceil(effectiveArea / 8)} 개`;
+        resExtraSub.textContent = `마감 걸레받이 몰딩 (2.4m)`;
+      }
+    }
+
+    areaInput.addEventListener('input', updatePyeong);
+    calcBtn.addEventListener('click', calculate);
+    typeSelect.addEventListener('change', calculate);
+    
+    // Initial Calc
+    updatePyeong();
+  </script>
+</body>
+</html>
