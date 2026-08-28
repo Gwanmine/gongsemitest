@@ -225,7 +225,7 @@
   .app-panel .ap-crop img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
   @media (max-width: 960px) {
@@ -255,63 +255,8 @@
     position: absolute; inset: 0;
     width: 100%; height: 100%;
     object-fit: contain;
+    transform: scale(1.55);
   }
-  .scan-shade {
-    position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(12,24,42,0.45) 0%, rgba(12,24,42,0.3) 45%, rgba(12,24,42,0.62) 100%);
-  }
-  .scan-grid {
-    position: absolute; inset: 0;
-    background-image:
-      linear-gradient(to right, rgba(168,141,129,0.28) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(168,141,129,0.28) 1px, transparent 1px);
-    background-size: 26px 26px;
-    opacity: 0.55;
-  }
-  /* Left wall edge: measured directly from the reference sample's red line (top 38.9% to corner 67.2%) */
-  .scan-line-wall {
-    position: absolute; left: 14%; top: 38.9%; width: 3px; height: 28.3%;
-    background: #E7D9CF;
-    box-shadow: 0 0 10px rgba(231,217,207,0.8);
-    border-radius: 2px;
-  }
-  /* Floor edge: left corner (14%) to right corner (90%) along the baseboard, same source measurement */
-  .scan-line-floor {
-    position: absolute; left: 14%; right: 10%; top: 67.2%; height: 3px;
-    background: #E7D9CF;
-    box-shadow: 0 0 10px rgba(231,217,207,0.8);
-    border-radius: 2px;
-  }
-  .scan-measure {
-    position: absolute;
-    background: rgba(10,20,35,0.9);
-    border: 1px solid rgba(255,255,255,0.14);
-    color: #E7D9CF;
-    font-family: "Manrope", sans-serif;
-    font-weight: 800;
-    font-size: 11.5px;
-    padding: 4px 9px;
-    border-radius: 999px;
-    white-space: nowrap;
-    z-index: 6;
-  }
-  .scan-laser {
-    position: absolute; left: 0; right: 0; height: 60px;
-    background: linear-gradient(180deg, rgba(168,141,129,0) 0%, rgba(168,141,129,0.4) 55%, rgba(215,190,175,0.95) 100%);
-    box-shadow: 0 0 20px rgba(215,190,175,0.7);
-    animation: scanMove 3.4s ease-in-out infinite alternate;
-  }
-  @keyframes scanMove {
-    0% { transform: translateY(31%); opacity: 0.25; }
-    50% { opacity: 0.9; }
-    100% { transform: translateY(67%); opacity: 0.25; }
-  }
-  .scan-pin { position: absolute; width: 12px; height: 12px; border-radius: 50%; background: #E7D9CF; border: 2px solid #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
-  .scan-pin.ring::before {
-    content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid #E7D9CF; animation: ring 2s cubic-bezier(.4,0,.6,1) infinite;
-  }
-  @keyframes ring { 0% { transform: scale(0.8); opacity: 0.9; } 100% { transform: scale(2); opacity: 0; } }
-
   .float-badge {
     position: absolute;
     background: rgba(10,20,35,0.92);
@@ -458,6 +403,21 @@
     display: flex; align-items: center; justify-content: center; font-size: 11px; flex-shrink: 0;
   }
 
+  .sim-swatch {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 22px; margin-left: auto;
+    width: fit-content;
+    padding: 10px 22px 10px 10px;
+    background: var(--navy-tint);
+    border-radius: 999px;
+  }
+  .sim-swatch img {
+    width: 64px; height: 64px; border-radius: 50%;
+    object-fit: cover; border: 2px solid #fff; box-shadow: var(--shadow-sm);
+  }
+  .sim-swatch .sw-label { display: block; font-size: 12px; color: var(--muted); font-weight: 600; }
+  .sim-swatch .sw-name { display: block; font-size: 15px; color: var(--navy); font-weight: 800; }
+
   .sim-demo { position: relative; }
   .sim-toggle {
     display: inline-flex; background: var(--navy-tint); border-radius: 999px; padding: 4px; margin-bottom: 16px;
@@ -468,18 +428,15 @@
   }
   .sim-toggle button.active { background: var(--navy); color: #fff; }
   .sim-viewport {
-    position: relative; width: 100%; aspect-ratio: 4/3;
+    position: relative; width: 100%; aspect-ratio: 3/4; max-height: 420px;
     border-radius: 20px; overflow: hidden; border: 1px solid var(--border);
   }
   .sim-layer { position: absolute; inset: 0; transition: opacity 0.4s ease; }
   .sim-layer.before {
-    background: repeating-linear-gradient(180deg, #E9ECEF 0 34px, #DEE2E6 34px 36px);
+    background: url('assets/img/material-before.jpg') center / cover no-repeat;
   }
   .sim-layer.after {
-    background:
-      repeating-linear-gradient(90deg, #B08968 0 46px, #9C7856 46px 48px),
-      linear-gradient(180deg, #C79A73 0%, #A9825C 100%);
-    background-blend-mode: multiply;
+    background: url('assets/img/material-after.jpg') center / cover no-repeat;
     opacity: 0;
   }
   .sim-layer.after.show, .sim-layer.before.hide { opacity: 0; }
@@ -670,25 +627,13 @@
         <div class="hero-visual">
           <div class="scan-frame">
             <div class="scan-screen">
-              <img class="scan-photo" src="assets/img/scan-wall-photo.jpg" alt="벽면과 바닥이 만나는 시공현장 실사 이미지" />
-              <div class="scan-shade"></div>
-              <div class="scan-grid"></div>
-              <div class="scan-line-wall"></div>
-              <div class="scan-line-floor"></div>
-              <div class="scan-laser"></div>
+              <img class="scan-photo" src="assets/img/space-scan.jpg" alt="AI 공간 스캐닝으로 벽면·바닥 치수를 실측하는 화면" />
 
-              <div class="scan-pin ring" style="top:38.9%; left:14%;"></div>
-              <div class="scan-pin" style="top:67.2%; left:14%;"></div>
-              <div class="scan-pin ring" style="top:67.2%; left:90%;"></div>
-
-              <span class="scan-measure" style="top:53%; left:14%; transform:translate(10px,-50%);">벽 높이 2.4m</span>
-              <span class="scan-measure" style="top:67.2%; left:52%; transform:translate(-50%, -28px);">바닥 가로 4.2m</span>
-
-              <div class="float-badge" style="top:40%; left:-16px;">
-                <div class="fb-label">실측 면적</div>
-                <div class="fb-value">27.4m²</div>
+              <div class="float-badge" style="top:22%; left:6px;">
+                <div class="fb-label">실측 면적 (3.18×2.37m)</div>
+                <div class="fb-value">7.54m²</div>
               </div>
-              <div class="float-badge" style="top:70%; right:10px; animation-delay:1.4s;">
+              <div class="float-badge" style="top:78%; right:6px; animation-delay:1.4s;">
                 <div class="fb-label">예상 자재비</div>
                 <div class="fb-value">218만원</div>
               </div>
@@ -830,6 +775,13 @@
             <li><span class="n">2</span>원하는 자재 이미지 선택</li>
             <li><span class="n">3</span>이질감 없이 합성된 결과 확인</li>
           </ul>
+          <div class="sim-swatch">
+            <img src="assets/img/material-swatch.jpg" alt="선택한 자재 밀란 그리지오 타일" />
+            <div>
+              <span class="sw-label">선택한 자재</span>
+              <span class="sw-name">밀란 그리지오</span>
+            </div>
+          </div>
         </div>
         <div class="sim-demo">
           <div class="sim-toggle">
