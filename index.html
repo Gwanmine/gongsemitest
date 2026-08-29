@@ -530,8 +530,9 @@
     animation: simHint 1.6s ease-in-out infinite;
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
-  /* the cursor is mirrored so it points back at the 자재 적용 button */
-  .sim-hint svg { width: 14px; height: 14px; transform: scaleX(-1); }
+  /* the cursor's tip is already top-left, so it points back at the 자재 적용
+     button - same direction the chip nudges */
+  .sim-hint svg { width: 14px; height: 14px; }
   /* fades away once they have flipped it themselves */
   .sim-demo.touched .sim-hint { opacity: 0; transform: rotate(-6deg) scale(0.9); animation: none; }
   @keyframes simHint {
