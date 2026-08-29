@@ -44,6 +44,9 @@
     background: var(--white);
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
+    /* Korean should wrap at word boundaries, not mid-word */
+    word-break: keep-all;
+    overflow-wrap: break-word;
   }
   img { max-width: 100%; display: block; }
   a { color: inherit; text-decoration: none; }
@@ -68,7 +71,7 @@
     display: inline-flex; align-items: center; gap: 8px;
     padding: 7px 16px; border-radius: 999px;
     background: var(--accent-tint); color: var(--accent);
-    font-weight: 700; font-size: 13px; letter-spacing: 0.02em;
+    font-weight: 700; font-size: 14px; letter-spacing: 0.02em;
   }
   .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dot, var(--accent)); }
 
@@ -109,7 +112,7 @@
       #fff;
   }
   .page-hero h1 { font-size: clamp(32px, 4.4vw, 50px); line-height: 1.25; margin: 20px 0 18px; text-wrap: balance; }
-  .page-hero p { color: var(--muted); font-size: 17px; line-height: 1.8; max-width: 820px; }
+  .page-hero p { color: var(--muted); font-size: 18.5px; line-height: 1.8; max-width: 820px; }
 
   /* ---------- Generic block ---------- */
   .block.tint { background: var(--navy-tint); }
@@ -119,7 +122,7 @@
     text-wrap: balance;
   }
   /* paragraphs keep a comfortable reading measure, headings use the full width */
-  .block-head p { color: var(--muted); font-size: 16px; line-height: 1.75; margin-top: 14px; max-width: 780px; }
+  .block-head p { color: var(--muted); font-size: 17.5px; line-height: 1.75; margin-top: 14px; max-width: 780px; }
 
   /* ---------- Loop steps ---------- */
   .loop { display: grid; gap: clamp(9px, 1.2vh, 16px); }
@@ -130,13 +133,13 @@
     padding: clamp(15px, 2vh, 26px) 28px;
   }
   .loop-step .ls-tag {
-    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12.5px;
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 13.5px;
     letter-spacing: 0.08em; color: var(--accent); padding-top: 4px;
   }
-  .loop-step h3 { font-size: clamp(16px, 1.8vh, 18px); margin-bottom: clamp(6px, 0.9vh, 10px); }
-  .loop-step p { color: var(--muted); font-size: clamp(13.5px, 1.4vh, 14.8px); line-height: 1.65; }
+  .loop-step h3 { font-size: clamp(17px, 1.9vh, 19.5px); margin-bottom: clamp(6px, 0.9vh, 10px); }
+  .loop-step p { color: var(--muted); font-size: clamp(14.5px, 1.5vh, 16.2px); line-height: 1.7; }
   .loop-step ul { margin-top: clamp(7px, 1.1vh, 12px); padding-left: 18px; }
-  .loop-step li { color: var(--muted); font-size: clamp(13px, 1.35vh, 14.3px); line-height: 1.58; margin-bottom: 4px; }
+  .loop-step li { color: var(--muted); font-size: clamp(14px, 1.45vh, 15.8px); line-height: 1.66; margin-bottom: 6px; }
 
   /* ---------- Measure stats ---------- */
   .stat-panel {
@@ -149,46 +152,99 @@
     border: 1px solid rgba(255,255,255,0.14);
     border-radius: 18px; padding: 22px 20px;
   }
-  .stat-cell .v { font-family: "Manrope", sans-serif; font-weight: 800; font-size: clamp(22px, 2.4vw, 30px); }
-  .stat-cell .l { margin-top: 8px; font-size: 13.5px; color: rgba(255,255,255,0.78); line-height: 1.6; }
+  .stat-cell .v {
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: clamp(22px, 2.4vw, 30px);
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .stat-cell .l { margin-top: 8px; font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.6; }
+  .stat-cell .sub {
+    display: block; margin-top: 5px;
+    font-size: 13.5px; color: rgba(255,255,255,0.62); line-height: 1.5;
+  }
+  /* rising indicator for the "still climbing" figure */
+  .trend-up {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: rgba(111, 227, 164, 0.18);
+    border: 1px solid rgba(111, 227, 164, 0.45);
+    flex-shrink: 0;
+    animation: trendRise 1.9s ease-in-out infinite;
+  }
+  .trend-up svg { width: 16px; height: 16px; color: #6FE3A4; }
+  @keyframes trendRise {
+    0%, 100% { transform: translateY(0); }
+    45%      { transform: translateY(-5px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .trend-up { animation: none; } }
 
   /* ---------- Roadmap ---------- */
   .roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .rm-col {
     background: #fff; border: 1px solid var(--border);
-    border-radius: var(--radius-md); padding: 24px 22px;
+    border-radius: var(--radius-md);
+    padding: clamp(16px, 2.2vh, 24px) 22px;
   }
   .rm-col .rm-phase {
     display: inline-flex; align-items: center; gap: 7px;
-    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12px;
-    letter-spacing: 0.06em; padding: 5px 12px; border-radius: 999px; margin-bottom: 14px;
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 13px;
+    letter-spacing: 0.06em; padding: 5px 12px; border-radius: 999px;
+    margin-bottom: clamp(9px, 1.3vh, 14px);
   }
   .rm-col.now  .rm-phase { background: #E6F6EC; color: #15803D; }
   .rm-col.next .rm-phase { background: #E9F2FF; color: #1D4ED8; }
   .rm-col.future .rm-phase { background: #FFF4E0; color: #A9670A; }
   .rm-col.beyond .rm-phase { background: #F3ECFB; color: #6D28D9; }
   .rm-col ul { padding-left: 17px; }
-  .rm-col li { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 9px; }
+  .rm-col li {
+    color: var(--muted); font-size: clamp(13.8px, 1.45vh, 15.5px);
+    line-height: 1.62; margin-bottom: clamp(7px, 1vh, 11px);
+  }
+  .eta {
+    display: inline-block; margin-left: 6px;
+    padding: 2px 9px; border-radius: 999px;
+    background: #E9F2FF; color: #1D4ED8;
+    border: 1px solid rgba(59,130,246,0.3);
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12px;
+    white-space: nowrap;
+  }
 
   /* ---------- Metrics ---------- */
   .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .metric-card {
     background: #fff; border: 1px solid var(--border);
-    border-radius: var(--radius-md); padding: 26px 24px;
+    border-radius: var(--radius-md);
+    padding: clamp(18px, 2.4vh, 26px) 24px;
     border-top: 4px solid var(--mc, var(--accent));
   }
   .metric-card.primary   { --mc: #16A34A; }
   .metric-card.supporting{ --mc: #2563EB; }
   .metric-card.guardrail { --mc: #E0574B; }
-  .metric-card h3 { font-size: 17px; margin-bottom: 6px; }
-  .metric-card .mc-sub { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .metric-card h3 { font-size: 19px; margin-bottom: 6px; }
+  .metric-card .mc-sub { font-size: 14.5px; color: var(--muted); margin-bottom: clamp(9px, 1.3vh, 14px); }
   .metric-card ul { padding-left: 17px; }
-  .metric-card li { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+  .metric-card li {
+    color: var(--muted); font-size: clamp(13.8px, 1.45vh, 15.5px); line-height: 1.55; margin-bottom: clamp(8px, 1.1vh, 12px);
+    display: flex; align-items: flex-start; gap: 9px;
+  }
+  .metric-card li::marker { content: ''; }
+  .metric-card ul { list-style: none; padding-left: 0; }
+  /* direction badge: green = should rise, blue = should fall, red = must not rise */
+  .dir {
+    display: inline-flex; align-items: center; gap: 3px;
+    flex-shrink: 0; margin-top: 2px;
+    padding: 2px 8px; border-radius: 999px;
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 11.5px;
+    white-space: nowrap;
+  }
+  .dir svg { width: 12px; height: 12px; }
+  .dir.up   { background: #E6F6EC; color: #15803D; border: 1px solid rgba(22,163,74,0.28); }
+  .dir.down { background: #E9F2FF; color: #1D4ED8; border: 1px solid rgba(37,99,235,0.28); }
+  .dir.stop { background: #FDECEA; color: #B4291D; border: 1px solid rgba(224,87,75,0.32); }
   .note {
-    margin-top: 24px; padding: 20px 24px;
+    margin-top: clamp(14px, 2vh, 24px); padding: clamp(14px, 1.9vh, 20px) 24px;
     background: #fff; border: 1px solid var(--border);
     border-left: 4px solid var(--accent); border-radius: 12px;
-    color: var(--muted); font-size: 14.5px; line-height: 1.8;
+    color: var(--muted); font-size: clamp(14px, 1.5vh, 16px); line-height: 1.75;
   }
 
   /* ---------- Pricing ---------- */
@@ -198,11 +254,11 @@
     border-radius: var(--radius-md); padding: 30px 26px;
   }
   .price-card.featured { border-color: rgba(59,130,246,0.45); box-shadow: var(--shadow-md); }
-  .price-card .pc-name { font-family: "Manrope", sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.06em; color: var(--accent); }
-  .price-card .pc-price { font-size: 28px; font-weight: 800; color: var(--navy); margin: 12px 0 4px; }
-  .price-card .pc-period { font-size: 13px; color: var(--muted); }
+  .price-card .pc-name { font-family: "Manrope", sans-serif; font-weight: 800; font-size: 15px; letter-spacing: 0.06em; color: var(--accent); }
+  .price-card .pc-price { font-size: 31px; font-weight: 800; color: var(--navy); margin: 12px 0 4px; }
+  .price-card .pc-period { font-size: 14.5px; color: var(--muted); }
   .price-card ul { margin-top: 18px; padding-left: 17px; }
-  .price-card li { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+  .price-card li { color: var(--muted); font-size: 15.5px; line-height: 1.7; margin-bottom: 10px; }
   .soon-chip {
     display: inline-flex; align-items: center; gap: 6px;
     margin-top: 14px; padding: 5px 11px; border-radius: 999px;
@@ -217,6 +273,30 @@
     background: var(--panel-navy); border-radius: var(--radius-lg);
     padding: 54px 34px; text-align: center; color: #fff;
   }
+  /* white brand plate, matching the landing page CTA */
+  .cta-brand {
+    display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+    background: #fff; border-radius: 24px;
+    padding: 24px 40px; margin-bottom: 30px;
+    box-shadow: 0 14px 34px rgba(8, 24, 48, 0.22);
+  }
+  .cta-brand img { height: clamp(52px, 6.4vh, 74px); width: auto; }
+  .cta-brand .cb-sub {
+    font-size: 13.5px; font-weight: 700; color: var(--muted);
+    letter-spacing: 0.01em; white-space: pre;
+  }
+  .cb-sub .ch { display: inline-block; }
+  .cb-sub.play .ch { animation: charBounce 0.6s cubic-bezier(.28,.84,.42,1) both; }
+  @keyframes charBounce {
+    0%   { transform: translateY(0); }
+    30%  { transform: translateY(-9px); }
+    55%  { transform: translateY(0); }
+    72%  { transform: translateY(-4px); }
+    88%  { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .cb-sub.play .ch { animation: none; } }
+
   .close-panel h2 { color: #fff; font-size: clamp(24px, 3vw, 34px); line-height: 1.35; }
   .close-panel p { color: rgba(255,255,255,0.75); margin: 16px auto 28px; max-width: 520px; font-size: 15.5px; line-height: 1.7; }
   .store-row { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -342,7 +422,7 @@
             <p>전 기능을 다 넣지 않고 <strong>핵심 자재 계산기 + 업무수첩(작업기록·메모)</strong>만 붙여 iOS·Android에 작게 출시했습니다.</p>
             <ul>
               <li>직접 인테리어·건축 시공현장에 나가 보고 들으며, 현장에서 실제로 쓰는 공식값을 반영해 기능을 구현했습니다.</li>
-              <li>계산·현장 데이터는 서버에 저장해 자료 유실 위험을 없애고, 오프라인에서도 사용 가능하도록 설계했습니다.</li>
+              <li><strong>로컬 데이터 저장을 기반</strong>으로 오프라인에서도 문제없이 사용 가능하도록 설계했습니다. 현장은 인터넷이 안 되는 경우가 비일비재하기 때문입니다.</li>
               <li>유입도 유료 광고 없이(광고비 0원) SNS 릴스로 작게 검증했습니다.</li>
             </ul>
           </div>
@@ -363,15 +443,26 @@
       <div class="stat-panel reveal">
         <div class="stat-cell">
           <div class="v">1,000+</div>
-          <div class="l">누적 다운로드 (출시 1개월, 광고비 0원)</div>
+          <div class="l">누적 다운로드
+            <span class="sub">출시 1개월, 광고비 0원</span>
+          </div>
         </div>
         <div class="stat-cell">
           <div class="v">60~80명</div>
-          <div class="l">일평균 이용자, 출시 후에도 현장 사용 지속</div>
+          <div class="l">일평균 이용자
+            <span class="sub">출시 후에도 현장 사용 지속</span>
+          </div>
         </div>
         <div class="stat-cell">
-          <div class="v">13만+</div>
-          <div class="l">SNS 릴스·영상 누적 조회, 현재도 상승 중</div>
+          <div class="v">
+            13만+
+            <span class="trend-up" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+            </span>
+          </div>
+          <div class="l">SNS 릴스·영상 누적 조회
+            <span class="sub">현재도 상승 중</span>
+          </div>
         </div>
         <div class="stat-cell">
           <div class="v">0원</div>
@@ -396,13 +487,13 @@
           <ul>
             <li>음성 AI 비서 <strong>'공담이'</strong> · 지역 방언·구어체·현장 용어까지 이해하도록 특화. 자체 LLM과 외부 LLM API를 함께 쓰는 하이브리드 구조.</li>
             <li>하이브리드 라우팅·프롬프트 캐싱으로 질의당 원가 절감, 방언 정규화·의도 분류 등은 자체 소형 LLM으로 전환 예정.</li>
-            <li><strong>글로벌 다국어 버전</strong> · 국내 외국인 근로자 수요 대응 (준비 완료).</li>
+            <li><strong>글로벌 다국어 버전</strong> · 영어 지원 출시 완료. 국내 외국인 근로자 수요에 대응합니다.</li>
           </ul>
         </div>
         <div class="rm-col next reveal">
           <span class="rm-phase">NEXT · 진행 예정</span>
           <ul>
-            <li>PC 버전 출시</li>
+            <li>PC 버전 출시 <span class="eta">26.09 예정</span></li>
             <li><strong>홍보문구 자동 작성</strong> · 네이버 블로그·인스타그램 연계로 앱에서 글·피드 자동 생성.</li>
             <li>AI 견적서·업무일지 자동 작성</li>
             <li>세금계산서 발행 등 행정 업무 · 정부 사이트에 따로 들어갈 필요 없이 앱에서 처리 (정부 API 연계).</li>
@@ -440,35 +531,36 @@
           <h3>Primary Metric</h3>
           <div class="mc-sub">가설이 맞았는지 판단하는 핵심</div>
           <ul>
-            <li>계산 → 작업기록 저장 완료율 ↑</li>
-            <li>주간 재사용(리텐션) ↑</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>계산 → 작업기록 저장 완료율</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>주간 재사용(리텐션)</li>
           </ul>
         </div>
         <div class="metric-card supporting reveal">
           <h3>Supporting Metric</h3>
           <div class="mc-sub">함께 확인하는 지표</div>
           <ul>
-            <li>자재 계산 소요시간 ↓</li>
-            <li>SNS 유입 → 설치 전환 ↑</li>
-            <li>무료 → 유료(PRO/프리미엄) 전환율 ↑</li>
-            <li>AI 홍보문구 생성 → 실제 게시 전환 ↑</li>
+            <li><span class="dir down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>↓</span>자재 계산 소요시간</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>SNS 유입 → 설치 전환</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>무료 → 유료(PRO/프리미엄) 전환율</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>AI 홍보문구 생성 → 실제 게시 전환</li>
           </ul>
         </div>
         <div class="metric-card guardrail reveal">
           <h3>Guardrail Metric</h3>
           <div class="mc-sub">나빠지면 안 되는 안전선</div>
           <ul>
-            <li>자재 계산 오류율 ↑ 금지</li>
-            <li>음성(공담이) 방언·용어 오인식률 ↑ 금지</li>
-            <li>AI 홍보문구의 과장·허위 표현 발생률 ↑ 금지</li>
-            <li>AI 결과 과도 수정률 ↑ 금지</li>
-            <li>이탈률 ↑ 금지</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>자재 계산 오류율</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>음성(공담이) 방언·용어 오인식률</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>AI 홍보문구의 과장·허위 표현 발생률</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>AI 결과 과도 수정률</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>이탈률</li>
           </ul>
         </div>
       </div>
 
       <div class="note reveal">
-        Guardrail이 없으면 서비스 지표(설치·사용)는 잘 나와도 엣지 케이스·예외 상황(오계산·방언 오인식·허위 홍보문구)에 대응하기 어렵습니다. 자재 수량을 다루고 자체 LLM으로 전환해가는 AI 제품에선 계산·생성 신뢰성이 특히 중요합니다.
+        Guardrail이 없으면 서비스 지표(설치·사용)는 잘 나와도 엣지 케이스·예외 상황(오계산·방언 오인식·허위 홍보문구)에 대응하기 어렵습니다.<br />
+        자재 수량을 다루고 자체 LLM으로 전환해가는 AI 제품에선 계산·생성 신뢰성이 특히 중요합니다.
       </div>
     </div>
   </section>
@@ -522,6 +614,10 @@
   <section class="close-cta">
     <div class="wrap">
       <div class="close-panel reveal">
+        <div class="cta-brand">
+          <img src="assets/img/logo-black.png" alt="공셈이 로고" />
+          <span class="cb-sub">시공현장을 위한 AI 업무 파트너</span>
+        </div>
         <h2>먼저 계산부터 가볍게 시작해보세요</h2>
         <p>자재 계산과 업무수첩은 무료입니다. 광고비 0원으로 1,000명이 선택한 앱, 지금 설치해보세요.</p>
         <div class="store-row">
@@ -562,6 +658,37 @@
     });
   }, { threshold: 0.12 });
   revealEls.forEach(el => io.observe(el));
+
+  // CTA subtitle: bounce one character at a time whenever it scrolls into view
+  (function () {
+    const sub = document.querySelector('.cb-sub');
+    if (!sub) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const text = sub.textContent;
+    sub.textContent = '';
+    [...text].forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'ch';
+      span.textContent = ch;
+      span.style.animationDelay = (i * 55) + 'ms';
+      sub.appendChild(span);
+    });
+
+    const total = text.length * 55 + 600;
+    let timer = null;
+    const bounceIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        sub.classList.remove('play');
+        void sub.offsetWidth;
+        sub.classList.add('play');
+        clearTimeout(timer);
+        timer = setTimeout(() => sub.classList.remove('play'), total);
+      });
+    }, { threshold: 0.6 });
+    bounceIO.observe(sub);
+  })();
 </script>
 
 </body>
