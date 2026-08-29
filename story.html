@@ -131,19 +131,18 @@
     box-shadow: var(--shadow-md);
   }
   .ph-mark img { width: 100%; height: auto; }
-  /* back to the main page */
+  /* the eyebrow and the home button sit on one line, same height */
+  .ph-topline { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 4px; }
+  /* back to the main page - matches .eyebrow's box exactly, minus the border */
   .ph-back {
-    display: inline-flex; align-items: center; gap: 8px;
-    margin-bottom: 16px; padding: 8px 15px 8px 12px;
-    border-radius: 999px; background: #fff;
-    border: 1px solid var(--border); color: var(--navy);
-    font-size: 14px; font-weight: 700;
-    box-shadow: var(--shadow-sm);
-    transition: border-color 0.2s ease, transform 0.2s ease;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 15px; border-radius: 999px;
+    background: #fff; border: 1px solid var(--border); color: var(--navy);
+    font-weight: 700; font-size: 14px; letter-spacing: 0.02em;
+    transition: border-color 0.2s ease, background 0.2s ease;
   }
-  .ph-back:hover { border-color: var(--navy); transform: translateY(-2px); }
-  .ph-back svg { width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.2s ease; }
-  .ph-back:hover svg { transform: translateX(-3px); }
+  .ph-back:hover { border-color: var(--navy); background: var(--navy-tint); }
+  .ph-back svg { width: 1em; height: 1em; flex-shrink: 0; }
 
   /* the loop steps spelled out in Korean, spanning the full hero width */
   .loop-legend {
@@ -566,11 +565,13 @@
   <section class="page-hero">
     <div class="wrap">
       <div>
-        <a href="index.html" class="ph-back">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M12 5l-7 7 7 7"/></svg>
-          메인으로 돌아가기
-        </a>
-        <span class="eyebrow" style="--dot:#E0574B;"><span class="dot"></span> 제품 개발 이야기</span>
+        <div class="ph-topline">
+          <span class="eyebrow" style="--dot:#E0574B;"><span class="dot"></span> 제품 개발 이야기</span>
+          <a href="index.html" class="ph-back" aria-label="메인 페이지로 나가기">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+            홈
+          </a>
+        </div>
         <h1>현장에서 확인한 문제로 시작했습니다</h1>
         <p>공셈이는 책상에서 기획한 앱이 아닙니다. 수개월간 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다. 그 관찰에서 가설을 세우고, 작게 만들어 내놓고, 실제 사용 데이터로 검증한 과정을 정리했습니다.</p>
       </div>
