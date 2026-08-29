@@ -131,6 +131,46 @@
     box-shadow: var(--shadow-md);
   }
   .ph-mark img { width: 100%; height: auto; }
+  /* back to the main page */
+  .ph-back {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-bottom: 16px; padding: 8px 15px 8px 12px;
+    border-radius: 999px; background: #fff;
+    border: 1px solid var(--border); color: var(--navy);
+    font-size: 14px; font-weight: 700;
+    box-shadow: var(--shadow-sm);
+    transition: border-color 0.2s ease, transform 0.2s ease;
+  }
+  .ph-back:hover { border-color: var(--navy); transform: translateY(-2px); }
+  .ph-back svg { width: 16px; height: 16px; flex-shrink: 0; transition: transform 0.2s ease; }
+  .ph-back:hover svg { transform: translateX(-3px); }
+
+  /* the loop steps spelled out in Korean, spanning the full hero width */
+  .loop-legend {
+    grid-column: 1 / -1;
+    margin-top: clamp(14px, 2.4vh, 28px);
+  }
+  .ll-title {
+    display: block; margin-bottom: 12px;
+    font-size: 13px; font-weight: 700; color: var(--muted);
+    letter-spacing: 0.01em;
+  }
+  .ll-row { display: flex; flex-wrap: wrap; align-items: stretch; gap: 8px; }
+  .ll-item {
+    display: flex; flex-direction: column; gap: 2px;
+    padding: 10px 16px; border-radius: 14px;
+    background: #fff; border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+  }
+  .ll-item .en {
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: 12px; letter-spacing: 0.07em; color: var(--accent);
+  }
+  .ll-item .ko { font-size: 14px; font-weight: 700; color: var(--navy); white-space: nowrap; }
+  .ll-arrow {
+    display: flex; align-items: center; color: #C3CAD4;
+    font-family: "Manrope", sans-serif; font-weight: 800;
+  }
 
   /* ---------- Generic block ---------- */
   .block.tint { background: var(--navy-tint); }
@@ -153,6 +193,14 @@
   .loop-step .ls-tag {
     font-family: "Manrope", sans-serif; font-weight: 800; font-size: 13.5px;
     letter-spacing: 0.08em; color: var(--accent); padding-top: 4px;
+  }
+  /* the Korean meaning of each loop step, right under its English tag */
+  .loop-step .ls-tag span {
+    display: block; margin-top: 4px;
+    /* Korean needs the body face, not Manrope */
+    font-family: "Pretendard Variable", Pretendard, "Malgun Gothic", sans-serif;
+    font-weight: 700; font-size: 14px;
+    letter-spacing: 0; color: var(--navy);
   }
   .loop-step h3 { font-size: clamp(17px, 1.9vh, 19.5px); margin-bottom: clamp(6px, 0.9vh, 10px); }
   .loop-step p { color: var(--muted); font-size: clamp(14.5px, 1.5vh, 16.2px); line-height: 1.7; }
@@ -210,7 +258,7 @@
     display: flex; align-items: center; justify-content: center;
     overflow: hidden;
   }
-  .shot-media img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .shot-media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
   .shot-media.contain { padding: 12px 14px 0; }
   .shot-media.contain img { object-fit: contain; object-position: center bottom; }
   /* before -> after pair inside one media box */
@@ -229,6 +277,23 @@
     color: var(--navy);
   }
   .shot-arrow svg { width: 16px; height: 16px; }
+  /* the material that was applied, floating over the top-right of the pair */
+  .shot-swatch {
+    position: absolute; top: 10px; right: 10px; z-index: 4;
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 11px 6px 6px; border-radius: 999px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid var(--border);
+    box-shadow: 0 6px 18px rgba(18,42,74,0.18);
+  }
+  .shot-swatch img {
+    width: 30px; height: 30px; border-radius: 50%;
+    object-fit: cover; flex-shrink: 0;
+    border: 1px solid rgba(18,42,74,0.12);
+  }
+  .shot-swatch .sw-t { display: flex; flex-direction: column; line-height: 1.25; }
+  .shot-swatch .sw-l { font-size: 9.5px; font-weight: 700; color: var(--muted); letter-spacing: 0.02em; }
+  .shot-swatch .sw-n { font-size: 11.5px; font-weight: 800; color: var(--navy); white-space: nowrap; }
   .shot-body { padding: clamp(13px, 1.8vh, 20px) 20px clamp(15px, 2vh, 22px); }
   .shot-body h3 { font-size: clamp(15.5px, 1.75vh, 18px); }
   .shot-body p {
@@ -397,6 +462,8 @@
     .metric-grid { grid-template-columns: 1fr; }
     .price-grid { grid-template-columns: 1fr; }
     .loop-step { grid-template-columns: 1fr; gap: 12px; }
+    .ll-arrow { display: none; }
+    .ll-item { flex: 1 1 calc(50% - 4px); }
     .shot-grid { grid-template-columns: 1fr; }
     .shot-media { height: 190px; }
   }
@@ -435,12 +502,33 @@
   <section class="page-hero">
     <div class="wrap">
       <div>
+        <a href="index.html" class="ph-back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H6"/><path d="M12 5l-7 7 7 7"/></svg>
+          메인으로 돌아가기
+        </a>
         <span class="eyebrow" style="--dot:#E0574B;"><span class="dot"></span> 제품 개발 이야기</span>
         <h1>현장에서 확인한 문제로 시작했습니다</h1>
         <p>공셈이는 책상에서 기획한 앱이 아닙니다. 수개월간 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다. 그 관찰에서 가설을 세우고, 작게 만들어 내놓고, 실제 사용 데이터로 검증한 과정을 정리했습니다.</p>
       </div>
       <div class="ph-mark">
         <img src="assets/img/logo-black.png" alt="공셈이 로고" />
+      </div>
+
+      <div class="loop-legend">
+        <span class="ll-title">이 페이지를 읽는 순서</span>
+        <div class="ll-row">
+          <div class="ll-item"><span class="en">PROBLEM</span><span class="ko">문제 정의</span></div>
+          <div class="ll-arrow">→</div>
+          <div class="ll-item"><span class="en">HYPOTHESIS</span><span class="ko">가설 설정</span></div>
+          <div class="ll-arrow">→</div>
+          <div class="ll-item"><span class="en">METRIC</span><span class="ko">지표 결정</span></div>
+          <div class="ll-arrow">→</div>
+          <div class="ll-item"><span class="en">BUILD</span><span class="ko">작게 구현</span></div>
+          <div class="ll-arrow">→</div>
+          <div class="ll-item"><span class="en">MEASURE</span><span class="ko">데이터 확인</span></div>
+          <div class="ll-arrow">→</div>
+          <div class="ll-item"><span class="en">LEARN</span><span class="ko">확대·수정·중단</span></div>
+        </div>
       </div>
     </div>
   </section>
@@ -450,13 +538,13 @@
     <div class="wrap">
       <div class="block-head reveal">
         <span class="eyebrow" style="--dot:#2FAE66;"><span class="dot"></span> 제품 개발의 기본 루프</span>
-        <h2>Problem → Hypothesis → Build → Measure → Learn</h2>
+        <h2>문제 정의에서 시작해 데이터로 확인했습니다</h2>
         <p>기능을 먼저 늘리지 않았습니다. 현장에서 문제를 정의하고, 거기서 검증할 가설을 세웠습니다.</p>
       </div>
 
       <div class="loop">
         <div class="loop-step reveal">
-          <div class="ls-tag">PROBLEM</div>
+          <div class="ls-tag">PROBLEM<span>문제 정의</span></div>
           <div>
             <h3>현장에서 시간과 비용이 새는 지점</h3>
             <ul>
@@ -468,9 +556,9 @@
         </div>
 
         <div class="loop-step reveal">
-          <div class="ls-tag">HYPOTHESIS</div>
+          <div class="ls-tag">HYPOTHESIS<span>가설 설정</span></div>
           <div>
-            <h3>가설</h3>
+            <h3>계산·기록·상담·일정을 하나로 묶으면 계속 쓸 것이다</h3>
             <p>현장 규격(면적·치수)만 입력하면 KS 규격·표준품셈 기반으로 자재 수량과 견적을 자동 산출하고, 계산·기록·상담·일정을 하나로 묶어주면, 계산 시간과 오차·손실이 줄어 작업자가 계속 사용할 것이다.</p>
           </div>
         </div>
@@ -489,17 +577,17 @@
 
       <div class="loop">
         <div class="loop-step reveal">
-          <div class="ls-tag">METRIC</div>
+          <div class="ls-tag">METRIC<span>지표 결정</span></div>
           <div>
-            <h3>검증 지표</h3>
+            <h3>무엇을 보고 성공을 판단할 것인가</h3>
             <p>가설 검증 지표로 <strong>'계산 → 작업기록 저장 전환율'</strong>과 <strong>'재사용(리텐션)'</strong>을 정했습니다. 전체 지표 체계는 아래 '지표는 세 종류로 나눠서 본다'에서 정리했습니다.</p>
           </div>
         </div>
 
         <div class="loop-step reveal">
-          <div class="ls-tag">BUILD</div>
+          <div class="ls-tag">BUILD<span>작게 구현</span></div>
           <div>
-            <h3>작게 구현 · MVP</h3>
+            <h3>핵심 기능만 담아 먼저 내놓았습니다</h3>
             <p>전 기능을 다 넣지 않고 <strong>핵심 자재 계산기 + 업무수첩(작업기록·메모)</strong>만 붙여 iOS·Android에 작게 출시했습니다.</p>
             <ul>
               <li>직접 인테리어·건축 시공현장에 나가 보고 들으며, 현장에서 실제로 쓰는 공식값을 반영해 기능을 구현했습니다.</li>
@@ -516,7 +604,7 @@
   <section class="block">
     <div class="wrap">
       <div class="block-head reveal">
-        <span class="eyebrow" style="--dot:#21A99B;"><span class="dot"></span> Measure</span>
+        <span class="eyebrow" style="--dot:#21A99B;"><span class="dot"></span> Measure · 데이터 확인</span>
         <h2>작게 만든 MVP만으로 실사용 수요를 검증했습니다</h2>
         <p>광고비를 쓰지 않고도 출시 한 달 만에 실사용자가 모였고, 출시 이후에도 현장에서 계속 쓰이고 있습니다.</p>
       </div>
@@ -559,7 +647,7 @@
   <section class="block" id="screens">
     <div class="wrap">
       <div class="block-head reveal">
-        <span class="eyebrow" style="--dot:#E5A32E;"><span class="dot"></span> Screens</span>
+        <span class="eyebrow" style="--dot:#E5A32E;"><span class="dot"></span> Screens · 실제 화면</span>
         <h2>검증한 화면과 지금 만들고 있는 화면</h2>
         <p>먼저 내놓은 계산·기록 화면으로 수요를 확인했고, 그 위에 공간 스캐닝과 마감재 시뮬레이션을 얹고 있습니다.</p>
       </div>
@@ -600,6 +688,13 @@
               <img src="assets/img/material-after.jpg" alt="마감재 시뮬레이션을 적용한 벽면" />
               <span class="cap">시공 후</span>
             </div>
+            <div class="shot-swatch">
+              <img src="assets/img/material-swatch.jpg" alt="적용한 자재 밀란 그리지오" />
+              <span class="sw-t">
+                <span class="sw-l">적용한 자재</span>
+                <span class="sw-n">밀란 그리지오</span>
+              </span>
+            </div>
           </div>
           <div class="shot-body">
             <span class="shot-tag soon"><span class="d"></span>출시 예정</span>
@@ -615,7 +710,7 @@
   <section class="block tint">
     <div class="wrap">
       <div class="block-head reveal">
-        <span class="eyebrow" style="--dot:#8B6BD9;"><span class="dot"></span> Learn / Pivot</span>
+        <span class="eyebrow" style="--dot:#8B6BD9;"><span class="dot"></span> Learn / Pivot · 확대·수정·중단</span>
         <h2>검증된 경험 위에 단계적으로 확장합니다</h2>
         <p>계산·기록 경험이 검증된 뒤에야 다음 기능을 얹습니다. 기능을 추가할 때마다 "이 기능이 목표 지표를 움직이는가?"를 먼저 묻습니다.</p>
       </div>
