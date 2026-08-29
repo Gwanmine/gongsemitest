@@ -204,6 +204,8 @@
   .loop-step h3 { font-size: clamp(17px, 1.9vh, 19.5px); margin-bottom: clamp(6px, 0.9vh, 10px); }
   .loop-step p { color: var(--muted); font-size: clamp(14.5px, 1.5vh, 16.2px); line-height: 1.7; }
   .loop-step p + p { margin-top: clamp(5px, 0.8vh, 9px); }
+  /* a follow-on sentence that belongs to the same bullet but reads on its own line */
+  .loop-step .li-next { display: block; margin-top: 3px; }
   .loop-step ul { margin-top: clamp(7px, 1.1vh, 12px); padding-left: 18px; }
   .loop-step li { color: var(--muted); font-size: clamp(14px, 1.45vh, 15.8px); line-height: 1.66; margin-bottom: 6px; }
 
@@ -729,7 +731,9 @@
             <h3>핵심 기능만 담아 먼저 내놓았습니다</h3>
             <p>전 기능을 다 넣지 않고 <strong>핵심 자재 계산기 + 업무수첩(작업기록·메모)</strong>만 붙여 iOS·Android에 작게 출시했습니다.</p>
             <ul>
-              <li>직접 인테리어·건축 시공현장에 나가 보고 들으며, <strong>시공자들이 실제로 쓰는 계산법과 노하우</strong>를 받아 공식값으로 넣었습니다. <strong>KS 규격에 어긋나지 않는지 확인</strong>한 값만 반영했습니다.</li>
+              <li>직접 인테리어·건축 시공현장에 나가 보고 들으며, <strong>시공자들이 실제로 쓰는 계산법과 노하우</strong>를 받아 공식값으로 넣었습니다.
+                <span class="li-next"><strong>KS 규격에 어긋나지 않는지 확인</strong>한 값만 반영했습니다.</span>
+              </li>
               <li><strong>로컬 데이터 저장을 기반</strong>으로 오프라인에서도 문제없이 사용 가능하도록 설계했습니다. 현장은 인터넷이 안 되는 경우가 비일비재하기 때문입니다.</li>
               <li>유입도 유료 광고 없이(광고비 0원) SNS 릴스로 작게 검증했습니다.</li>
             </ul>

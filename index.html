@@ -600,6 +600,47 @@
   .carousel-langs .c-lang.active { color: var(--navy); border-color: rgba(168,141,129,0.4); background: rgba(243,236,232,0.95); }
   .carousel-langs .c-lang.active .c-dot { background: var(--accent); }
 
+  /* click a screenshot to open it full size */
+  /* only the visible slide is clickable - the other is stacked on top at opacity 0 */
+  .carousel-slide { pointer-events: none; }
+  .carousel-slide.active { pointer-events: auto; cursor: zoom-in; }
+  .lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: clamp(16px, 4vw, 56px);
+    background: rgba(10, 18, 30, 0.62);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .lightbox.open { opacity: 1; visibility: visible; }
+  .lightbox img {
+    max-width: 100%; max-height: 100%;
+    width: auto; height: auto;
+    border-radius: 14px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    transform: scale(0.97);
+    transition: transform 0.25s ease;
+    cursor: default;
+  }
+  .lightbox.open img { transform: scale(1); }
+  .lightbox-close {
+    position: absolute; top: clamp(14px, 2.4vw, 26px); right: clamp(14px, 2.4vw, 26px);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: var(--navy); cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .lightbox-close:hover { background: #fff; transform: scale(1.06); }
+  .lightbox-close svg { width: 20px; height: 20px; }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox, .lightbox img { transition: none; }
+  }
+
   /* ---------- Story ---------- */
   .story { background: var(--navy-tint); }
   .story { --dot: #E0574B; }
@@ -1016,6 +1057,14 @@
     </div>
   </section>
 
+  <!-- full-size viewer for the showcase screenshots -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="앱 화면 크게 보기">
+    <button class="lightbox-close" type="button" aria-label="닫기">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <img id="lightboxImg" src="" alt="" />
+  </div>
+
   <!-- SHOWCASE -->
   <section class="showcase" id="showcase">
     <div class="wrap">
@@ -1273,16 +1322,59 @@
   // showcase language carousel (auto-advance KR <-> EN)
   const carouselSlides = document.querySelectorAll('.carousel-slide');
   const carouselLangs = document.querySelectorAll('.c-lang');
-  if (carouselSlides.length) {
-    let carouselIndex = 0;
-    setInterval(() => {
-      carouselSlides[carouselIndex].classList.remove('active');
-      carouselLangs[carouselIndex].classList.remove('active');
-      carouselIndex = (carouselIndex + 1) % carouselSlides.length;
-      carouselSlides[carouselIndex].classList.add('active');
-      carouselLangs[carouselIndex].classList.add('active');
+  let carouselTimer = null;
+  function startCarousel() {
+    if (carouselTimer || carouselSlides.length < 2) return;
+    let i = [...carouselSlides].findIndex(s => s.classList.contains('active'));
+    carouselTimer = setInterval(() => {
+      carouselSlides[i].classList.remove('active');
+      carouselLangs[i].classList.remove('active');
+      i = (i + 1) % carouselSlides.length;
+      carouselSlides[i].classList.add('active');
+      carouselLangs[i].classList.add('active');
     }, 4000);
   }
+  function stopCarousel() { clearInterval(carouselTimer); carouselTimer = null; }
+  startCarousel();
+
+  // full-size viewer for the showcase screenshots
+  (function () {
+    const box = document.getElementById('lightbox');
+    const boxImg = document.getElementById('lightboxImg');
+    if (!box || !boxImg) return;
+    const closeBtn = box.querySelector('.lightbox-close');
+    let lastFocused = null;
+
+    function openBox(img) {
+      lastFocused = document.activeElement;
+      boxImg.src = img.src;
+      boxImg.alt = img.alt;
+      box.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      stopCarousel();
+      closeBtn.focus();
+    }
+    function closeBox() {
+      if (!box.classList.contains('open')) return;
+      box.classList.remove('open');
+      document.documentElement.style.overflow = '';
+      startCarousel();
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    carouselSlides.forEach(img => {
+      img.setAttribute('role', 'button');
+      img.setAttribute('tabindex', '0');
+      img.addEventListener('click', () => openBox(img));
+      img.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBox(img); }
+      });
+    });
+
+    // clicking anywhere except the image itself closes
+    box.addEventListener('click', (e) => { if (e.target !== boxImg) closeBox(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBox(); });
+  })();
 
   // material simulation toggle
   const simButtons = document.querySelectorAll('.sim-toggle button');
