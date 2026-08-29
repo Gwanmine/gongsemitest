@@ -515,28 +515,37 @@
     background: rgba(18,42,74,0.88); color: #fff; font-size: 12px; font-weight: 700;
     padding: 7px 13px; border-radius: 999px;
   }
-  /* this demo does not advance on its own, so nudge people to tap it */
+  /* this demo does not advance on its own, so nudge people to tap the toggle */
   .sim-viewport { cursor: pointer; }
+  .sim-toprow { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+  .sim-toprow .sim-toggle { margin-bottom: 0; }
   .sim-hint {
-    position: absolute; top: 13px; right: 13px; z-index: 8;
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 14px; border-radius: 999px;
+    padding: 7px 13px; border-radius: 999px;
     background: #E5A32E; color: #2E1F04;
     font-size: 12.5px; font-weight: 800;
-    box-shadow: 0 8px 20px rgba(18,42,74,0.32);
+    box-shadow: 0 6px 16px rgba(229,163,46,0.4);
+    white-space: nowrap; flex-shrink: 0;
     pointer-events: none;
-    animation: simHint 1.9s ease-in-out infinite;
+    animation: simHint 1.6s ease-in-out infinite;
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
-  .sim-hint svg { width: 14px; height: 14px; }
+  /* the cursor is mirrored so it points back at the 자재 적용 button */
+  .sim-hint svg { width: 14px; height: 14px; transform: scaleX(-1); }
   /* fades away once they have flipped it themselves */
-  .sim-demo.touched .sim-hint { opacity: 0; transform: rotate(-9deg) scale(0.9); animation: none; }
+  .sim-demo.touched .sim-hint { opacity: 0; transform: rotate(-6deg) scale(0.9); animation: none; }
   @keyframes simHint {
-    0%, 100% { transform: rotate(-9deg) translateY(0); }
-    50%      { transform: rotate(-9deg) translateY(-5px); }
+    0%, 100% { transform: rotate(-6deg) translateX(0); }
+    50%      { transform: rotate(-6deg) translateX(-5px); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .sim-hint { animation: none; transform: rotate(-9deg); }
+    .sim-hint { animation: none; transform: rotate(-6deg); }
+  }
+  /* keep the chip on the same line as the toggle on a phone */
+  @media (max-width: 640px) {
+    .sim-toprow { gap: 8px; }
+    .sim-toggle button { padding: 9px 14px; }
+    .sim-hint { padding: 6px 11px; font-size: 12px; }
   }
 
   /* ---------- Gongdami ---------- */
@@ -1086,14 +1095,16 @@
           </div>
         </div>
         <div class="sim-demo">
-          <div class="sim-toggle">
-            <button class="active" data-state="before">촬영 원본</button>
-            <button data-state="after">자재 적용</button>
+          <div class="sim-toprow">
+            <div class="sim-toggle">
+              <button class="active" data-state="before">촬영 원본</button>
+              <button data-state="after">자재 적용</button>
+            </div>
+            <span class="sim-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l13 8.4-5.7 1.1 2.7 5.4-2.7 1.3-2.6-5.4L6 18z"/></svg>클릭!</span>
           </div>
           <div class="sim-viewport">
             <div class="sim-layer before show"></div>
             <div class="sim-layer after"></div>
-            <span class="sim-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l13 8.4-5.7 1.1 2.7 5.4-2.7 1.3-2.6-5.4L6 18z"/></svg>클릭!</span>
             <span class="sim-tag" id="simTag">촬영 원본</span>
           </div>
         </div>
