@@ -165,6 +165,9 @@
 
   .header-actions { display: flex; align-items: center; gap: 14px; }
   .btn-sm { padding: 11px 22px; font-size: 14.5px; }
+  /* trailing arrow on "보러가기" style links - sized from the button's line box */
+  .btn svg { width: 1.1em; height: 1.1em; flex-shrink: 0; transition: transform 0.2s ease; }
+  .btn:hover svg { transform: translateX(3px); }
 
   .burger { display: none; width: 42px; height: 42px; border-radius: 12px; border: 1px solid var(--border); background: #fff; align-items: center; justify-content: center; cursor: pointer; }
   .burger span, .burger span::before, .burger span::after {
@@ -237,7 +240,9 @@
   .app-panel {
     flex: 1 1 0;
     min-width: 0;
-    max-width: 300px;
+    /* the screenshot is 299x652, so this panel's height is its width x2.18 -
+       cap the width from the viewport height to keep the hero on one screen */
+    max-width: clamp(200px, 32vh, 300px);
     background: #fff;
     border: 1px solid var(--border);
     border-radius: 32px;
@@ -386,13 +391,13 @@
   /* ---------- Features ---------- */
   .features { background: var(--navy-tint); }
   .simulation { background: var(--navy-tint); }
-  .features .section-head { margin-bottom: clamp(12px, 2.4vh, 32px); }
+  .features .section-head { margin-bottom: clamp(10px, 1.6vh, 32px); }
   .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.6vh, 18px); }
   .feature-card {
     background: #fff;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: clamp(14px, 2.2vh, 26px) 22px;
+    padding: clamp(12px, 1.6vh, 26px) 22px;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
   .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: rgba(168,141,129,0.4); }
@@ -400,7 +405,7 @@
     width: clamp(34px, 4.6vh, 52px); height: clamp(34px, 4.6vh, 52px); border-radius: 14px;
     background: var(--accent-tint);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: clamp(10px, 1.9vh, 20px);
+    margin-bottom: clamp(9px, 1.5vh, 20px);
     flex-shrink: 0;
   }
   .feature-card .fc-icon svg { width: 24px; height: 24px; color: var(--accent); }
@@ -786,7 +791,9 @@
         <p class="lead">공셈이는 현장 스캔만으로 도면과 3D 모델을 만들고, 자재 계산·견적까지 자동으로 처리하는 AI 업무 파트너입니다.</p>
         <div class="cta-row">
           <a href="#cta" class="btn btn-primary">다운로드</a>
-          <a href="#gongdami" class="btn btn-ghost">공담이에게 물어보기</a>
+          <a href="story.html" class="btn btn-ghost">개발 이야기 보러가기
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
+          </a>
         </div>
         <div class="capsule-row">
           <span class="capsule"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16M10 4v16"/></svg>자재 계산기 13종</span>
@@ -1021,7 +1028,9 @@
       </div>
 
       <div class="story-more reveal">
-        <a href="story.html" class="btn btn-ghost">제품 개발 이야기 자세히 보기</a>
+        <a href="story.html" class="btn btn-ghost">제품 개발 이야기 자세히 보기
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
+        </a>
       </div>
     </div>
   </section>

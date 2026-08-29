@@ -196,6 +196,57 @@
   }
   @media (prefers-reduced-motion: reduce) { .trend-up { animation: none; } }
 
+  /* ---------- Screen shots (검증한 것 / 만들고 있는 것) ---------- */
+  .shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .shot-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md); overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .shot-media {
+    position: relative;
+    height: clamp(150px, 26vh, 250px);
+    background: var(--navy-tint);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .shot-media img { width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .shot-media.contain { padding: 12px 14px 0; }
+  .shot-media.contain img { object-fit: contain; object-position: center bottom; }
+  /* before -> after pair inside one media box */
+  .shot-media.pair { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; padding: 0; }
+  .shot-pane { position: relative; overflow: hidden; }
+  .shot-pane img { width: 100%; height: 100%; object-fit: cover; }
+  .shot-pane .cap {
+    position: absolute; left: 8px; bottom: 8px;
+    padding: 3px 9px; border-radius: 999px;
+    background: rgba(17,19,21,0.62); color: #fff;
+    font-size: 11px; font-weight: 700; letter-spacing: 0.01em;
+  }
+  .shot-arrow {
+    display: flex; align-items: center; justify-content: center;
+    width: 30px; background: #fff;
+    color: var(--navy);
+  }
+  .shot-arrow svg { width: 16px; height: 16px; }
+  .shot-body { padding: clamp(13px, 1.8vh, 20px) 20px clamp(15px, 2vh, 22px); }
+  .shot-body h3 { font-size: clamp(15.5px, 1.75vh, 18px); }
+  .shot-body p {
+    margin-top: 7px; color: var(--muted);
+    font-size: clamp(13.4px, 1.4vh, 14.8px); line-height: 1.6;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .shot-tag {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-bottom: 9px; padding: 4px 10px; border-radius: 999px;
+    font-size: 11.5px; font-weight: 700;
+  }
+  .shot-tag .d { width: 6px; height: 6px; border-radius: 50%; }
+  .shot-tag.live { background: #E6F6EC; color: #15803D; border: 1px solid rgba(22,163,74,0.28); }
+  .shot-tag.live .d { background: #16A34A; }
+  .shot-tag.soon { background: #FFF4E0; color: #A9670A; border: 1px solid rgba(245,158,11,0.35); }
+  .shot-tag.soon .d { background: #F59E0B; }
+
   /* ---------- Roadmap ---------- */
   .roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
   .rm-col {
@@ -346,6 +397,8 @@
     .metric-grid { grid-template-columns: 1fr; }
     .price-grid { grid-template-columns: 1fr; }
     .loop-step { grid-template-columns: 1fr; gap: 12px; }
+    .shot-grid { grid-template-columns: 1fr; }
+    .shot-media { height: 190px; }
   }
   @media (max-width: 640px) {
     .wrap { padding: 0 18px; }
@@ -367,6 +420,7 @@
       <a href="index.html#gongdami">공담이</a>
       <a href="index.html#showcase">실제 화면</a>
       <a href="#loop">개발 루프</a>
+      <a href="#screens">화면</a>
       <a href="#metrics">지표 체계</a>
     </nav>
     <div class="header-actions">
@@ -501,6 +555,62 @@
     </div>
   </section>
 
+  <!-- SCREENS -->
+  <section class="block" id="screens">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#E5A32E;"><span class="dot"></span> Screens</span>
+        <h2>검증한 화면과 지금 만들고 있는 화면</h2>
+        <p>먼저 내놓은 계산·기록 화면으로 수요를 확인했고, 그 위에 공간 스캐닝과 마감재 시뮬레이션을 얹고 있습니다.</p>
+      </div>
+
+      <div class="shot-grid">
+        <div class="shot-card reveal">
+          <div class="shot-media contain">
+            <img src="assets/img/app-screens-kr.png" alt="공셈이 자재 계산기와 업무수첩 앱 화면" />
+          </div>
+          <div class="shot-body">
+            <span class="shot-tag live"><span class="d"></span>출시 완료</span>
+            <h3>자재 계산기 · 업무수첩</h3>
+            <p>MVP로 먼저 내놓은 화면입니다. 면적·수량·로스율 계산과 작업기록을 한 손으로 처리합니다.</p>
+          </div>
+        </div>
+
+        <div class="shot-card reveal">
+          <div class="shot-media">
+            <img src="assets/img/space-scan.jpg" alt="모바일 공간 스캐닝으로 벽면 실측 치수를 표시한 화면" />
+          </div>
+          <div class="shot-body">
+            <span class="shot-tag soon"><span class="d"></span>출시 예정</span>
+            <h3>공간 스캐닝 · 실측</h3>
+            <p>벽·바닥·천장 구조와 치수를 자동으로 읽어 2D 도면·3D 모델로 바꾸고, 자재 계산까지 바로 잇습니다.</p>
+          </div>
+        </div>
+
+        <div class="shot-card reveal">
+          <div class="shot-media pair">
+            <div class="shot-pane">
+              <img src="assets/img/material-before.jpg" alt="마감재 적용 전 벽면" />
+              <span class="cap">시공 전</span>
+            </div>
+            <div class="shot-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
+            </div>
+            <div class="shot-pane">
+              <img src="assets/img/material-after.jpg" alt="마감재 시뮬레이션을 적용한 벽면" />
+              <span class="cap">시공 후</span>
+            </div>
+          </div>
+          <div class="shot-body">
+            <span class="shot-tag soon"><span class="d"></span>출시 예정</span>
+            <h3>마감재 시뮬레이션</h3>
+            <p>벽면 사진에 원하는 자재를 입혀 시공 결과를 미리 보여줍니다. 고객의 자재 선택을 그대로 거래로 잇는 기능입니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- LEARN / ROADMAP -->
   <section class="block tint">
     <div class="wrap">
@@ -533,6 +643,7 @@
           <ul>
             <li><strong>자체 공간분석·도면화 기술</strong> · 모바일에서 취득한 공간 데이터로 벽체·바닥·천장·개구부 구조와 치수를 자동 인식하고, 실측 기반 2D 도면·3D 공간 모델로 변환.</li>
             <li>기존 외주(도면 건당 평균 약 43만 원, 3D 투시도 장당 3~5만 원) 대비 시간·비용을 크게 절감.</li>
+            <li><strong>마감재 시뮬레이션</strong> · 현장 사진과 자재 사진만으로 시공 후 모습을 이질감 없이 미리 보여줘, 고객의 자재 선택을 거래로 잇습니다.</li>
           </ul>
         </div>
         <div class="rm-col beyond reveal">
