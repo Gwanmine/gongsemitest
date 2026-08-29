@@ -244,6 +244,50 @@
   }
   @media (prefers-reduced-motion: reduce) { .trend-up { animation: none; } }
 
+  /* ---------- Reel link (the channel that brought the users in) ---------- */
+  .video-card {
+    display: flex; align-items: center; gap: clamp(14px, 1.8vw, 22px);
+    margin-top: clamp(14px, 2.2vh, 24px);
+    padding: clamp(12px, 1.6vh, 18px) clamp(16px, 1.8vw, 24px);
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .video-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--navy); }
+  .vc-thumb {
+    position: relative; flex-shrink: 0;
+    width: clamp(72px, 7.2vh, 88px); aspect-ratio: 9 / 16;
+    border-radius: 12px; overflow: hidden;
+    background: var(--navy-tint);
+  }
+  .vc-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .vc-play {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 28px; height: 28px; border-radius: 50%;
+    background: rgba(255,255,255,0.94);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 3px 10px rgba(18,42,74,0.30);
+  }
+  .vc-play svg { width: 12px; height: 12px; color: var(--navy); margin-left: 2px; }
+  .vc-body { min-width: 0; }
+  .vc-label {
+    display: block; margin-bottom: 5px;
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: 10.5px; letter-spacing: 0.08em; color: var(--accent);
+  }
+  .vc-title {
+    display: block; font-size: clamp(14.5px, 1.6vh, 17px); font-weight: 800;
+    color: var(--navy); line-height: 1.45;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .vc-more {
+    display: inline-flex; align-items: center; gap: 5px; margin-top: 7px;
+    font-size: 13px; font-weight: 700; color: #1D4ED8;
+  }
+  .vc-more svg { width: 1em; height: 1em; flex-shrink: 0; transition: transform 0.2s ease; }
+  .video-card:hover .vc-more svg { transform: translateX(3px); }
+
   /* ---------- Screen shots (검증한 것 / 만들고 있는 것) ---------- */
   .shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .shot-card {
@@ -735,6 +779,22 @@
           <div class="l">광고 집행비</div>
         </div>
       </div>
+
+      <a class="video-card reveal" href="https://www.youtube.com/shorts/2l39BmeK2hk" target="_blank" rel="noopener">
+        <span class="vc-thumb">
+          <img src="https://i.ytimg.com/vi/2l39BmeK2hk/oardefault.jpg" alt="공셈이 소개 쇼츠 썸네일" />
+          <span class="vc-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </span>
+        </span>
+        <span class="vc-body">
+          <span class="vc-label">YOUTUBE SHORTS</span>
+          <span class="vc-title">광고비를 쓰지 않고, 이런 영상으로 현장에 알려졌습니다</span>
+          <span class="vc-more">영상 보러가기
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
+          </span>
+        </span>
+      </a>
     </div>
   </section>
 
