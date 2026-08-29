@@ -32,7 +32,12 @@
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 76px;
+    /* one screen per section, same as the landing page */
+    scroll-snap-type: y mandatory;
+  }
   body {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, Roboto, sans-serif;
     color: var(--black);
@@ -44,6 +49,18 @@
   a { color: inherit; text-decoration: none; }
 
   .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* Every section is one full screen, with its content vertically centred. */
+  section {
+    position: relative;
+    min-height: calc(100vh - 76px);
+    min-height: calc(100svh - 76px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    padding-block: clamp(24px, 4.5vh, 48px);
+  }
 
   h1, h2, h3 { color: var(--navy); font-weight: 800; letter-spacing: -0.02em; }
 
@@ -87,7 +104,6 @@
 
   /* ---------- Page hero ---------- */
   .page-hero {
-    padding: 90px 0 70px;
     background:
       radial-gradient(55% 60% at 85% 0%, rgba(168,141,129,0.10) 0%, rgba(168,141,129,0) 70%),
       #fff;
@@ -96,9 +112,8 @@
   .page-hero p { color: var(--muted); font-size: 17px; line-height: 1.8; max-width: 820px; }
 
   /* ---------- Generic block ---------- */
-  .block { padding: 70px 0; }
   .block.tint { background: var(--navy-tint); }
-  .block-head { margin-bottom: 36px; }
+  .block-head { margin-bottom: clamp(18px, 3vh, 36px); }
   .block-head h2 {
     font-size: clamp(24px, 3vw, 34px); line-height: 1.3; margin-top: 14px;
     text-wrap: balance;
@@ -107,20 +122,21 @@
   .block-head p { color: var(--muted); font-size: 16px; line-height: 1.75; margin-top: 14px; max-width: 780px; }
 
   /* ---------- Loop steps ---------- */
-  .loop { display: grid; gap: 16px; }
+  .loop { display: grid; gap: clamp(9px, 1.2vh, 16px); }
   .loop-step {
     display: grid; grid-template-columns: 132px 1fr; gap: 24px;
     background: #fff; border: 1px solid var(--border);
-    border-radius: var(--radius-md); padding: 26px 28px;
+    border-radius: var(--radius-md);
+    padding: clamp(15px, 2vh, 26px) 28px;
   }
   .loop-step .ls-tag {
     font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12.5px;
     letter-spacing: 0.08em; color: var(--accent); padding-top: 4px;
   }
-  .loop-step h3 { font-size: 18px; margin-bottom: 10px; }
-  .loop-step p { color: var(--muted); font-size: 14.8px; line-height: 1.75; }
-  .loop-step ul { margin-top: 12px; padding-left: 18px; }
-  .loop-step li { color: var(--muted); font-size: 14.5px; line-height: 1.75; margin-bottom: 6px; }
+  .loop-step h3 { font-size: clamp(16px, 1.8vh, 18px); margin-bottom: clamp(6px, 0.9vh, 10px); }
+  .loop-step p { color: var(--muted); font-size: clamp(13.5px, 1.4vh, 14.8px); line-height: 1.65; }
+  .loop-step ul { margin-top: clamp(7px, 1.1vh, 12px); padding-left: 18px; }
+  .loop-step li { color: var(--muted); font-size: clamp(13px, 1.35vh, 14.3px); line-height: 1.58; margin-bottom: 4px; }
 
   /* ---------- Measure stats ---------- */
   .stat-panel {
@@ -196,7 +212,7 @@
   .soon-chip .d { width: 6px; height: 6px; border-radius: 50%; background: #F59E0B; }
 
   /* ---------- Closing CTA ---------- */
-  .close-cta { padding: 80px 0 90px; background: #fff; }
+  .close-cta { background: #fff; }
   .close-panel {
     background: var(--panel-navy); border-radius: var(--radius-lg);
     padding: 54px 34px; text-align: center; color: #fff;
@@ -211,7 +227,7 @@
   .store-badge.is-googleplay img { height: 73px; }
 
   /* ---------- Footer ---------- */
-  footer.site { padding: 40px 0; background: #fff; border-top: 1px solid var(--border); }
+  footer.site { padding: 40px 0; background: #fff; border-top: 1px solid var(--border); scroll-snap-align: end; }
   footer.site .bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
   footer.site .brand img { height: 30px; }
   footer.site .brand-text p:first-child { font-weight: 700; font-size: 14px; }
@@ -220,6 +236,8 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width: 960px) {
+    html { scroll-snap-type: none; }
+    section { min-height: 0; }
     nav.main-nav { display: none; }
     .stat-panel { grid-template-columns: repeat(2, 1fr); }
     .roadmap { grid-template-columns: repeat(2, 1fr); }
@@ -231,8 +249,7 @@
     .wrap { padding: 0 18px; }
     .stat-panel { grid-template-columns: 1fr; padding: 28px 22px; }
     .roadmap { grid-template-columns: 1fr; }
-    .page-hero { padding: 60px 0 50px; }
-    .block { padding: 52px 0; }
+    section { padding-block: 52px; }
   }
 </style>
 </head>
@@ -273,7 +290,7 @@
       <div class="block-head reveal">
         <span class="eyebrow" style="--dot:#2FAE66;"><span class="dot"></span> 제품 개발의 기본 루프</span>
         <h2>Problem → Hypothesis → Build → Measure → Learn</h2>
-        <p>기능을 먼저 늘리지 않았습니다. 문제를 정의하고, 검증할 지표를 정하고, 가장 작은 형태로 만들어 실제 사용 데이터를 확인했습니다.</p>
+        <p>기능을 먼저 늘리지 않았습니다. 현장에서 문제를 정의하고, 거기서 검증할 가설을 세웠습니다.</p>
       </div>
 
       <div class="loop">
@@ -296,7 +313,20 @@
             <p>현장 규격(면적·치수)만 입력하면 KS 규격·표준품셈 기반으로 자재 수량과 견적을 자동 산출하고, 계산·기록·상담·일정을 하나로 묶어주면, 계산 시간과 오차·손실이 줄어 작업자가 계속 사용할 것이다.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
 
+  <!-- LOOP part 2 -->
+  <section class="block tint">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#2FAE66;"><span class="dot"></span> 제품 개발의 기본 루프</span>
+        <h2>지표를 정하고, 작게 만들어 내놓았습니다</h2>
+        <p>무엇을 보고 성공을 판단할지 먼저 정한 뒤, 가장 작은 형태로 만들어 실제 현장에 내놓았습니다.</p>
+      </div>
+
+      <div class="loop">
         <div class="loop-step reveal">
           <div class="ls-tag">METRIC</div>
           <div>
