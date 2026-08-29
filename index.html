@@ -416,19 +416,23 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
   .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: rgba(168,141,129,0.4); }
+  /* icon on the left, status badge on the right of the same row */
+  .feature-card .fc-top {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    margin-bottom: clamp(9px, 1.5vh, 20px);
+  }
   .feature-card .fc-icon {
     width: clamp(34px, 4.6vh, 52px); height: clamp(34px, 4.6vh, 52px); border-radius: 14px;
     background: var(--accent-tint);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: clamp(9px, 1.5vh, 20px);
     flex-shrink: 0;
   }
   .feature-card .fc-icon svg { width: 24px; height: 24px; color: var(--accent); }
   .feature-card h3 { font-size: clamp(16px, 1.7vh, 18px); margin-bottom: clamp(6px, 1vh, 10px); }
   .feature-card p { font-size: clamp(12.5px, 1.35vh, 14.5px); color: var(--muted); line-height: 1.58; }
   .feature-card .fc-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    margin-top: 14px; padding: 5px 11px; border-radius: 999px;
+    display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+    padding: 5px 11px; border-radius: 999px;
     background: #E9F2FF; color: #1D4ED8; font-size: 11.5px; font-weight: 700;
     border: 1px solid rgba(59, 130, 246, 0.28);
   }
@@ -904,42 +908,48 @@
       <!-- 첫 줄은 이미 쓰고 있는 기능, 둘째 줄은 학습 중·출시 예정 -->
       <div class="feature-grid">
         <div class="feature-card reveal">
-          <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7h6M9 11h6M9 15h3"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></div>
+          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7h6M9 11h6M9 15h3"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></div></div>
           <h3>자재 계산 · 견적 자동화</h3>
           <p>현장 규격만 입력하면 KS 규격·표준품셈 기반으로 자재 수량을 산출하고 견적까지 바로 만들어, 계산기 두드릴 시간을 줄여줍니다.</p>
         </div>
 
         <div class="feature-card reveal">
-          <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div></div>
           <h3>작업기록 · 일정 관리</h3>
           <p>현장 작업 이력과 스케줄을 앱 하나로 모아 관리할 수 있습니다. 노트가 젖거나 빠뜨릴 걱정이 없습니다.</p>
         </div>
 
         <div class="feature-card reveal">
-          <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.75 8.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div>
+          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.75 8.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div></div>
           <h3>AI 챗봇 · 음성 비서 공담이</h3>
           <p>시공 관련 궁금한 점은 언제든 공담이에게 물어보세요. 손이 바쁠 땐 음성으로도 이용할 수 있습니다.</p>
         </div>
 
         <div class="feature-card reveal">
-          <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+          <div class="fc-top">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+            <span class="fc-badge"><span class="live-dot-sm"></span>학습 중</span>
+          </div>
           <h3>현장 은어까지 알아듣는 공담이</h3>
           <p>지역 방언과 작업자들만 쓰는 현장 용어까지, 공담이는 지금도 계속 학습하고 있습니다.</p>
-          <span class="fc-badge"><span class="live-dot-sm"></span>학습 중</span>
         </div>
 
         <div class="feature-card reveal">
-          <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+          <div class="fc-top">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
+          </div>
           <h3>마감재 시뮬레이션</h3>
           <p>바꾸고 싶은 벽면·위치를 사진으로 찍고 원하는 자재 이미지를 올리면, 촬영한 환경에 이질감 없이 입힌 결과를 미리 확인할 수 있습니다.</p>
-          <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
         </div>
 
         <div class="feature-card reveal">
-          <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></div>
+          <div class="fc-top">
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></div>
+            <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
+          </div>
           <h3>3D 모델링 · 인테리어 가상 조감도</h3>
           <p>모바일로 공간을 스캔하면 벽·바닥·천장 구조와 치수를 자동 인식해 2D 도면과 3D 모델, 인테리어 가상 조감도까지 만들어 드립니다.</p>
-          <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
         </div>
       </div>
     </div>
