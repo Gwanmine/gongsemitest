@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>공셈이 | 시공현장을 위한 AI 업무 파트너</title>
+<title>공셈이 · 시공현장을 위한 AI 업무 파트너</title>
 <meta name="description" content="공셈이(GONGSEMI) - 공간 스캐닝부터 자재 계산·견적, AI 챗봇 공담이까지 앱 하나로 처리하는 시공현장 AI 업무 파트너" />
-<link rel="icon" href="assets/img/logo-black.png" />
+<link rel="icon" type="image/png" href="assets/img/favicon.png" />
+<link rel="apple-touch-icon" href="assets/img/favicon.png" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -24,6 +25,8 @@
     --muted: #5B6472;
     --border: #E5E8ED;
     --live: #2FAE66;
+    /* shared brighter navy for the trust + CTA panels */
+    --panel-navy: linear-gradient(135deg, #3A6BA8 0%, #21497E 100%);
     --radius-lg: 28px;
     --radius-md: 18px;
     --radius-sm: 12px;
@@ -34,7 +37,12 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 76px;
+    /* every section is exactly one screen tall, so snap points line up 1:1 */
+    scroll-snap-type: y mandatory;
+  }
 
   body {
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, Roboto, sans-serif;
@@ -55,12 +63,24 @@
   }
 
   .wrap {
+    width: 100%;
     max-width: 1180px;
     margin: 0 auto;
     padding: 0 24px;
   }
 
-  section { position: relative; }
+  /* Every section is one full screen, with its content vertically centred. */
+  section {
+    position: relative;
+    min-height: calc(100vh - 76px);
+    min-height: calc(100svh - 76px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-snap-align: start;
+    /* breathing room that shrinks on short screens so content still fits */
+    padding-block: clamp(24px, 4.5vh, 48px);
+  }
 
   .eyebrow {
     display: inline-flex;
@@ -75,10 +95,18 @@
     letter-spacing: 0.02em;
   }
 
+  /* the dot takes a per-section accent colour (falls back to the brand tone) */
   .eyebrow .dot {
     width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent);
+    background: var(--dot, var(--accent));
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
   }
+  .problem    { --dot: #E0574B; }  /* 문제 제기 - 레드 */
+  .features   { --dot: #2FAE66; }  /* 핵심 기능 - 그린 */
+  .simulation { --dot: #E5A32E; }  /* 마감재 시뮬레이션 - 옐로 */
+  .gongdami   { --dot: #3B82F6; }  /* 공담이 - 블루 (캐릭터 톤) */
+  .showcase   { --dot: #21A99B; }  /* 실제 화면 - 틸 */
+  .audience   { --dot: #8B6BD9; }  /* 타겟 사용자 - 바이올렛 */
 
   h1, h2, h3 { color: var(--navy); font-weight: 800; letter-spacing: -0.02em; }
 
@@ -105,7 +133,6 @@
   .btn-primary:hover { background: var(--navy-2); transform: translateY(-2px); }
   .btn-ghost { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
   .btn-ghost:hover { border-color: var(--navy); transform: translateY(-2px); }
-  .btn-store { background: #fff; color: var(--navy); border: 1.5px solid rgba(255,255,255,0.25); }
 
   /* reveal on scroll */
   .reveal { opacity: 0; transform: translateY(22px); transition: opacity 0.7s ease, transform 0.7s ease; }
@@ -156,7 +183,6 @@
 
   /* ---------- Hero ---------- */
   .hero {
-    padding: 76px 0 90px;
     background:
       radial-gradient(60% 55% at 82% 8%, rgba(168,141,129,0.10) 0%, rgba(168,141,129,0) 70%),
       radial-gradient(50% 50% at 5% 90%, rgba(18,42,74,0.06) 0%, rgba(18,42,74,0) 70%),
@@ -288,7 +314,7 @@
 
   /* ---------- Partner marquee ---------- */
   .partners {
-    padding: 34px 0;
+    padding: 0 0 40px;
     background: #fff;
   }
   .partners .p-label {
@@ -336,7 +362,7 @@
   .partner-item .p-dot { width: 7px; height: 7px; border-radius: 2px; background: currentColor; opacity: 0.55; flex-shrink: 0; }
 
   /* ---------- Problem ---------- */
-  .problem { padding: 100px 0; background: #fff; }
+  .problem { background: #fff; }
   .problem-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
   .problem-card {
     background: var(--navy-tint);
@@ -355,35 +381,38 @@
   .problem-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
   /* ---------- Features ---------- */
-  .features { padding: 100px 0; background: var(--navy-tint); }
-  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .features { background: var(--navy-tint); }
+  .simulation { background: var(--navy-tint); }
+  .features .section-head { margin-bottom: clamp(16px, 3vh, 32px); }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.7vh, 18px); }
   .feature-card {
     background: #fff;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: 32px 28px;
+    padding: clamp(16px, 2.4vh, 26px) 22px;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
   .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: rgba(168,141,129,0.4); }
   .feature-card .fc-icon {
-    width: 52px; height: 52px; border-radius: 16px;
+    width: clamp(38px, 4.8vh, 52px); height: clamp(38px, 4.8vh, 52px); border-radius: 16px;
     background: var(--accent-tint);
     display: flex; align-items: center; justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: clamp(10px, 1.9vh, 20px);
+    flex-shrink: 0;
   }
   .feature-card .fc-icon svg { width: 24px; height: 24px; color: var(--accent); }
-  .feature-card h3 { font-size: 18px; margin-bottom: 10px; }
-  .feature-card p { font-size: 14.5px; color: var(--muted); line-height: 1.7; }
+  .feature-card h3 { font-size: clamp(16px, 1.7vh, 18px); margin-bottom: clamp(6px, 1vh, 10px); }
+  .feature-card p { font-size: clamp(13px, 1.4vh, 14.5px); color: var(--muted); line-height: 1.6; }
   .feature-card .fc-badge {
     display: inline-flex; align-items: center; gap: 6px;
     margin-top: 14px; padding: 5px 11px; border-radius: 999px;
-    background: var(--navy); color: #fff; font-size: 11.5px; font-weight: 700;
+    background: #E9F2FF; color: #1D4ED8; font-size: 11.5px; font-weight: 700;
+    border: 1px solid rgba(59, 130, 246, 0.28);
   }
-  .fc-badge .live-dot-sm { width: 6px; height: 6px; border-radius: 50%; background: #E7D9CF; animation: pulseDot 1.3s ease-in-out infinite; }
+  .fc-badge .live-dot-sm { width: 6px; height: 6px; border-radius: 50%; background: #16A34A; animation: pulseDot 1.3s ease-in-out infinite; }
 
   /* Material simulation demo */
   .sim-block {
-    margin-top: 56px;
     background: #fff;
     border: 1px solid var(--border);
     border-radius: var(--radius-lg);
@@ -449,7 +478,8 @@
   }
 
   /* ---------- Gongdami ---------- */
-  .gongdami { padding: 100px 0; background: #fff; }
+  .gongdami { background: #fff; }
+  .gongdami img.character { max-height: 62vh; width: auto; margin: 0 auto; }
   .gongdami .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
   .gongdami img.character { border-radius: var(--radius-lg); }
   .gongdami-points { list-style: none; display: flex; flex-direction: column; gap: 16px; margin-top: 26px; }
@@ -462,26 +492,77 @@
   .learning-badge {
     display: inline-flex; align-items: center; gap: 8px;
     margin-top: 22px; padding: 10px 18px;
-    background: var(--navy); color: #fff; border-radius: 999px;
+    background: #E9F2FF; color: #1D4ED8; border-radius: 999px;
+    border: 1px solid rgba(59, 130, 246, 0.28);
     font-size: 13.5px; font-weight: 700;
   }
   .learning-badge .type-dots span {
-    display: inline-block; width: 4px; height: 4px; border-radius: 50%;
-    background: #E7D9CF; margin-right: 3px; animation: typeDot 1.2s infinite ease-in-out;
+    display: inline-block; width: 5px; height: 5px; border-radius: 50%;
+    margin-right: 3px; animation: typeDot 1.2s infinite ease-in-out;
   }
-  .learning-badge .type-dots span:nth-child(2) { animation-delay: 0.2s; }
-  .learning-badge .type-dots span:nth-child(3) { animation-delay: 0.4s; }
+  /* colourful trio, saturated so they stay visible on the light badge */
+  .learning-badge .type-dots span:nth-child(1) {
+    background: #16A34A; box-shadow: 0 0 0 2px rgba(22, 163, 74, 0.16);
+  }
+  .learning-badge .type-dots span:nth-child(2) {
+    background: #F59E0B; box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.16);
+    animation-delay: 0.2s;
+  }
+  .learning-badge .type-dots span:nth-child(3) {
+    background: #2563EB; box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.16);
+    animation-delay: 0.4s;
+  }
   @keyframes typeDot { 0%,60%,100%{ opacity: 0.25; transform: translateY(0);} 30%{ opacity: 1; transform: translateY(-3px);} }
 
   /* ---------- Showcase ---------- */
-  .showcase { padding: 100px 0; background: var(--navy-tint); }
+  .showcase { background: var(--navy-tint); }
   .showcase-frame {
-    background: #fff; border-radius: var(--radius-lg); padding: 30px;
+    background: #fff; border-radius: var(--radius-lg); padding: 14px;
     box-shadow: var(--shadow-md); border: 1px solid var(--border);
+    width: fit-content;
+    max-width: 100%;
+    margin: 0 auto;
   }
+  .showcase .section-head { margin-bottom: clamp(16px, 3vh, 48px); }
+  /* sized by height so the card hugs the image and the section stays one screen.
+     the calc() reserves room for the header + heading block on short screens. */
+  .carousel {
+    position: relative;
+    height: min(58vh, calc(100vh - 440px));
+    width: auto;
+    max-width: 100%;
+    aspect-ratio: 2470 / 1686;
+    border-radius: calc(var(--radius-lg) - 6px);
+    overflow: hidden;
+  }
+  .carousel-slide {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .carousel-slide.active { opacity: 1; }
+  .carousel-langs {
+    position: absolute; top: 16px; right: 16px;
+    display: flex; justify-content: center; gap: 8px;
+    z-index: 5;
+  }
+  .carousel-langs .c-lang {
+    display: flex; align-items: center; gap: 7px;
+    padding: 7px 16px; border-radius: 999px;
+    border: 1px solid var(--border); background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(6px);
+    font-size: 13px; font-weight: 700; color: var(--muted);
+    box-shadow: var(--shadow-sm);
+    transition: all 0.25s ease;
+  }
+  .carousel-langs .c-lang .c-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border); transition: background 0.25s ease; }
+  .carousel-langs .c-lang.active { color: var(--navy); border-color: rgba(168,141,129,0.4); background: rgba(243,236,232,0.95); }
+  .carousel-langs .c-lang.active .c-dot { background: var(--accent); }
 
   /* ---------- Audience ---------- */
-  .audience { padding: 90px 0; background: #fff; }
+  .audience { background: #fff; }
   .audience-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
   .audience-chip {
     display: flex; align-items: center; gap: 10px;
@@ -495,25 +576,31 @@
   .audience-chip svg { width: 20px; height: 20px; color: var(--accent); }
 
   /* ---------- Trust ---------- */
-  .trust { padding: 100px 0; background: #fff; }
   .trust-panel {
-    background: var(--navy);
+    background: var(--panel-navy);
     border-radius: var(--radius-lg);
-    padding: 56px 48px;
+    padding: 36px 32px;
+    margin-top: 56px;
     color: #fff;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 34px;
+    gap: 16px;
   }
-  .trust-stat { text-align: left; }
+  .trust-stat {
+    text-align: left;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 18px;
+    padding: 22px 20px;
+  }
   .trust-stat .value {
-    font-size: clamp(30px, 3.4vw, 42px);
+    font-size: clamp(26px, 2.8vw, 34px);
     font-weight: 800;
     font-family: "Manrope", sans-serif;
     color: #fff;
     display: flex; align-items: center; gap: 12px;
   }
-  .trust-stat .label { margin-top: 10px; font-size: 14px; color: rgba(255,255,255,0.72); line-height: 1.6; }
+  .trust-stat .label { margin-top: 10px; font-size: 13.5px; color: rgba(255,255,255,0.75); line-height: 1.6; }
   .live-pill {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 11.5px; font-weight: 700;
@@ -525,25 +612,70 @@
   .trust-divider { height: 1px; background: rgba(255,255,255,0.14); grid-column: 1 / -1; margin: 4px 0; }
 
   /* ---------- CTA ---------- */
-  .cta { padding: 30px 0 110px; background: #fff; }
+  .cta {
+    background: #fff;
+    gap: 24px;
+  }
   .cta-panel {
-    background: linear-gradient(135deg, var(--navy) 0%, #0C1E38 100%);
+    background: var(--panel-navy);
     border-radius: var(--radius-lg);
-    padding: 70px 40px;
+    padding: 48px 32px;
     text-align: center;
     color: #fff;
   }
-  .cta-panel img.logo-white { height: 34px; margin: 0 auto 22px; }
+  /* white plate so the logo reads clearly against the blue panel */
+  .cta-brand {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-radius: 24px;
+    padding: 24px 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 14px 34px rgba(8, 24, 48, 0.22);
+  }
+  .cta-brand img { height: clamp(52px, 6.4vh, 74px); width: auto; }
+  .cta-brand .cb-sub {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--muted);
+    letter-spacing: 0.01em;
+    white-space: pre;
+  }
+  .cb-sub .ch { display: inline-block; }
+  .cb-sub.play .ch { animation: charBounce 0.6s cubic-bezier(.28,.84,.42,1) both; }
+  @keyframes charBounce {
+    0%   { transform: translateY(0); }
+    30%  { transform: translateY(-9px); }
+    55%  { transform: translateY(0); }
+    72%  { transform: translateY(-4px); }
+    88%  { transform: translateY(0); }
+    100% { transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .cb-sub.play .ch { animation: none; }
+  }
   .cta-panel h2 { color: #fff; font-size: clamp(26px, 3.4vw, 38px); line-height: 1.35; }
   .cta-panel p { color: rgba(255,255,255,0.72); margin: 18px auto 34px; max-width: 480px; font-size: 15.5px; line-height: 1.7; }
-  .store-row { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; }
-  .btn-store svg { width: 20px; height: 20px; }
+  .store-row { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .store-badge {
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .store-badge:hover { transform: translateY(-3px); opacity: 0.9; }
+  .store-badge img { width: auto; display: block; }
+  /* the two official assets carry different built-in padding, so heights are
+     tuned to make the visible black pills the same size */
+  .store-badge.is-appstore img { height: 56px; }
+  .store-badge.is-googleplay img { height: 73px; }
 
   /* ---------- Footer ---------- */
   footer.site {
     padding: 40px 0;
     background: #fff;
     border-top: 1px solid var(--border);
+    scroll-snap-align: end;
   }
   footer.site .bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
   footer.site .brand img { height: 30px; }
@@ -553,6 +685,8 @@
 
   /* ---------- Responsive ---------- */
   @media (max-width: 960px) {
+    html { scroll-snap-type: none; }
+    section { min-height: 0; }
     nav.main-nav { display: none; }
     .burger { display: flex; }
     .hero .grid { grid-template-columns: 1fr; }
@@ -563,6 +697,8 @@
     .gongdami .grid { grid-template-columns: 1fr; }
     .gongdami .grid { text-align: left; }
     .trust-panel { grid-template-columns: 1fr; }
+    .showcase-frame { width: auto; max-width: 100%; }
+    .carousel { height: auto; width: 100%; }
   }
   @media (max-width: 640px) {
     .wrap { padding: 0 18px; }
@@ -655,33 +791,6 @@
     </div>
   </section>
 
-  <!-- PARTNERS MARQUEE (dummy placeholder logos) -->
-  <section class="partners">
-    <div class="wrap">
-      <p class="p-label">함께하는 자재·시공 파트너사</p>
-    </div>
-    <div class="marquee">
-      <div class="marquee-track" id="marqueeTrack">
-        <span class="partner-item"><span class="p-dot"></span>NORTHBUILD</span>
-        <span class="partner-item"><span class="p-dot"></span>STONE &amp; CO</span>
-        <span class="partner-item"><span class="p-dot"></span>GRIDWORKS</span>
-        <span class="partner-item"><span class="p-dot"></span>BASE MATERIALS</span>
-        <span class="partner-item"><span class="p-dot"></span>CORNERSTONE</span>
-        <span class="partner-item"><span class="p-dot"></span>URBAN CRAFT</span>
-        <span class="partner-item"><span class="p-dot"></span>TILEWORKS</span>
-        <span class="partner-item"><span class="p-dot"></span>ATLAS SUPPLY</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>NORTHBUILD</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>STONE &amp; CO</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>GRIDWORKS</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>BASE MATERIALS</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>CORNERSTONE</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>URBAN CRAFT</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>TILEWORKS</span>
-        <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>ATLAS SUPPLY</span>
-      </div>
-    </div>
-  </section>
-
   <!-- PROBLEM -->
   <section class="problem" id="problem">
     <div class="wrap">
@@ -763,8 +872,12 @@
           <p>현장 작업 이력과 스케줄을 앱 하나로 모아 관리할 수 있습니다.</p>
         </div>
       </div>
+    </div>
+  </section>
 
-      <!-- Material simulation demo -->
+  <!-- MATERIAL SIMULATION (own screen) -->
+  <section class="simulation" id="simulation">
+    <div class="wrap">
       <div class="sim-block reveal">
         <div>
           <span class="eyebrow"><span class="dot"></span> 마감재 시뮬레이션</span>
@@ -829,12 +942,19 @@
         <p>자재 계산기 13종 · 현장 캘린더 · 업무 메모 · AI 비서 공담이가 앱 하나에 담겨 있습니다.</p>
       </div>
       <div class="showcase-frame reveal">
-        <img src="assets/img/app-screens-kr.png" alt="공셈이 앱 실제 화면 - 홈, 계산기, 캘린더, 업무수첩" />
+        <div class="carousel" id="showcaseCarousel">
+          <img class="carousel-slide active" data-lang="ko" src="assets/img/app-screens-kr.png" alt="공셈이 앱 실제 화면 - 한국어" />
+          <img class="carousel-slide" data-lang="en" src="assets/img/app-screens-en.png" alt="공셈이 앱 실제 화면 - 영어 지원 (Global)" />
+          <div class="carousel-langs">
+            <span class="c-lang active" data-lang="ko"><span class="c-dot"></span>한국어</span>
+            <span class="c-lang" data-lang="en"><span class="c-dot"></span>English</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- AUDIENCE -->
+  <!-- AUDIENCE + TRUST (combined so both fit on one screen) -->
   <section class="audience" id="audience">
     <div class="wrap">
       <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
@@ -848,20 +968,15 @@
         <span class="audience-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-8h14l2 8M5 12h14v8H5z"/></svg>셀프 인테리어 고객</span>
         <span class="audience-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>외국인 근로자 포함</span>
       </div>
-    </div>
-  </section>
 
-  <!-- TRUST -->
-  <section class="trust" id="trust">
-    <div class="wrap">
-      <div class="trust-panel reveal">
+      <div class="trust-panel reveal" id="trust">
         <div class="trust-stat">
           <div class="value"><span id="userCount">0</span>+</div>
           <div class="label">출시 한 달 만에 달성한 실사용자 수</div>
           <div style="margin-top:12px;"><span class="live-pill"><span class="d"></span>실시간 증가 중</span></div>
         </div>
         <div class="trust-stat">
-          <div class="value">KS</div>
+          <div class="value">KS규격</div>
           <div class="label">공공데이터 기반 정확한 자재·규격 정보</div>
         </div>
         <div class="trust-stat">
@@ -872,21 +987,47 @@
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA (partners marquee + download, merged so both fit one screen) -->
   <section class="cta" id="cta">
+    <div class="partners">
+      <div class="wrap">
+        <p class="p-label">함께하는 자재·시공 파트너사</p>
+      </div>
+      <div class="marquee">
+        <div class="marquee-track" id="marqueeTrack">
+          <span class="partner-item"><span class="p-dot"></span>NORTHBUILD</span>
+          <span class="partner-item"><span class="p-dot"></span>STONE &amp; CO</span>
+          <span class="partner-item"><span class="p-dot"></span>GRIDWORKS</span>
+          <span class="partner-item"><span class="p-dot"></span>BASE MATERIALS</span>
+          <span class="partner-item"><span class="p-dot"></span>CORNERSTONE</span>
+          <span class="partner-item"><span class="p-dot"></span>URBAN CRAFT</span>
+          <span class="partner-item"><span class="p-dot"></span>TILEWORKS</span>
+          <span class="partner-item"><span class="p-dot"></span>ATLAS SUPPLY</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>NORTHBUILD</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>STONE &amp; CO</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>GRIDWORKS</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>BASE MATERIALS</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>CORNERSTONE</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>URBAN CRAFT</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>TILEWORKS</span>
+          <span class="partner-item" aria-hidden="true"><span class="p-dot"></span>ATLAS SUPPLY</span>
+        </div>
+      </div>
+    </div>
     <div class="wrap">
       <div class="cta-panel reveal">
-        <img class="logo-white" src="assets/img/logo-white.png" alt="공셈이 로고" />
+        <div class="cta-brand">
+          <img src="assets/img/logo-black.png" alt="공셈이 로고" />
+          <span class="cb-sub">시공현장을 위한 AI 업무 파트너</span>
+        </div>
         <h2>지금, 현장에<br />공셈이를 더하세요</h2>
         <p>App Store와 Google Play에서 무료로 다운로드할 수 있습니다.</p>
         <div class="store-row">
-          <a href="#" class="btn btn-store">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12-1.11.45-2.28 1.16-3.05.8-.9 2.15-1.53 3-1.6zM20.5 17.35c-.53 1.22-.78 1.77-1.47 2.85-.96 1.51-2.31 3.39-4 3.4-1.5.02-1.89-.98-3.93-.97-2.04.01-2.46 1-3.96.98-1.68-.02-2.96-1.71-3.92-3.22C1.4 17 .55 12.66 2.1 9.7c.79-1.5 2.2-2.45 3.73-2.47 1.5-.02 2.92 1.01 3.83 1.01.91 0 2.63-1.25 4.43-1.06.75.03 2.87.3 4.23 2.26-.11.07-2.52 1.47-2.5 4.4.03 3.5 3.08 4.66 3.12 4.68-.03.09-.49 1.67-1.44 3.3z"/></svg>
-            App Store 다운로드
+          <a href="https://apps.apple.com/kr/app/id6770438573" target="_blank" rel="noopener" class="store-badge is-appstore">
+            <img src="assets/img/badge-appstore.svg" alt="App Store에서 다운로드" />
           </a>
-          <a href="#" class="btn btn-store">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 2.6c-.3.3-.5.7-.5 1.2v16.4c0 .5.2.9.5 1.2l.1.1L13 12.2v-.4L3.7 2.5l-.1.1z"/><path d="M16.1 15.3l-3.1-3.1v-.4l3.1-3.1 3.5 2c1 .6 1 1.5 0 2.1l-3.5 2.5z"/><path d="M13 11.8L3.7 21.1c.4.3.9.4 1.5.1l11-6.3-3.2-3.1z"/><path d="M13 12.2l3.2-3.1-11-6.3c-.6-.3-1.1-.2-1.5.1L13 12.2z"/></svg>
-            Google Play 다운로드
+          <a href="https://play.google.com/store/apps/details?id=com.movrium.spatial" target="_blank" rel="noopener" class="store-badge is-googleplay">
+            <img src="assets/img/badge-googleplay.png" alt="Google Play에서 다운로드" />
           </a>
         </div>
       </div>
@@ -933,6 +1074,37 @@
   }, { threshold: 0.15 });
   revealEls.forEach(el => io.observe(el));
 
+  // CTA subtitle: bounce one character at a time whenever it scrolls into view
+  (function () {
+    const sub = document.querySelector('.cb-sub');
+    if (!sub) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const text = sub.textContent;
+    sub.textContent = '';
+    [...text].forEach((ch, i) => {
+      const span = document.createElement('span');
+      span.className = 'ch';
+      span.textContent = ch === ' ' ? ' ' : ch;
+      span.style.animationDelay = (i * 55) + 'ms';
+      sub.appendChild(span);
+    });
+
+    const total = text.length * 55 + 600;
+    let timer = null;
+    const bounceIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        sub.classList.remove('play');
+        void sub.offsetWidth; // restart the animation
+        sub.classList.add('play');
+        clearTimeout(timer);
+        timer = setTimeout(() => sub.classList.remove('play'), total);
+      });
+    }, { threshold: 0.6 });
+    bounceIO.observe(sub);
+  })();
+
   // count-up for user stat
   const countEl = document.getElementById('userCount');
   let counted = false;
@@ -955,6 +1127,20 @@
     });
   }, { threshold: 0.4 });
   countIO.observe(countEl);
+
+  // showcase language carousel (auto-advance KR <-> EN)
+  const carouselSlides = document.querySelectorAll('.carousel-slide');
+  const carouselLangs = document.querySelectorAll('.c-lang');
+  if (carouselSlides.length) {
+    let carouselIndex = 0;
+    setInterval(() => {
+      carouselSlides[carouselIndex].classList.remove('active');
+      carouselLangs[carouselIndex].classList.remove('active');
+      carouselIndex = (carouselIndex + 1) % carouselSlides.length;
+      carouselSlides[carouselIndex].classList.add('active');
+      carouselLangs[carouselIndex].classList.add('active');
+    }, 4000);
+  }
 
   // material simulation toggle
   const simButtons = document.querySelectorAll('.sim-toggle button');
