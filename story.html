@@ -246,15 +246,18 @@
   }
   .metric-card li::marker { content: ''; }
   .metric-card ul { list-style: none; padding-left: 0; }
-  /* direction badge: green = should rise, blue = should fall, red = must not rise */
+  /* direction badge: one icon + one label, green = target up,
+     blue = target down, red = must not rise */
   .dir {
-    display: inline-flex; align-items: center; gap: 3px;
-    flex-shrink: 0; margin-top: 2px;
-    padding: 2px 8px; border-radius: 999px;
-    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 11.5px;
+    display: inline-flex; align-items: center; gap: 5px;
+    flex-shrink: 0; margin-top: 1px;
+    padding: 3px 10px; border-radius: 999px;
+    font-weight: 700; font-size: 12px;
     white-space: nowrap;
+    justify-content: center;
+    min-width: 84px;
   }
-  .dir svg { width: 12px; height: 12px; }
+  .dir svg { width: 13px; height: 13px; flex-shrink: 0; }
   .dir.up   { background: #E6F6EC; color: #15803D; border: 1px solid rgba(22,163,74,0.28); }
   .dir.down { background: #E9F2FF; color: #1D4ED8; border: 1px solid rgba(37,99,235,0.28); }
   .dir.stop { background: #FDECEA; color: #B4291D; border: 1px solid rgba(224,87,75,0.32); }
@@ -556,29 +559,29 @@
           <h3>Primary Metric</h3>
           <div class="mc-sub">가설이 맞았는지 판단하는 핵심</div>
           <ul>
-            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>계산 → 작업기록 저장 완료율</li>
-            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>주간 재사용(리텐션)</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>상승</span>계산 → 작업기록 저장 완료율</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>상승</span>주간 재사용(리텐션)</li>
           </ul>
         </div>
         <div class="metric-card supporting reveal">
           <h3>Supporting Metric</h3>
           <div class="mc-sub">함께 확인하는 지표</div>
           <ul>
-            <li><span class="dir down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>↓</span>자재 계산 소요시간</li>
-            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>SNS 유입 → 설치 전환</li>
-            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>무료 → 유료(PRO/프리미엄) 전환율</li>
-            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>↑</span>AI 홍보문구 생성 → 실제 게시 전환</li>
+            <li><span class="dir down"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>감소</span>자재 계산 소요시간</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>상승</span>SNS 유입 → 설치 전환</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>상승</span>무료 → 유료(PRO/프리미엄) 전환율</li>
+            <li><span class="dir up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>상승</span>AI 홍보문구 생성 → 실제 게시 전환</li>
           </ul>
         </div>
         <div class="metric-card guardrail reveal">
           <h3>Guardrail Metric</h3>
           <div class="mc-sub">나빠지면 안 되는 안전선</div>
           <ul>
-            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>자재 계산 오류율</li>
-            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>음성(공담이) 방언·용어 오인식률</li>
-            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>AI 홍보문구의 과장·허위 표현 발생률</li>
-            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>AI 결과 과도 수정률</li>
-            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>금지</span>이탈률</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/><path d="M3 21L21 3"/></svg>상승 금지</span>자재 계산 오류율</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/><path d="M3 21L21 3"/></svg>상승 금지</span>음성(공담이) 방언·용어 오인식률</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/><path d="M3 21L21 3"/></svg>상승 금지</span>AI 홍보문구의 과장·허위 표현 발생률</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/><path d="M3 21L21 3"/></svg>상승 금지</span>AI 결과 과도 수정률</li>
+            <li><span class="dir stop"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/><path d="M3 21L21 3"/></svg>상승 금지</span>이탈률</li>
           </ul>
         </div>
       </div>
