@@ -259,10 +259,14 @@
     overflow: hidden;
   }
   .shot-media img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
-  .shot-media.contain { padding: 12px 14px 0; }
-  .shot-media.contain img { object-fit: contain; object-position: center bottom; }
+  .shot-media.contain { padding: 14px; }
+  .shot-media.contain img { object-fit: contain; object-position: center; }
   /* before -> after pair inside one media box */
-  .shot-media.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; padding: 0; }
+  /* grid-template-rows:1fr makes the panes fill the box height, not their own aspect */
+  .shot-media.pair {
+    display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr;
+    align-items: stretch; gap: 2px; padding: 0;
+  }
   .shot-pane { position: relative; overflow: hidden; }
   .shot-pane img { width: 100%; height: 100%; object-fit: cover; }
   .shot-pane .cap {
