@@ -369,10 +369,24 @@
 
   /* ---------- Roadmap ---------- */
   .roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  /* the four cards are the tallest block on the page, so this heading gives
+     back some of its breathing room on short screens */
+  .block-head:has(+ .roadmap) { margin-bottom: clamp(12px, 1.8vh, 36px); }
+  /* share the phase / list / stack rows across all four cards so the stack
+     dividers line up instead of floating wherever each list happens to end */
+  @supports (grid-template-rows: subgrid) {
+    .roadmap { grid-template-rows: auto 1fr auto; }
+    .rm-col {
+      display: grid;
+      grid-row: span 3;
+      grid-template-rows: subgrid;
+      row-gap: 0;
+    }
+  }
   .rm-col {
     background: #fff; border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: clamp(16px, 2.2vh, 24px) 22px;
+    padding: clamp(14px, 1.8vh, 24px) 22px;
   }
   .rm-col .rm-phase {
     display: inline-flex; align-items: center; gap: 7px;
@@ -387,12 +401,12 @@
   .rm-col ul { padding-left: 17px; }
   .rm-col li {
     color: var(--muted); font-size: clamp(13.8px, 1.45vh, 15.5px);
-    line-height: 1.62; margin-bottom: clamp(6px, 0.8vh, 11px);
+    line-height: 1.62; margin-bottom: clamp(5px, 0.6vh, 11px);
   }
   /* core tech stack, tucked into the spare room at the bottom of a column */
   .rm-stack {
-    margin-top: clamp(9px, 1.3vh, 15px);
-    padding-top: clamp(9px, 1.3vh, 13px);
+    margin-top: clamp(8px, 1vh, 15px);
+    padding-top: clamp(8px, 1vh, 13px);
     border-top: 1px dashed var(--border);
   }
   .rs-label {

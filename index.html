@@ -560,6 +560,44 @@
     font-weight: 700; font-size: 14.5px; color: var(--navy);
   }
   .gongdami-points li svg { width: 18px; height: 18px; color: var(--accent); flex-shrink: 0; }
+  /* hands-free callout - the differentiator on a site where hands are busy */
+  .voice-call {
+    display: flex; align-items: flex-start; gap: 14px;
+    margin-top: 22px; padding: 16px 20px;
+    background: linear-gradient(135deg, #EEF4FF 0%, var(--navy-tint) 100%);
+    border: 1px solid rgba(59, 130, 246, 0.22);
+    border-radius: 16px;
+  }
+  .voice-call .voc-mic {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    background: #fff; color: #1D4ED8;
+    box-shadow: 0 2px 8px rgba(18, 42, 74, 0.10);
+    position: relative;
+  }
+  .voice-call .voc-mic svg { width: 19px; height: 19px; }
+  /* a soft pulse, like the mic is listening */
+  .voice-call .voc-mic::after {
+    content: ""; position: absolute; inset: -4px;
+    border-radius: 50%; border: 2px solid rgba(59, 130, 246, 0.45);
+    animation: micPulse 2s ease-out infinite;
+  }
+  @keyframes micPulse {
+    0%   { transform: scale(0.85); opacity: 0.8; }
+    70%  { transform: scale(1.15); opacity: 0; }
+    100% { transform: scale(1.15); opacity: 0; }
+  }
+  @media (prefers-reduced-motion: reduce) { .voice-call .voc-mic::after { animation: none; opacity: 0.5; } }
+  .voice-call .voc-t { min-width: 0; }
+  .voice-call .voc-head { display: block; font-size: 15px; font-weight: 800; color: var(--navy); line-height: 1.5; }
+  .voice-call .voc-head em {
+    font-style: normal; color: #1D4ED8;
+  }
+  .voice-call .voc-sub {
+    display: block; margin-top: 5px;
+    font-size: 13.5px; color: var(--muted); line-height: 1.6;
+  }
+
   .learning-badge {
     display: inline-flex; align-items: center; gap: 8px;
     margin-top: 22px; padding: 10px 18px;
@@ -1129,6 +1167,15 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v3M5 7l2 2M3 14h3M5 21l2-2M12 18v3M17 19l-2-2M21 14h-3M17 5l-2 2"/><circle cx="12" cy="12" r="4"/></svg>작업은 편리하게, 현장은 안전하게</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>KS 규격·공공데이터 기반 정확한 답변</li>
         </ul>
+        <div class="voice-call">
+          <span class="voc-mic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>
+          </span>
+          <span class="voc-t">
+            <span class="voc-head">장갑 낀 손 그대로, <em>"공담아~"</em> 하고 부르기만 하세요</span>
+            <span class="voc-sub">앱만 켜져 있으면 화면을 만지지 않아도 됩니다. 양손이 막혀 있어도 음성으로 계산하고, 답을 듣고, 작업기록까지 남길 수 있습니다.</span>
+          </span>
+        </div>
         <span class="learning-badge">방언·현장 은어 학습 중 <span class="type-dots"><span></span><span></span><span></span></span></span>
       </div>
     </div>
