@@ -241,19 +241,20 @@
   .metric-card .mc-sub { font-size: 14.5px; color: var(--muted); margin-bottom: clamp(9px, 1.3vh, 14px); }
   .metric-card ul { padding-left: 17px; }
   .metric-card li {
-    color: var(--muted); font-size: clamp(13.8px, 1.45vh, 15.5px); line-height: 1.55; margin-bottom: clamp(8px, 1.1vh, 12px);
-    display: flex; align-items: flex-start; gap: 9px;
+    color: var(--muted); font-size: clamp(13.8px, 1.45vh, 15.5px); line-height: 1.7; margin-bottom: clamp(8px, 1.1vh, 12px);
+    display: flex; align-items: flex-start; gap: 10px;
   }
   .metric-card li::marker { content: ''; }
   .metric-card ul { list-style: none; padding-left: 0; }
-  /* direction badge: one icon + one label, green = target up,
-     blue = target down, red = must not rise */
+  /* direction badge: sized to the text line box so it lines up with the
+     first line of the label. green = target up, blue = target down,
+     red = must not rise */
   .dir {
     display: inline-flex; align-items: center; justify-content: center;
-    flex-shrink: 0; margin-top: 1px;
-    width: 26px; height: 26px; border-radius: 50%;
+    flex-shrink: 0;
+    width: 1.7em; height: 1.7em; border-radius: 50%;
   }
-  .dir svg { width: 14px; height: 14px; flex-shrink: 0; }
+  .dir svg { width: 0.86em; height: 0.86em; flex-shrink: 0; }
   .dir.up   { background: #E6F6EC; color: #15803D; border: 1px solid rgba(22,163,74,0.28); }
   .dir.down { background: #E9F2FF; color: #1D4ED8; border: 1px solid rgba(37,99,235,0.28); }
   .dir.stop { background: #FDECEA; color: #B4291D; border: 1px solid rgba(224,87,75,0.32); }
