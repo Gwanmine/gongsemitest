@@ -383,18 +383,18 @@
   /* ---------- Features ---------- */
   .features { background: var(--navy-tint); }
   .simulation { background: var(--navy-tint); }
-  .features .section-head { margin-bottom: clamp(16px, 3vh, 32px); }
-  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(12px, 1.7vh, 18px); }
+  .features .section-head { margin-bottom: clamp(12px, 2.4vh, 32px); }
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.6vh, 18px); }
   .feature-card {
     background: #fff;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: clamp(16px, 2.4vh, 26px) 22px;
+    padding: clamp(14px, 2.2vh, 26px) 22px;
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
   .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: rgba(168,141,129,0.4); }
   .feature-card .fc-icon {
-    width: clamp(38px, 4.8vh, 52px); height: clamp(38px, 4.8vh, 52px); border-radius: 16px;
+    width: clamp(34px, 4.6vh, 52px); height: clamp(34px, 4.6vh, 52px); border-radius: 14px;
     background: var(--accent-tint);
     display: flex; align-items: center; justify-content: center;
     margin-bottom: clamp(10px, 1.9vh, 20px);
@@ -402,7 +402,7 @@
   }
   .feature-card .fc-icon svg { width: 24px; height: 24px; color: var(--accent); }
   .feature-card h3 { font-size: clamp(16px, 1.7vh, 18px); margin-bottom: clamp(6px, 1vh, 10px); }
-  .feature-card p { font-size: clamp(13px, 1.4vh, 14.5px); color: var(--muted); line-height: 1.6; }
+  .feature-card p { font-size: clamp(12.5px, 1.35vh, 14.5px); color: var(--muted); line-height: 1.58; }
   .feature-card .fc-badge {
     display: inline-flex; align-items: center; gap: 6px;
     margin-top: 14px; padding: 5px 11px; border-radius: 999px;
@@ -410,6 +410,12 @@
     border: 1px solid rgba(59, 130, 246, 0.28);
   }
   .fc-badge .live-dot-sm { width: 6px; height: 6px; border-radius: 50%; background: #16A34A; animation: pulseDot 1.3s ease-in-out infinite; }
+  /* marks capabilities that are built but not shipped yet */
+  .fc-badge.is-soon {
+    background: #FFF4E0; color: #A9670A;
+    border-color: rgba(245, 158, 11, 0.35);
+  }
+  .fc-badge.is-soon .soon-dot { width: 6px; height: 6px; border-radius: 50%; background: #F59E0B; }
 
   /* Material simulation demo */
   .sim-block {
@@ -561,6 +567,24 @@
   .carousel-langs .c-lang.active { color: var(--navy); border-color: rgba(168,141,129,0.4); background: rgba(243,236,232,0.95); }
   .carousel-langs .c-lang.active .c-dot { background: var(--accent); }
 
+  /* ---------- Story ---------- */
+  .story { background: var(--navy-tint); }
+  .story { --dot: #E0574B; }
+  .story-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .story-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: clamp(20px, 2.8vh, 30px) 26px;
+  }
+  .story-card .sc-step {
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 13px;
+    color: var(--accent); letter-spacing: 0.08em; margin-bottom: 12px;
+  }
+  .story-card h3 { font-size: clamp(16px, 1.8vh, 18.5px); margin-bottom: 10px; }
+  .story-card p { font-size: clamp(13px, 1.4vh, 14.5px); color: var(--muted); line-height: 1.65; }
+  .story-more { text-align: center; margin-top: clamp(18px, 3vh, 34px); }
+
   /* ---------- Audience ---------- */
   .audience { background: #fff; }
   .audience-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
@@ -579,28 +603,28 @@
   .trust-panel {
     background: var(--panel-navy);
     border-radius: var(--radius-lg);
-    padding: 36px 32px;
-    margin-top: 56px;
+    padding: clamp(22px, 3.2vh, 34px) clamp(18px, 2vw, 28px);
+    margin-top: clamp(26px, 4.5vh, 52px);
     color: #fff;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 12px;
   }
   .trust-stat {
     text-align: left;
     background: rgba(255,255,255,0.07);
     border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 18px;
-    padding: 22px 20px;
+    border-radius: 16px;
+    padding: clamp(14px, 2vh, 20px) clamp(12px, 1vw, 16px);
   }
   .trust-stat .value {
-    font-size: clamp(26px, 2.8vw, 34px);
+    font-size: clamp(20px, 1.9vw, 27px);
     font-weight: 800;
     font-family: "Manrope", sans-serif;
     color: #fff;
-    display: flex; align-items: center; gap: 12px;
+    display: flex; align-items: center; gap: 8px;
   }
-  .trust-stat .label { margin-top: 10px; font-size: 13.5px; color: rgba(255,255,255,0.75); line-height: 1.6; }
+  .trust-stat .label { margin-top: 8px; font-size: clamp(11.5px, 1.25vh, 13px); color: rgba(255,255,255,0.75); line-height: 1.55; }
   .live-pill {
     display: inline-flex; align-items: center; gap: 6px;
     font-size: 11.5px; font-weight: 700;
@@ -696,7 +720,8 @@
     .sim-block { grid-template-columns: 1fr; }
     .gongdami .grid { grid-template-columns: 1fr; }
     .gongdami .grid { text-align: left; }
-    .trust-panel { grid-template-columns: 1fr; }
+    .trust-panel { grid-template-columns: repeat(2, 1fr); }
+    .story-grid { grid-template-columns: 1fr; }
     .showcase-frame { width: auto; max-width: 100%; }
     .carousel { height: auto; width: 100%; }
   }
@@ -707,7 +732,7 @@
     .hero { padding: 46px 0 60px; }
     .hero .cta-row { flex-direction: column; }
     .hero .cta-row .btn { width: 100%; }
-    .trust-panel { padding: 36px 24px; }
+    .trust-panel { grid-template-columns: 1fr; padding: 30px 22px; }
     .cta-panel { padding: 46px 22px; }
   }
 </style>
@@ -724,6 +749,7 @@
       <a href="#gongdami">공담이</a>
       <a href="#showcase">실제 화면</a>
       <a href="#trust">신뢰 지표</a>
+      <a href="story.html">개발 이야기</a>
     </nav>
     <div class="header-actions">
       <a href="#cta" class="btn btn-primary btn-sm">다운로드</a>
@@ -735,6 +761,7 @@
     <a href="#gongdami">공담이</a>
     <a href="#showcase">실제 화면</a>
     <a href="#trust">신뢰 지표</a>
+    <a href="story.html">개발 이야기</a>
     <a href="#cta">다운로드</a>
   </div>
 </header>
@@ -796,30 +823,30 @@
     <div class="wrap">
       <div class="section-head reveal">
         <span class="eyebrow"><span class="dot"></span> 현장에서 반복되는 일</span>
-        <h2>현장에서 쳇바퀴처럼<br />반복되는 일들</h2>
-        <p>줄자와 계산기, 수기 도면으로는 시간이 배로 듭니다. 공셈이는 이 반복을 줄이기 위해 만들어졌습니다.</p>
+        <h2>아직도 현장에<br />수첩 들고 다니시나요?</h2>
+        <p>자재 계산은 머릿속으로, 일정은 기억력으로. 아니면 계산기 따로, 캘린더 따로, 메모 따로. 이제 그러실 필요 없습니다.</p>
       </div>
 
       <div class="problem-grid">
         <div class="problem-card reveal">
           <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3l18 18M6 6l3 3M10 10l3 3M14 14l3 3"/></svg></div>
-          <h3>실측은 여전히 줄자와 손글씨</h3>
-          <p>벽·바닥·천장을 일일이 재고 옮겨 적느라 시간이 배로 듭니다.</p>
+          <h3>“난 다 외우고 있다”</h3>
+          <p>머릿속 계산은 결국 눈대중이 됩니다. 한 장 모자라서 다시 나가고, 남아서 쌓아둡니다.</p>
         </div>
         <div class="problem-card reveal">
           <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5a2 2 0 0 1 2-2h8l6 6v10a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M14 3v6h6"/></svg></div>
-          <h3>도면·견적은 사무실에서 다시 작업</h3>
-          <p>현장 기록을 바탕으로 도면을 그리고 자재량을 계산하는 데 또 반나절이 필요합니다.</p>
+          <h3>수첩은 젖고, 안 가져온 날도 있습니다</h3>
+          <p>물에 젖으면 그날 계산은 사라집니다. 정작 필요한 날엔 노트가 사무실에 있습니다.</p>
         </div>
         <div class="problem-card reveal">
           <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <h3>자재 선택은 감으로</h3>
-          <p>고객에게 마감재를 미리 보여줄 방법이 없어 시공 후에야 만족도를 확인합니다.</p>
+          <h3>계산기 따로, 캘린더 따로, 메모 따로</h3>
+          <p>앱만 잔뜩 켜두고 결과는 또 옮겨 적습니다. 도구를 바꿀 때마다 시간이 샙니다.</p>
         </div>
         <div class="problem-card reveal">
           <div class="pc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 1 4 4v5a4 4 0 0 1-8 0V6a4 4 0 0 1 4-4z"/><path d="M6 11a6 6 0 0 0 12 0M12 21v-4"/></svg></div>
-          <h3>손이 자유롭지 않은 작업 환경</h3>
-          <p>장비를 다루는 중에는 메모도, 검색도 쉽지 않습니다.</p>
+          <h3>장갑 낀 손으로는 입력도 일입니다</h3>
+          <p>양손이 바쁠 땐 메모도, 검색도 쉽지 않습니다. 그래서 그냥 넘어가게 됩니다.</p>
         </div>
       </div>
     </div>
@@ -839,12 +866,14 @@
           <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></div>
           <h3>3D 모델링 · 인테리어 가상 조감도</h3>
           <p>모바일로 공간을 스캔하면 벽·바닥·천장 구조와 치수를 자동 인식해 2D 도면과 3D 모델, 인테리어 가상 조감도까지 만들어 드립니다.</p>
+          <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
         </div>
 
         <div class="feature-card reveal">
           <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
           <h3>마감재 시뮬레이션</h3>
           <p>바꾸고 싶은 벽면·위치를 사진으로 찍고 원하는 자재 이미지를 올리면, 촬영한 환경에 이질감 없이 입힌 결과를 미리 확인할 수 있습니다.</p>
+          <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
         </div>
 
         <div class="feature-card reveal">
@@ -881,6 +910,7 @@
       <div class="sim-block reveal">
         <div>
           <span class="eyebrow"><span class="dot"></span> 마감재 시뮬레이션</span>
+          <span class="fc-badge is-soon" style="margin-left:8px;"><span class="soon-dot"></span>출시 예정</span>
           <h3 style="margin-top:14px;">사진 한 장으로 시공 결과를 먼저 확인하세요</h3>
           <p>벽면을 찍고 원하는 자재를 고르면, 실제 현장에 자연스럽게 입혀진 모습을 눈으로 먼저 확인할 수 있습니다.</p>
           <ul class="sim-steps">
@@ -954,6 +984,39 @@
     </div>
   </section>
 
+  <!-- STORY (why we built it, in user language) -->
+  <section class="story" id="story">
+    <div class="wrap">
+      <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+        <span class="eyebrow"><span class="dot"></span> 왜 만들었나</span>
+        <h2>현장에서 몇 달을<br />함께 다녔습니다</h2>
+        <p>책상에서 기획한 앱이 아닙니다. 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다.</p>
+      </div>
+
+      <div class="story-grid">
+        <div class="story-card reveal">
+          <div class="sc-step">01</div>
+          <h3>현장에서 직접 확인했습니다</h3>
+          <p>노트가 물에 젖어 계산이 사라지고, 정작 필요한 날엔 노트가 없었습니다. 계산은 계산기·엑셀·수첩에 흩어져 있었습니다.</p>
+        </div>
+        <div class="story-card reveal">
+          <div class="sc-step">02</div>
+          <h3>작게 만들어 내놓았습니다</h3>
+          <p>기능을 다 넣지 않고 자재 계산기와 업무수첩만 붙여 출시했습니다. 현장에서 실제로 쓰는 공식값을 그대로 반영했습니다.</p>
+        </div>
+        <div class="story-card reveal">
+          <div class="sc-step">03</div>
+          <h3>현장이 답을 줬습니다</h3>
+          <p>광고비 0원으로 한 달 만에 1,000명이 설치했고, 지금도 매일 쓰입니다. 그 검증 위에 공담이와 스캐닝을 얹고 있습니다.</p>
+        </div>
+      </div>
+
+      <div class="story-more reveal">
+        <a href="story.html" class="btn btn-ghost">제품 개발 이야기 자세히 보기</a>
+      </div>
+    </div>
+  </section>
+
   <!-- AUDIENCE + TRUST (combined so both fit on one screen) -->
   <section class="audience" id="audience">
     <div class="wrap">
@@ -972,16 +1035,24 @@
       <div class="trust-panel reveal" id="trust">
         <div class="trust-stat">
           <div class="value"><span id="userCount">0</span>+</div>
-          <div class="label">출시 한 달 만에 달성한 실사용자 수</div>
-          <div style="margin-top:12px;"><span class="live-pill"><span class="d"></span>실시간 증가 중</span></div>
+          <div class="label">출시 한 달, 광고비 0원으로 모인 실사용자</div>
+          <div style="margin-top:10px;"><span class="live-pill"><span class="d"></span>실시간 증가 중</span></div>
+        </div>
+        <div class="trust-stat">
+          <div class="value">13만+</div>
+          <div class="label">SNS 릴스·영상 누적 조회 수</div>
+        </div>
+        <div class="trust-stat">
+          <div class="value">60~80명</div>
+          <div class="label">일평균 이용자 · 현장 사용 지속</div>
         </div>
         <div class="trust-stat">
           <div class="value">KS규격</div>
-          <div class="label">공공데이터 기반 정확한 자재·규격 정보</div>
+          <div class="label">공공데이터·표준품셈 기반 계산</div>
         </div>
         <div class="trust-stat">
           <div class="value">특허</div>
-          <div class="label">지역 방언·현장 은어까지 학습해 전문가처럼 답변하는 AI 챗봇 상담 기술 특허 적용</div>
+          <div class="label">방언·현장 은어 인식 AI 상담 특허</div>
         </div>
       </div>
     </div>

@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>공셈이 · 제품 개발 이야기</title>
+<meta name="description" content="공셈이(GONGSEMI)의 제품 개발 루프 - 현장에서 확인한 문제, 가설, 작게 만든 MVP, 실제 측정 결과와 확장 로드맵" />
+<link rel="icon" type="image/png" href="assets/img/favicon.png" />
+<link rel="apple-touch-icon" href="assets/img/favicon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+<style>
+  :root {
+    --navy: #122A4A;
+    --navy-2: #1B3A63;
+    --navy-tint: #EEF2F7;
+    --black: #111315;
+    --white: #FFFFFF;
+    --accent: #A88D81;
+    --accent-tint: #F3ECE8;
+    --muted: #5B6472;
+    --border: #E5E8ED;
+    --panel-navy: linear-gradient(135deg, #3A6BA8 0%, #21497E 100%);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --shadow-sm: 0 2px 10px rgba(17, 19, 21, 0.06);
+    --shadow-md: 0 12px 34px rgba(18, 42, 74, 0.10);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Malgun Gothic", system-ui, Roboto, sans-serif;
+    color: var(--black);
+    background: var(--white);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+
+  .wrap { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  h1, h2, h3 { color: var(--navy); font-weight: 800; letter-spacing: -0.02em; }
+
+  .eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 7px 16px; border-radius: 999px;
+    background: var(--accent-tint); color: var(--accent);
+    font-weight: 700; font-size: 13px; letter-spacing: 0.02em;
+  }
+  .eyebrow .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--dot, var(--accent)); }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 9px;
+    padding: 15px 26px; border-radius: 999px;
+    font-weight: 700; font-size: 15.5px; border: none; cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn-primary { background: var(--navy); color: #fff; box-shadow: var(--shadow-md); }
+  .btn-primary:hover { background: var(--navy-2); transform: translateY(-2px); }
+  .btn-ghost { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
+  .btn-ghost:hover { border-color: var(--navy); transform: translateY(-2px); }
+
+  .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+
+  /* ---------- Header ---------- */
+  header.site {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  header.site .bar { display: flex; align-items: center; justify-content: space-between; height: 76px; }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand img { height: 46px; width: auto; }
+  nav.main-nav { display: flex; align-items: center; gap: 30px; }
+  nav.main-nav a { font-weight: 600; font-size: 15px; color: var(--black); opacity: 0.75; transition: opacity 0.2s ease, color 0.2s ease; }
+  nav.main-nav a:hover { opacity: 1; color: var(--navy); }
+  .btn-sm { padding: 11px 22px; font-size: 14.5px; }
+
+  /* ---------- Page hero ---------- */
+  .page-hero {
+    padding: 90px 0 70px;
+    background:
+      radial-gradient(55% 60% at 85% 0%, rgba(168,141,129,0.10) 0%, rgba(168,141,129,0) 70%),
+      #fff;
+  }
+  .page-hero h1 { font-size: clamp(32px, 4.4vw, 50px); line-height: 1.25; margin: 20px 0 18px; }
+  .page-hero p { color: var(--muted); font-size: 17px; line-height: 1.8; max-width: 700px; }
+
+  /* ---------- Generic block ---------- */
+  .block { padding: 70px 0; }
+  .block.tint { background: var(--navy-tint); }
+  .block-head { max-width: 720px; margin-bottom: 36px; }
+  .block-head h2 { font-size: clamp(24px, 3vw, 34px); line-height: 1.3; margin-top: 14px; }
+  .block-head p { color: var(--muted); font-size: 16px; line-height: 1.75; margin-top: 14px; }
+
+  /* ---------- Loop steps ---------- */
+  .loop { display: grid; gap: 16px; }
+  .loop-step {
+    display: grid; grid-template-columns: 132px 1fr; gap: 24px;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 26px 28px;
+  }
+  .loop-step .ls-tag {
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12.5px;
+    letter-spacing: 0.08em; color: var(--accent); padding-top: 4px;
+  }
+  .loop-step h3 { font-size: 18px; margin-bottom: 10px; }
+  .loop-step p { color: var(--muted); font-size: 14.8px; line-height: 1.75; }
+  .loop-step ul { margin-top: 12px; padding-left: 18px; }
+  .loop-step li { color: var(--muted); font-size: 14.5px; line-height: 1.75; margin-bottom: 6px; }
+
+  /* ---------- Measure stats ---------- */
+  .stat-panel {
+    background: var(--panel-navy); border-radius: var(--radius-lg);
+    padding: 38px 34px; color: #fff;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+  }
+  .stat-cell {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 18px; padding: 22px 20px;
+  }
+  .stat-cell .v { font-family: "Manrope", sans-serif; font-weight: 800; font-size: clamp(22px, 2.4vw, 30px); }
+  .stat-cell .l { margin-top: 8px; font-size: 13.5px; color: rgba(255,255,255,0.78); line-height: 1.6; }
+
+  /* ---------- Roadmap ---------- */
+  .roadmap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .rm-col {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 24px 22px;
+  }
+  .rm-col .rm-phase {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12px;
+    letter-spacing: 0.06em; padding: 5px 12px; border-radius: 999px; margin-bottom: 14px;
+  }
+  .rm-col.now  .rm-phase { background: #E6F6EC; color: #15803D; }
+  .rm-col.next .rm-phase { background: #E9F2FF; color: #1D4ED8; }
+  .rm-col.future .rm-phase { background: #FFF4E0; color: #A9670A; }
+  .rm-col.beyond .rm-phase { background: #F3ECFB; color: #6D28D9; }
+  .rm-col ul { padding-left: 17px; }
+  .rm-col li { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 9px; }
+
+  /* ---------- Metrics ---------- */
+  .metric-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .metric-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 26px 24px;
+    border-top: 4px solid var(--mc, var(--accent));
+  }
+  .metric-card.primary   { --mc: #16A34A; }
+  .metric-card.supporting{ --mc: #2563EB; }
+  .metric-card.guardrail { --mc: #E0574B; }
+  .metric-card h3 { font-size: 17px; margin-bottom: 6px; }
+  .metric-card .mc-sub { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+  .metric-card ul { padding-left: 17px; }
+  .metric-card li { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+  .note {
+    margin-top: 24px; padding: 20px 24px;
+    background: #fff; border: 1px solid var(--border);
+    border-left: 4px solid var(--accent); border-radius: 12px;
+    color: var(--muted); font-size: 14.5px; line-height: 1.8;
+  }
+
+  /* ---------- Pricing ---------- */
+  .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .price-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md); padding: 30px 26px;
+  }
+  .price-card.featured { border-color: rgba(59,130,246,0.45); box-shadow: var(--shadow-md); }
+  .price-card .pc-name { font-family: "Manrope", sans-serif; font-weight: 800; font-size: 14px; letter-spacing: 0.06em; color: var(--accent); }
+  .price-card .pc-price { font-size: 28px; font-weight: 800; color: var(--navy); margin: 12px 0 4px; }
+  .price-card .pc-period { font-size: 13px; color: var(--muted); }
+  .price-card ul { margin-top: 18px; padding-left: 17px; }
+  .price-card li { color: var(--muted); font-size: 14px; line-height: 1.7; margin-bottom: 8px; }
+  .soon-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    margin-top: 14px; padding: 5px 11px; border-radius: 999px;
+    background: #FFF4E0; color: #A9670A; border: 1px solid rgba(245,158,11,0.35);
+    font-size: 11.5px; font-weight: 700;
+  }
+  .soon-chip .d { width: 6px; height: 6px; border-radius: 50%; background: #F59E0B; }
+
+  /* ---------- Closing CTA ---------- */
+  .close-cta { padding: 80px 0 90px; background: #fff; }
+  .close-panel {
+    background: var(--panel-navy); border-radius: var(--radius-lg);
+    padding: 54px 34px; text-align: center; color: #fff;
+  }
+  .close-panel h2 { color: #fff; font-size: clamp(24px, 3vw, 34px); line-height: 1.35; }
+  .close-panel p { color: rgba(255,255,255,0.75); margin: 16px auto 28px; max-width: 520px; font-size: 15.5px; line-height: 1.7; }
+  .store-row { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .store-badge { display: inline-flex; align-items: center; justify-content: center; transition: transform 0.2s ease, opacity 0.2s ease; }
+  .store-badge:hover { transform: translateY(-3px); opacity: 0.9; }
+  .store-badge img { width: auto; display: block; }
+  .store-badge.is-appstore img { height: 56px; }
+  .store-badge.is-googleplay img { height: 73px; }
+
+  /* ---------- Footer ---------- */
+  footer.site { padding: 40px 0; background: #fff; border-top: 1px solid var(--border); }
+  footer.site .bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
+  footer.site .brand img { height: 30px; }
+  footer.site .brand-text p:first-child { font-weight: 700; font-size: 14px; }
+  footer.site .brand-text p:last-child { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  footer.site .copyright { font-size: 12.5px; color: var(--muted); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 960px) {
+    nav.main-nav { display: none; }
+    .stat-panel { grid-template-columns: repeat(2, 1fr); }
+    .roadmap { grid-template-columns: repeat(2, 1fr); }
+    .metric-grid { grid-template-columns: 1fr; }
+    .price-grid { grid-template-columns: 1fr; }
+    .loop-step { grid-template-columns: 1fr; gap: 12px; }
+  }
+  @media (max-width: 640px) {
+    .wrap { padding: 0 18px; }
+    .stat-panel { grid-template-columns: 1fr; padding: 28px 22px; }
+    .roadmap { grid-template-columns: 1fr; }
+    .page-hero { padding: 60px 0 50px; }
+    .block { padding: 52px 0; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap bar">
+    <a href="index.html" class="brand">
+      <img src="assets/img/logo-black.png" alt="공셈이 로고" />
+    </a>
+    <nav class="main-nav">
+      <a href="index.html#features">핵심 기능</a>
+      <a href="index.html#gongdami">공담이</a>
+      <a href="index.html#showcase">실제 화면</a>
+      <a href="#loop">개발 루프</a>
+      <a href="#metrics">지표 체계</a>
+    </nav>
+    <div class="header-actions">
+      <a href="index.html#cta" class="btn btn-primary btn-sm">다운로드</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="wrap">
+      <span class="eyebrow" style="--dot:#E0574B;"><span class="dot"></span> 제품 개발 이야기</span>
+      <h1>현장에서 확인한 문제로<br />시작했습니다</h1>
+      <p>공셈이는 책상에서 기획한 앱이 아닙니다. 수개월간 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다. 그 관찰에서 가설을 세우고, 작게 만들어 내놓고, 실제 사용 데이터로 검증한 과정을 정리했습니다.</p>
+    </div>
+  </section>
+
+  <!-- LOOP -->
+  <section class="block tint" id="loop">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#2FAE66;"><span class="dot"></span> 제품 개발의 기본 루프</span>
+        <h2>Problem → Hypothesis → Build → Measure → Learn</h2>
+        <p>기능을 먼저 늘리지 않았습니다. 문제를 정의하고, 검증할 지표를 정하고, 가장 작은 형태로 만들어 실제 사용 데이터를 확인했습니다.</p>
+      </div>
+
+      <div class="loop">
+        <div class="loop-step reveal">
+          <div class="ls-tag">PROBLEM</div>
+          <div>
+            <h3>현장에서 시간과 비용이 새는 지점</h3>
+            <ul>
+              <li><strong>현장 기록의 취약성</strong> — 현장 노트가 물에 젖어 계산·기록이 유실되거나, 정작 필요할 때 노트를 안 가져와 이전 내역을 확인하지 못하는 일이 잦습니다. 반면 휴대폰은 누구나 늘 소지합니다.</li>
+              <li><strong>계산·기록의 비효율</strong> — 면적·수량·로스율 계산이 계산기·엑셀·수첩에 흩어져 있어 매번 도구를 바꿔가며 작업하고 결과를 따로 옮겨 적어야 합니다. 장갑을 끼거나 양손이 바빠 입력 자체가 번거롭고, 눈대중으로 넘어가 과부족 발주·재작업으로 이어집니다.</li>
+              <li><strong>소통·실측의 한계</strong> — 현장은 지역 방언·은어('헤베', '사메다' 등)로 소통해 기존 AI 앱은 질문을 잘 알아듣지 못하고, 실측은 수기나 외부 스캐닝에 의존해 비용·정확도에 한계가 있습니다.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="loop-step reveal">
+          <div class="ls-tag">HYPOTHESIS</div>
+          <div>
+            <h3>가설</h3>
+            <p>현장 규격(면적·치수)만 입력하면 KS 규격·표준품셈 기반으로 자재 수량과 견적을 자동 산출하고, 계산·기록·상담·일정을 하나로 묶어주면, 계산 시간과 오차·손실이 줄어 작업자가 계속 사용할 것이다.</p>
+          </div>
+        </div>
+
+        <div class="loop-step reveal">
+          <div class="ls-tag">METRIC</div>
+          <div>
+            <h3>검증 지표</h3>
+            <p>가설 검증 지표로 <strong>'계산 → 작업기록 저장 전환율'</strong>과 <strong>'재사용(리텐션)'</strong>을 정했습니다. 전체 지표 체계는 아래 '지표는 세 종류로 나눠서 본다'에서 정리했습니다.</p>
+          </div>
+        </div>
+
+        <div class="loop-step reveal">
+          <div class="ls-tag">BUILD</div>
+          <div>
+            <h3>작게 구현 · MVP</h3>
+            <p>전 기능을 다 넣지 않고 <strong>핵심 자재 계산기 + 업무수첩(작업기록·메모)</strong>만 붙여 iOS·Android에 작게 출시했습니다.</p>
+            <ul>
+              <li>직접 인테리어·건축 시공현장에 나가 보고 들으며, 현장에서 실제로 쓰는 공식값을 반영해 기능을 구현했습니다.</li>
+              <li>계산·현장 데이터는 서버에 저장해 자료 유실 위험을 없애고, 오프라인에서도 사용 가능하도록 설계했습니다.</li>
+              <li>유입도 유료 광고 없이(광고비 0원) SNS 릴스로 작게 검증했습니다.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEASURE -->
+  <section class="block">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#21A99B;"><span class="dot"></span> Measure</span>
+        <h2>작게 만든 MVP만으로<br />실사용 수요를 검증했습니다</h2>
+        <p>광고비를 쓰지 않고도 출시 한 달 만에 실사용자가 모였고, 출시 이후에도 현장에서 계속 쓰이고 있습니다.</p>
+      </div>
+
+      <div class="stat-panel reveal">
+        <div class="stat-cell">
+          <div class="v">1,000+</div>
+          <div class="l">누적 다운로드 (출시 1개월, 광고비 0원)</div>
+        </div>
+        <div class="stat-cell">
+          <div class="v">60~80명</div>
+          <div class="l">일평균 이용자, 출시 후에도 현장 사용 지속</div>
+        </div>
+        <div class="stat-cell">
+          <div class="v">13만+</div>
+          <div class="l">SNS 릴스·영상 누적 조회, 현재도 상승 중</div>
+        </div>
+        <div class="stat-cell">
+          <div class="v">0원</div>
+          <div class="l">유료 광고 집행 없이 달성한 결과</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LEARN / ROADMAP -->
+  <section class="block tint">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#8B6BD9;"><span class="dot"></span> Learn / Pivot</span>
+        <h2>검증된 경험 위에<br />단계적으로 확장합니다</h2>
+        <p>계산·기록 경험이 검증된 뒤에야 다음 기능을 얹습니다. 기능을 추가할 때마다 "이 기능이 목표 지표를 움직이는가?"를 먼저 묻습니다.</p>
+      </div>
+
+      <div class="roadmap">
+        <div class="rm-col now reveal">
+          <span class="rm-phase">NOW · 추가 완료</span>
+          <ul>
+            <li>음성 AI 비서 <strong>'공담이'</strong> — 지역 방언·구어체·현장 용어까지 이해하도록 특화. 자체 LLM과 외부 LLM API를 함께 쓰는 하이브리드 구조.</li>
+            <li>하이브리드 라우팅·프롬프트 캐싱으로 질의당 원가 절감, 방언 정규화·의도 분류 등은 자체 소형 LLM으로 전환 예정.</li>
+            <li><strong>글로벌 다국어 버전</strong> — 국내 외국인 근로자 수요 대응 (준비 완료).</li>
+          </ul>
+        </div>
+        <div class="rm-col next reveal">
+          <span class="rm-phase">NEXT · 진행 예정</span>
+          <ul>
+            <li>PC 버전 출시</li>
+            <li><strong>홍보문구 자동 작성</strong> — 네이버 블로그·인스타그램 연계로 앱에서 글·피드 자동 생성.</li>
+            <li>AI 견적서·업무일지 자동 작성</li>
+            <li>세금계산서 발행 등 행정 업무 — 정부 사이트에 따로 들어갈 필요 없이 앱에서 처리 (정부 API 연계).</li>
+          </ul>
+        </div>
+        <div class="rm-col future reveal">
+          <span class="rm-phase">FUTURE · 개발 추진</span>
+          <ul>
+            <li><strong>자체 공간분석·도면화 기술</strong> — 모바일에서 취득한 공간 데이터로 벽체·바닥·천장·개구부 구조와 치수를 자동 인식하고, 실측 기반 2D 도면·3D 공간 모델로 변환.</li>
+            <li>기존 외주(도면 건당 평균 약 43만 원, 3D 투시도 장당 3~5만 원) 대비 시간·비용을 크게 절감.</li>
+          </ul>
+        </div>
+        <div class="rm-col beyond reveal">
+          <span class="rm-phase">BEYOND · 확장 목표</span>
+          <ul>
+            <li>계산·기록에서 시작해 <strong>견적·거래·행정까지</strong> 하나로 잇는 종합 업무 플랫폼으로 확장.</li>
+            <li>수출을 통한 해외 시장 확장 — 미국 야드파운드법·ASTM, 유럽 미터법·EN/유로코드, 일본 JIS 등 지역별 단위·규격 반영.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- METRICS -->
+  <section class="block" id="metrics">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#E5A32E;"><span class="dot"></span> 지표 체계</span>
+        <h2>지표는 세 종류로<br />나눠서 봅니다</h2>
+        <p>성장 지표만 보면 오계산·오인식 같은 예외 상황을 놓칩니다. 자재 수량을 다루는 제품이라 계산·생성 신뢰성을 별도 안전선으로 관리합니다.</p>
+      </div>
+
+      <div class="metric-grid">
+        <div class="metric-card primary reveal">
+          <h3>Primary Metric</h3>
+          <div class="mc-sub">가설이 맞았는지 판단하는 핵심</div>
+          <ul>
+            <li>계산 → 작업기록 저장 완료율 ↑</li>
+            <li>주간 재사용(리텐션) ↑</li>
+          </ul>
+        </div>
+        <div class="metric-card supporting reveal">
+          <h3>Supporting Metric</h3>
+          <div class="mc-sub">함께 확인하는 지표</div>
+          <ul>
+            <li>자재 계산 소요시간 ↓</li>
+            <li>SNS 유입 → 설치 전환 ↑</li>
+            <li>무료 → 유료(PRO/프리미엄) 전환율 ↑</li>
+            <li>AI 홍보문구 생성 → 실제 게시 전환 ↑</li>
+          </ul>
+        </div>
+        <div class="metric-card guardrail reveal">
+          <h3>Guardrail Metric</h3>
+          <div class="mc-sub">나빠지면 안 되는 안전선</div>
+          <ul>
+            <li>자재 계산 오류율 ↑ 금지</li>
+            <li>음성(공담이) 방언·용어 오인식률 ↑ 금지</li>
+            <li>AI 홍보문구의 과장·허위 표현 발생률 ↑ 금지</li>
+            <li>AI 결과 과도 수정률 ↑ 금지</li>
+            <li>이탈률 ↑ 금지</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note reveal">
+        Guardrail이 없으면 서비스 지표(설치·사용)는 잘 나와도 엣지 케이스·예외 상황(오계산·방언 오인식·허위 홍보문구)에 대응하기 어렵습니다. 자재 수량을 다루고 자체 LLM으로 전환해가는 AI 제품에선 계산·생성 신뢰성이 특히 중요합니다.
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="block tint" id="pricing">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#3B82F6;"><span class="dot"></span> 요금제</span>
+        <h2>계산은 무료로,<br />필요한 만큼만 확장하세요</h2>
+        <p>핵심 자재 계산은 무료로 쓸 수 있습니다. 공간스캐닝·2D/3D·행정 업무는 해당 기능 출시에 맞춰 프리미엄으로 제공될 예정입니다.</p>
+      </div>
+
+      <div class="price-grid">
+        <div class="price-card reveal">
+          <div class="pc-name">FREE</div>
+          <div class="pc-price">0원</div>
+          <div class="pc-period">앱 내 광고 포함</div>
+          <ul>
+            <li>자재 계산기</li>
+            <li>업무수첩 · 현장 메모</li>
+            <li>현장 캘린더</li>
+          </ul>
+        </div>
+        <div class="price-card featured reveal">
+          <div class="pc-name">PRO</div>
+          <div class="pc-price">월 9,900원</div>
+          <div class="pc-period">연 99,000원</div>
+          <ul>
+            <li>음성 AI 비서 '공담이'</li>
+            <li>프로모드 계산</li>
+            <li>무제한 이력 관리</li>
+          </ul>
+        </div>
+        <div class="price-card reveal">
+          <div class="pc-name">PREMIUM</div>
+          <div class="pc-price">약 49,900원</div>
+          <div class="pc-period">해당 기능 출시 시점 제공</div>
+          <ul>
+            <li>공간스캐닝 · 2D 도면 · 3D 모델</li>
+            <li>자재 계산 연계</li>
+            <li>견적서 · 업무일지 · 세금계산서 등 행정 업무</li>
+          </ul>
+          <span class="soon-chip"><span class="d"></span>출시 예정</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING -->
+  <section class="close-cta">
+    <div class="wrap">
+      <div class="close-panel reveal">
+        <h2>먼저 계산부터<br />가볍게 시작해보세요</h2>
+        <p>자재 계산과 업무수첩은 무료입니다. 광고비 0원으로 1,000명이 선택한 앱, 지금 설치해보세요.</p>
+        <div class="store-row">
+          <a href="https://apps.apple.com/kr/app/id6770438573" target="_blank" rel="noopener" class="store-badge is-appstore">
+            <img src="assets/img/badge-appstore.svg" alt="App Store에서 다운로드" />
+          </a>
+          <a href="https://play.google.com/store/apps/details?id=com.movrium.spatial" target="_blank" rel="noopener" class="store-badge is-googleplay">
+            <img src="assets/img/badge-googleplay.png" alt="Google Play에서 다운로드" />
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site">
+  <div class="wrap bar">
+    <div class="brand" style="gap:12px;">
+      <img src="assets/img/logo-black.png" alt="공셈이 로고" />
+      <div class="brand-text">
+        <p>공셈이 (GONGSEMI)</p>
+        <p>시공현장을 위한 AI 업무 파트너 · gongsemi.kr</p>
+      </div>
+    </div>
+    <p class="copyright">© 2026 GONGSEMI. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
