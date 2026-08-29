@@ -402,6 +402,64 @@
   }
   .soon-chip .d { width: 6px; height: 6px; border-radius: 50%; background: #F59E0B; }
 
+  /* ---------- Brand rename ---------- */
+  .brand-panel {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: clamp(22px, 3.4vh, 40px) clamp(24px, 3vw, 44px);
+    box-shadow: var(--shadow-sm);
+  }
+  .bp-name {
+    display: flex; flex-wrap: wrap; align-items: center; gap: clamp(12px, 1.6vw, 22px);
+    padding-bottom: clamp(16px, 2.4vh, 26px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bp-old {
+    display: inline-flex; align-items: center; gap: 9px;
+    font-size: clamp(17px, 2vh, 21px); font-weight: 700; color: var(--muted);
+  }
+  /* 舊 - the name the app shipped under before the rebrand */
+  .bp-tag {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.55em; height: 1.55em; border-radius: 9px;
+    background: var(--navy-tint); color: var(--navy);
+    /* 舊 is a dense glyph - keep it big enough to read at this size */
+    font-size: 0.95em; font-weight: 700; line-height: 1;
+  }
+  .bp-arrow { color: #C3CAD4; font-family: "Manrope", sans-serif; font-weight: 800; font-size: 20px; }
+  .bp-new {
+    display: inline-flex; align-items: baseline; gap: 10px;
+    font-size: clamp(21px, 2.7vh, 28px); font-weight: 800; color: var(--navy);
+  }
+  .bp-new em {
+    font-family: "Manrope", sans-serif; font-style: normal; font-weight: 800;
+    font-size: 0.6em; letter-spacing: 0.05em; color: var(--accent);
+  }
+
+  .bp-parts {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    margin-top: clamp(16px, 2.4vh, 26px);
+  }
+  .bp-part {
+    display: flex; align-items: center; gap: 13px;
+    padding: clamp(11px, 1.6vh, 16px) 16px;
+    background: var(--navy-tint); border-radius: 14px;
+  }
+  .bp-part .ch {
+    display: flex; align-items: center; justify-content: center;
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 12px; background: #fff;
+    border: 1px solid var(--border);
+    font-size: 19px; font-weight: 800; color: var(--navy);
+  }
+  .bp-part .t { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+  .bp-part .k { font-size: 14.5px; font-weight: 800; color: var(--navy); }
+  .bp-part .d { font-size: 13px; color: var(--muted); line-height: 1.5; }
+  .bp-note {
+    margin-top: clamp(14px, 2.2vh, 24px);
+    color: var(--muted); font-size: clamp(14.5px, 1.55vh, 16.2px); line-height: 1.75;
+  }
+
   /* ---------- Closing CTA ---------- */
   .close-cta { background: #fff; }
   .close-panel {
@@ -447,7 +505,9 @@
   footer.site .bar { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
   footer.site .brand img { height: 30px; }
   footer.site .brand-text p:first-child { font-weight: 700; font-size: 14px; }
-  footer.site .brand-text p:last-child { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  footer.site .brand-text p:nth-child(2) { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+  /* the name the app shipped under before the rebrand */
+  footer.site .brand-text p.former { font-size: 12px; color: #8C95A3; margin-top: 3px; }
   footer.site .copyright { font-size: 12.5px; color: var(--muted); }
 
   /* ---------- Responsive ---------- */
@@ -461,6 +521,7 @@
     .roadmap { grid-template-columns: repeat(2, 1fr); }
     .metric-grid { grid-template-columns: 1fr; }
     .price-grid { grid-template-columns: 1fr; }
+    .bp-parts { grid-template-columns: 1fr; }
     .loop-step { grid-template-columns: 1fr; gap: 12px; }
     .ll-arrow { display: none; }
     .ll-item { flex: 1 1 calc(50% - 4px); }
@@ -472,6 +533,9 @@
     .stat-panel { grid-template-columns: 1fr; padding: 28px 22px; }
     .roadmap { grid-template-columns: 1fr; }
     section { padding-block: 52px; }
+    /* the old/new name stack, so the arrow has to point down */
+    .bp-name { flex-direction: column; align-items: flex-start; gap: 10px; }
+    .bp-arrow { transform: rotate(90deg); margin-left: 12px; }
   }
 </style>
 </head>
@@ -845,6 +909,42 @@
     </div>
   </section>
 
+  <!-- BRAND -->
+  <section class="block" id="brand">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#A88D81;"><span class="dot"></span> Brand · 이름을 바꾼 이유</span>
+        <h2>'공간작업실'에서 '공셈이'로</h2>
+        <p>단순한 명칭 교체가 아니라, 서비스의 방향성을 명확히 하기 위한 결정이었습니다.</p>
+      </div>
+
+      <div class="brand-panel reveal">
+        <div class="bp-name">
+          <span class="bp-old"><span class="bp-tag">舊</span>공간작업실</span>
+          <span class="bp-arrow">→</span>
+          <span class="bp-new">공셈이 <em>GONGSEMI</em></span>
+        </div>
+
+        <div class="bp-parts">
+          <div class="bp-part">
+            <span class="ch">空</span>
+            <span class="t"><span class="k">공간</span><span class="d">시공이 이루어지는 공간</span></span>
+          </div>
+          <div class="bp-part">
+            <span class="ch">셈</span>
+            <span class="t"><span class="k">계산</span><span class="d">현장에서 필요한 계산</span></span>
+          </div>
+          <div class="bp-part">
+            <span class="ch">이</span>
+            <span class="t"><span class="k">파트너</span><span class="d">작업자 곁에서 함께 일하는 AI</span></span>
+          </div>
+        </div>
+
+        <p class="bp-note">기존 '공간작업실'의 정체성을 계승하면서도 '시공현장을 위한 AI 업무 파트너'라는 지향점을 보다 직관적으로 전달합니다. 자재 계산 기능으로 유입되더라도 단순 계산기 앱에 머물지 않고, 현장 업무 생산성을 높이는 플랫폼으로 확장해 나갈 브랜드 기반을 마련하고자 했습니다.</p>
+      </div>
+    </div>
+  </section>
+
   <!-- CLOSING -->
   <section class="close-cta">
     <div class="wrap">
@@ -880,6 +980,7 @@
       <div class="brand-text">
         <p>공셈이 (GONGSEMI)</p>
         <p>시공현장을 위한 AI 업무 파트너 · gongsemi.kr</p>
+        <p class="former">舊 공간작업실</p>
       </div>
     </div>
     <p class="copyright">© 2026 GONGSEMI. All rights reserved.</p>
