@@ -621,10 +621,52 @@
     border-radius: 14px;
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
     transform: scale(0.97);
-    transition: transform 0.25s ease;
+    transition: transform 0.25s ease, opacity 0.18s ease;
     cursor: default;
   }
   .lightbox.open img { transform: scale(1); }
+  .lightbox img.swapping { opacity: 0; }
+
+  /* flip between the language screenshots without leaving the viewer */
+  .lightbox-nav {
+    position: absolute; top: 50%; z-index: 2;
+    transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: var(--navy); cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .lightbox-nav.prev { left: clamp(8px, 2.4vw, 28px); }
+  .lightbox-nav.next { right: clamp(8px, 2.4vw, 28px); }
+  .lightbox-nav:hover { background: #fff; transform: translateY(-50%) scale(1.07); }
+  .lightbox-nav svg { width: 22px; height: 22px; }
+  .lightbox-label {
+    position: absolute; bottom: clamp(14px, 2.6vw, 30px); left: 50%; z-index: 2;
+    transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 16px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    font-size: 13px; font-weight: 700; color: var(--navy);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.24);
+    white-space: nowrap;
+  }
+  .lightbox-label .lb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  /* on a phone the arrows would sit on top of the screenshot, so drop them
+     onto the bottom row either side of the language label (swipe also works) */
+  @media (max-width: 640px) {
+    .lightbox-nav {
+      top: auto; bottom: 14px; transform: none;
+      width: 40px; height: 40px;
+    }
+    .lightbox-nav:hover { transform: none; }
+    .lightbox-nav svg { width: 19px; height: 19px; }
+    .lightbox-nav.prev { left: 50%; margin-left: -108px; }
+    .lightbox-nav.next { right: 50%; margin-right: -108px; }
+    .lightbox-label { bottom: 19px; }
+  }
   .lightbox-close {
     position: absolute; top: clamp(14px, 2.4vw, 26px); right: clamp(14px, 2.4vw, 26px);
     width: 44px; height: 44px; border-radius: 50%;
@@ -1062,7 +1104,14 @@
     <button class="lightbox-close" type="button" aria-label="닫기">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
+    <button class="lightbox-nav prev" type="button" aria-label="이전 화면">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
     <img id="lightboxImg" src="" alt="" />
+    <button class="lightbox-nav next" type="button" aria-label="다음 화면">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+    </button>
+    <span class="lightbox-label" id="lightboxLabel"><span class="lb-dot"></span><span class="lb-text"></span></span>
   </div>
 
   <!-- SHOWCASE -->
@@ -1341,14 +1390,37 @@
   (function () {
     const box = document.getElementById('lightbox');
     const boxImg = document.getElementById('lightboxImg');
-    if (!box || !boxImg) return;
+    if (!box || !boxImg || !carouselSlides.length) return;
     const closeBtn = box.querySelector('.lightbox-close');
+    const prevBtn = box.querySelector('.lightbox-nav.prev');
+    const nextBtn = box.querySelector('.lightbox-nav.next');
+    const labelText = box.querySelector('.lightbox-label .lb-text');
+    const slides = [...carouselSlides];
+    const names = [...carouselLangs].map(l => l.textContent.trim());
+    let index = 0;
     let lastFocused = null;
 
-    function openBox(img) {
+    // a single screenshot needs no paging
+    if (slides.length < 2) {
+      [prevBtn, nextBtn].forEach(b => b && b.remove());
+    }
+
+    function show(i, animate) {
+      index = (i + slides.length) % slides.length;
+      const src = slides[index].src;
+      const apply = () => {
+        boxImg.src = src;
+        boxImg.alt = slides[index].alt;
+        if (labelText) labelText.textContent = names[index] || '';
+        boxImg.classList.remove('swapping');
+      };
+      if (animate) { boxImg.classList.add('swapping'); setTimeout(apply, 120); }
+      else apply();
+    }
+
+    function openBox(i) {
       lastFocused = document.activeElement;
-      boxImg.src = img.src;
-      boxImg.alt = img.alt;
+      show(i, false);
       box.classList.add('open');
       document.documentElement.style.overflow = 'hidden';
       stopCarousel();
@@ -1358,22 +1430,45 @@
       if (!box.classList.contains('open')) return;
       box.classList.remove('open');
       document.documentElement.style.overflow = '';
+      // leave the carousel on whichever screen was being viewed
+      slides.forEach((s, i) => s.classList.toggle('active', i === index));
+      carouselLangs.forEach((l, i) => l.classList.toggle('active', i === index));
       startCarousel();
       if (lastFocused && lastFocused.focus) lastFocused.focus();
     }
 
-    carouselSlides.forEach(img => {
+    slides.forEach((img, i) => {
       img.setAttribute('role', 'button');
       img.setAttribute('tabindex', '0');
-      img.addEventListener('click', () => openBox(img));
+      img.addEventListener('click', () => openBox(i));
       img.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBox(img); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBox(i); }
       });
     });
 
-    // clicking anywhere except the image itself closes
-    box.addEventListener('click', (e) => { if (e.target !== boxImg) closeBox(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeBox(); });
+    closeBtn.addEventListener('click', closeBox);
+    if (prevBtn) prevBtn.addEventListener('click', () => show(index - 1, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => show(index + 1, true));
+
+    // only the backdrop itself closes, so the buttons stay clickable
+    box.addEventListener('click', (e) => { if (e.target === box) closeBox(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (!box.classList.contains('open')) return;
+      if (e.key === 'Escape') closeBox();
+      else if (e.key === 'ArrowLeft') show(index - 1, true);
+      else if (e.key === 'ArrowRight') show(index + 1, true);
+    });
+
+    // swipe on touch screens
+    let touchX = null;
+    box.addEventListener('touchstart', (e) => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', (e) => {
+      if (touchX === null) return;
+      const dx = e.changedTouches[0].clientX - touchX;
+      touchX = null;
+      if (Math.abs(dx) > 40) show(index + (dx < 0 ? 1 : -1), true);
+    }, { passive: true });
   })();
 
   // material simulation toggle
