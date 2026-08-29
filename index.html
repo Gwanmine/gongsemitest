@@ -515,6 +515,29 @@
     background: rgba(18,42,74,0.88); color: #fff; font-size: 12px; font-weight: 700;
     padding: 7px 13px; border-radius: 999px;
   }
+  /* this demo does not advance on its own, so nudge people to tap it */
+  .sim-viewport { cursor: pointer; }
+  .sim-hint {
+    position: absolute; top: 13px; right: 13px; z-index: 8;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px;
+    background: #E5A32E; color: #2E1F04;
+    font-size: 12.5px; font-weight: 800;
+    box-shadow: 0 8px 20px rgba(18,42,74,0.32);
+    pointer-events: none;
+    animation: simHint 1.9s ease-in-out infinite;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .sim-hint svg { width: 14px; height: 14px; }
+  /* fades away once they have flipped it themselves */
+  .sim-demo.touched .sim-hint { opacity: 0; transform: rotate(-9deg) scale(0.9); animation: none; }
+  @keyframes simHint {
+    0%, 100% { transform: rotate(-9deg) translateY(0); }
+    50%      { transform: rotate(-9deg) translateY(-5px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .sim-hint { animation: none; transform: rotate(-9deg); }
+  }
 
   /* ---------- Gongdami ---------- */
   .gongdami { background: #fff; }
@@ -1065,11 +1088,12 @@
         <div class="sim-demo">
           <div class="sim-toggle">
             <button class="active" data-state="before">촬영 원본</button>
-            <button data-state="after">시뮬레이션 결과</button>
+            <button data-state="after">자재 적용</button>
           </div>
           <div class="sim-viewport">
             <div class="sim-layer before show"></div>
             <div class="sim-layer after"></div>
+            <span class="sim-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l13 8.4-5.7 1.1 2.7 5.4-2.7 1.3-2.6-5.4L6 18z"/></svg>클릭!</span>
             <span class="sim-tag" id="simTag">촬영 원본</span>
           </div>
         </div>
@@ -1476,22 +1500,31 @@
   const beforeLayer = document.querySelector('.sim-layer.before');
   const afterLayer = document.querySelector('.sim-layer.after');
   const simTag = document.getElementById('simTag');
-  simButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      simButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const state = btn.dataset.state;
-      if (state === 'after') {
-        beforeLayer.classList.remove('show');
-        afterLayer.classList.add('show');
-        simTag.textContent = '시뮬레이션 결과';
-      } else {
-        afterLayer.classList.remove('show');
-        beforeLayer.classList.add('show');
-        simTag.textContent = '촬영 원본';
-      }
-    });
-  });
+  const simDemo = document.querySelector('.sim-demo');
+  const simViewport = document.querySelector('.sim-viewport');
+  const SIM_LABEL = { before: '촬영 원본', after: '자재 적용' };
+  let simState = 'before';
+
+  function setSimState(state) {
+    simState = state;
+    simButtons.forEach(b => b.classList.toggle('active', b.dataset.state === state));
+    if (state === 'after') {
+      beforeLayer.classList.remove('show');
+      afterLayer.classList.add('show');
+    } else {
+      afterLayer.classList.remove('show');
+      beforeLayer.classList.add('show');
+    }
+    simTag.textContent = SIM_LABEL[state];
+    // the "클릭!" nudge has done its job once they interact
+    if (simDemo) simDemo.classList.add('touched');
+  }
+
+  simButtons.forEach(btn => btn.addEventListener('click', () => setSimState(btn.dataset.state)));
+  // the photo itself flips too, so the nudge is honest wherever they click
+  if (simViewport) {
+    simViewport.addEventListener('click', () => setSimState(simState === 'after' ? 'before' : 'after'));
+  }
 </script>
 
 </body>
