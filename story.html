@@ -111,8 +111,26 @@
       radial-gradient(55% 60% at 85% 0%, rgba(168,141,129,0.10) 0%, rgba(168,141,129,0) 70%),
       #fff;
   }
+  .page-hero .wrap {
+    display: grid;
+    grid-template-columns: 1.4fr 0.6fr;
+    gap: 48px;
+    align-items: center;
+  }
   .page-hero h1 { font-size: clamp(32px, 4.4vw, 50px); line-height: 1.25; margin: 20px 0 18px; text-wrap: balance; }
   .page-hero p { color: var(--muted); font-size: 18.5px; line-height: 1.8; max-width: 820px; }
+  /* brand mark on the right of the intro */
+  .ph-mark {
+    display: flex; align-items: center; justify-content: center;
+    aspect-ratio: 1;
+    width: 100%; max-width: clamp(190px, 26vh, 300px);
+    margin-left: auto;
+    background: linear-gradient(150deg, #fff 0%, var(--navy-tint) 100%);
+    border: 1px solid var(--border);
+    border-radius: 32px;
+    box-shadow: var(--shadow-md);
+  }
+  .ph-mark img { width: 66%; height: auto; }
 
   /* ---------- Generic block ---------- */
   .block.tint { background: var(--navy-tint); }
@@ -319,6 +337,8 @@
     html { scroll-snap-type: none; }
     section { min-height: 0; }
     nav.main-nav { display: none; }
+    .page-hero .wrap { grid-template-columns: 1fr; gap: 28px; }
+    .ph-mark { margin: 0 auto; max-width: 180px; border-radius: 26px; }
     .stat-panel { grid-template-columns: repeat(2, 1fr); }
     .roadmap { grid-template-columns: repeat(2, 1fr); }
     .metric-grid { grid-template-columns: 1fr; }
@@ -358,9 +378,14 @@
   <!-- PAGE HERO -->
   <section class="page-hero">
     <div class="wrap">
-      <span class="eyebrow" style="--dot:#E0574B;"><span class="dot"></span> 제품 개발 이야기</span>
-      <h1>현장에서 확인한 문제로 시작했습니다</h1>
-      <p>공셈이는 책상에서 기획한 앱이 아닙니다. 수개월간 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다. 그 관찰에서 가설을 세우고, 작게 만들어 내놓고, 실제 사용 데이터로 검증한 과정을 정리했습니다.</p>
+      <div>
+        <span class="eyebrow" style="--dot:#E0574B;"><span class="dot"></span> 제품 개발 이야기</span>
+        <h1>현장에서 확인한 문제로 시작했습니다</h1>
+        <p>공셈이는 책상에서 기획한 앱이 아닙니다. 수개월간 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다. 그 관찰에서 가설을 세우고, 작게 만들어 내놓고, 실제 사용 데이터로 검증한 과정을 정리했습니다.</p>
+      </div>
+      <div class="ph-mark">
+        <img src="assets/img/favicon.png" alt="공셈이 로고" />
+      </div>
     </div>
   </section>
 
