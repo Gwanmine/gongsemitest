@@ -122,15 +122,15 @@
   /* brand mark on the right of the intro */
   .ph-mark {
     display: flex; align-items: center; justify-content: center;
-    aspect-ratio: 1;
-    width: 100%; max-width: clamp(190px, 26vh, 300px);
+    width: 100%; max-width: 340px;
     margin-left: auto;
+    padding: clamp(26px, 4.5vh, 44px) clamp(22px, 2.4vw, 36px);
     background: linear-gradient(150deg, #fff 0%, var(--navy-tint) 100%);
     border: 1px solid var(--border);
-    border-radius: 32px;
+    border-radius: 28px;
     box-shadow: var(--shadow-md);
   }
-  .ph-mark img { width: 66%; height: auto; }
+  .ph-mark img { width: 100%; height: auto; }
 
   /* ---------- Generic block ---------- */
   .block.tint { background: var(--navy-tint); }
@@ -171,8 +171,9 @@
     border-radius: 18px; padding: 22px 20px;
   }
   .stat-cell .v {
-    font-family: "Manrope", sans-serif; font-weight: 800; font-size: clamp(22px, 2.4vw, 30px);
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: clamp(21px, 2.2vw, 28px);
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
   }
   .stat-cell .l { margin-top: 8px; font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.6; }
   .stat-cell .sub {
@@ -316,7 +317,8 @@
   @media (prefers-reduced-motion: reduce) { .cb-sub.play .ch { animation: none; } }
 
   .close-panel h2 { color: #fff; font-size: clamp(24px, 3vw, 34px); line-height: 1.35; }
-  .close-panel p { color: rgba(255,255,255,0.75); margin: 16px auto 28px; max-width: 520px; font-size: 15.5px; line-height: 1.7; }
+  .close-panel p { color: rgba(255,255,255,0.75); margin: 16px auto 28px; max-width: 560px; font-size: 15.5px; line-height: 1.75; }
+  .close-panel p span { display: block; word-break: keep-all; overflow-wrap: break-word; }
   .store-row { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; }
   .store-badge { display: inline-flex; align-items: center; justify-content: center; transition: transform 0.2s ease, opacity 0.2s ease; }
   .store-badge:hover { transform: translateY(-3px); opacity: 0.9; }
@@ -338,7 +340,7 @@
     section { min-height: 0; }
     nav.main-nav { display: none; }
     .page-hero .wrap { grid-template-columns: 1fr; gap: 28px; }
-    .ph-mark { margin: 0 auto; max-width: 180px; border-radius: 26px; }
+    .ph-mark { margin: 0 auto; max-width: 280px; border-radius: 24px; padding: 22px 24px; }
     .stat-panel { grid-template-columns: repeat(2, 1fr); }
     .roadmap { grid-template-columns: repeat(2, 1fr); }
     .metric-grid { grid-template-columns: 1fr; }
@@ -384,7 +386,7 @@
         <p>공셈이는 책상에서 기획한 앱이 아닙니다. 수개월간 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다. 그 관찰에서 가설을 세우고, 작게 만들어 내놓고, 실제 사용 데이터로 검증한 과정을 정리했습니다.</p>
       </div>
       <div class="ph-mark">
-        <img src="assets/img/favicon.png" alt="공셈이 로고" />
+        <img src="assets/img/logo-black.png" alt="공셈이 로고" />
       </div>
     </div>
   </section>
@@ -467,7 +469,9 @@
 
       <div class="stat-panel reveal">
         <div class="stat-cell">
-          <div class="v">1,000+</div>
+          <div class="v">
+            <span><span class="count" data-count="1000">0</span>+</span>
+          </div>
           <div class="l">누적 다운로드
             <span class="sub">출시 1개월, 광고비 0원</span>
           </div>
@@ -480,7 +484,7 @@
         </div>
         <div class="stat-cell">
           <div class="v">
-            13만+
+            <span><span class="count" data-count="130000">0</span>+</span>
             <span class="trend-up" aria-hidden="true">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
             </span>
@@ -491,7 +495,7 @@
         </div>
         <div class="stat-cell">
           <div class="v">0원</div>
-          <div class="l">유료 광고 집행 없이 달성한 결과</div>
+          <div class="l">광고 집행비</div>
         </div>
       </div>
     </div>
@@ -644,7 +648,11 @@
           <span class="cb-sub">시공현장을 위한 AI 업무 파트너</span>
         </div>
         <h2>먼저 계산부터 가볍게 시작해보세요</h2>
-        <p>자재 계산과 업무수첩은 무료입니다. 광고비 0원으로 1,000명이 선택한 앱, 지금 설치해보세요.</p>
+        <p>
+          <span>자재 계산과 업무수첩은 무료입니다.</span>
+          <span>기본 업무에 필요한 계산기를 이용해보세요.</span>
+          <span>출시하자마자 1,000명 이상이 선택한 앱, 지금 설치해보세요.</span>
+        </p>
         <div class="store-row">
           <a href="https://apps.apple.com/kr/app/id6770438573" target="_blank" rel="noopener" class="store-badge is-appstore">
             <img src="assets/img/badge-appstore.svg" alt="App Store에서 다운로드" />
@@ -713,6 +721,42 @@
       });
     }, { threshold: 0.6 });
     bounceIO.observe(sub);
+  })();
+
+  // Stat figures: count up from 0 each time the panel scrolls into view
+  (function () {
+    const counters = document.querySelectorAll('.count[data-count]');
+    if (!counters.length) return;
+
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fmt = (n) => n.toLocaleString('en-US');
+
+    function run(el) {
+      const target = parseInt(el.dataset.count, 10);
+      if (!isFinite(target)) return;
+      if (reduce) { el.textContent = fmt(target); return; }
+
+      const duration = 1600;
+      let start = null;
+      if (el._raf) cancelAnimationFrame(el._raf);
+
+      function step(ts) {
+        if (start === null) start = ts;
+        const p = Math.min((ts - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmt(Math.round(target * eased));
+        if (p < 1) el._raf = requestAnimationFrame(step);
+      }
+      el.textContent = '0';
+      el._raf = requestAnimationFrame(step);
+    }
+
+    const countIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) run(entry.target);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(el => countIO.observe(el));
   })();
 </script>
 
