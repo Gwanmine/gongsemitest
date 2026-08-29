@@ -331,8 +331,28 @@
   .rm-col ul { padding-left: 17px; }
   .rm-col li {
     color: var(--muted); font-size: clamp(13.8px, 1.45vh, 15.5px);
-    line-height: 1.62; margin-bottom: clamp(7px, 1vh, 11px);
+    line-height: 1.62; margin-bottom: clamp(6px, 0.8vh, 11px);
   }
+  /* core tech stack, tucked into the spare room at the bottom of a column */
+  .rm-stack {
+    margin-top: clamp(9px, 1.3vh, 15px);
+    padding-top: clamp(9px, 1.3vh, 13px);
+    border-top: 1px dashed var(--border);
+  }
+  .rs-label {
+    display: block; margin-bottom: 7px;
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: 10.5px; letter-spacing: 0.08em; color: var(--muted);
+  }
+  .rs-chips { display: flex; flex-wrap: wrap; gap: 4px; }
+  .rs-chip {
+    padding: 3px 7px; border-radius: 7px;
+    background: var(--navy-tint); color: var(--navy);
+    font-size: 10.5px; font-weight: 700; line-height: 1.45;
+    white-space: nowrap;
+  }
+  .rs-note { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
   .eta {
     display: inline-block; margin-left: 6px;
     padding: 2px 9px; border-radius: 999px;
@@ -777,7 +797,7 @@
       <div class="block-head reveal">
         <span class="eyebrow" style="--dot:#8B6BD9;"><span class="dot"></span> Learn / Pivot · 확대·수정·중단</span>
         <h2>검증된 경험 위에 단계적으로 확장합니다</h2>
-        <p>계산·기록 경험이 검증된 뒤에야 다음 기능을 얹습니다. 기능을 추가할 때마다 "이 기능이 목표 지표를 움직이는가?"를 먼저 묻습니다.</p>
+        <p>기능을 얹을 때마다 "이 기능이 목표 지표를 움직이는가?"를 먼저 묻습니다.</p>
       </div>
 
       <div class="roadmap">
@@ -797,14 +817,37 @@
             <li>AI 견적서·업무일지 자동 작성</li>
             <li>세금계산서 발행 등 행정 업무 · 정부 사이트에 따로 들어갈 필요 없이 앱에서 처리 (정부 API 연계).</li>
           </ul>
+
+          <div class="rm-stack">
+            <span class="rs-label">홍보문구 자동 작성 · 핵심 스택</span>
+            <div class="rs-chips">
+              <span class="rs-chip">LLM API</span>
+              <span class="rs-chip">RAG</span>
+              <span class="rs-chip">n8n 파이프라인</span>
+              <span class="rs-chip">네이버·Instagram API</span>
+              <span class="rs-chip">자체 LLM 전환</span>
+            </div>
+          </div>
         </div>
         <div class="rm-col future reveal">
           <span class="rm-phase">FUTURE · 개발 추진</span>
           <ul>
-            <li><strong>자체 공간분석·도면화 기술</strong> · 모바일에서 취득한 공간 데이터로 벽체·바닥·천장·개구부 구조와 치수를 자동 인식하고, 실측 기반 2D 도면·3D 공간 모델로 변환.</li>
-            <li>기존 외주(도면 건당 평균 약 43만 원, 3D 투시도 장당 3~5만 원) 대비 시간·비용을 크게 절감.</li>
-            <li><strong>마감재 시뮬레이션</strong> · 현장 사진과 자재 사진만으로 시공 후 모습을 이질감 없이 미리 보여줘, 고객의 자재 선택을 거래로 잇습니다.</li>
+            <li><strong>자체 공간분석·도면화 기술</strong> · 벽·바닥·천장·개구부 구조와 치수를 자동 인식해 2D 도면·3D 모델로 변환.</li>
+            <li>외주 대비 비용 절감 · 도면 건당 43만 원, 3D 투시도 3~5만 원.</li>
+            <li><strong>마감재 시뮬레이션</strong> · 현장 사진에 자재를 입혀 시공 결과를 미리 보여주고 거래로 잇습니다.</li>
           </ul>
+
+          <div class="rm-stack">
+            <span class="rs-label">공간 스캐닝 · 핵심 스택</span>
+            <div class="rs-chips">
+              <span class="rs-chip">ARKit·RoomPlan</span>
+              <span class="rs-chip">ARCore Depth</span>
+              <span class="rs-chip">Depth Anything</span>
+              <span class="rs-chip">SAM2</span>
+              <span class="rs-chip">Open3D·COLMAP</span>
+              <span class="rs-chip">Core ML·LiteRT</span>
+            </div>
+          </div>
         </div>
         <div class="rm-col beyond reveal">
           <span class="rm-phase">BEYOND · 확장 목표</span>
@@ -812,6 +855,11 @@
             <li>계산·기록에서 시작해 <strong>견적·거래·행정까지</strong> 하나로 잇는 종합 업무 플랫폼으로 확장.</li>
             <li>수출을 통한 해외 시장 확장 · 미국 야드파운드법·ASTM, 유럽 미터법·EN/유로코드, 일본 JIS 등 지역별 단위·규격 반영.</li>
           </ul>
+
+          <div class="rm-stack">
+            <span class="rs-label">라이선스 원칙</span>
+            <p class="rs-note">위 스택은 <strong>상업 사용이 가능한 라이선스</strong>(MIT · Apache 2.0 · BSD)만 채택합니다. 비상업·연구용 라이선스는 배포 대상에서 제외합니다.</p>
+          </div>
         </div>
       </div>
     </div>
