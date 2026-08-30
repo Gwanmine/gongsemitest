@@ -119,6 +119,9 @@
   }
   .page-hero h1 { font-size: clamp(32px, 4.4vw, 50px); line-height: 1.25; margin: 20px 0 18px; text-wrap: balance; }
   .page-hero p { color: var(--muted); font-size: 18.5px; line-height: 1.8; max-width: 820px; }
+  /* one sentence per line, so the wrap does not fall mid-thought */
+  .page-hero p span { display: block; word-break: keep-all; overflow-wrap: break-word; }
+  .page-hero p span + span { margin-top: 4px; }
   /* brand mark on the right of the intro */
   .ph-mark {
     display: flex; align-items: center; justify-content: center;
@@ -776,7 +779,11 @@
           </a>
         </div>
         <h1>현장에서 확인한 문제로 시작했습니다</h1>
-        <p>공셈이는 책상에서 기획한 앱이 아닙니다. 수개월간 인테리어·건축 현장을 직접 따라다니며 시공자들과 함께 작업했고, 어디에서 시간과 비용이 새는지 눈으로 확인했습니다. 그 관찰에서 가설을 세우고, 작게 만들어 내놓고, 실제 사용 데이터로 검증한 과정을 정리했습니다.</p>
+        <p>
+          <span>시작은 제가 인테리어를 맡겨본 일이었습니다. 시공하시는 분들은 아직도 종이와 머릿속으로 계산하고 계셨습니다.</span>
+          <span>왜 앱을 안 쓰시냐 여쭤보니 "그런 건 없다", "머릿속으로 다 된다"는 답이 돌아왔습니다.</span>
+          <span>그 말이 걸려서 몇 달 동안 현장을 따라다녔고, 거기서 본 것으로 가설을 세워 작게 만들어 내놓고 검증한 과정을 정리했습니다.</span>
+        </p>
       </div>
       <div class="ph-mark">
         <img src="assets/img/logo-black.png" alt="공셈이 로고" />
