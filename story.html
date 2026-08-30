@@ -392,6 +392,58 @@
     font-size: clamp(11.5px, 1.2vh, 12.5px); color: var(--muted); line-height: 1.6;
   }
 
+  /* ---------- TAM / SAM / SOM ---------- */
+  .funnel { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.2vh, 13px); }
+  .fn-tier {
+    width: 100%;
+    display: flex; align-items: center; gap: clamp(12px, 1.8vw, 24px);
+    padding: clamp(13px, 1.9vh, 21px) clamp(18px, 2.4vw, 30px);
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+  }
+  .fn-tier.t2 { max-width: 86%; }
+  .fn-tier.t3 { max-width: 72%; background: var(--panel-navy); border-color: transparent; color: #fff; }
+  .fn-tag {
+    flex-shrink: 0; width: 52px;
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: 12.5px; letter-spacing: 0.06em; color: var(--accent);
+  }
+  .fn-tier.t3 .fn-tag { color: rgba(255,255,255,0.72); }
+  .fn-body { min-width: 0; }
+  .fn-v {
+    display: block;
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: clamp(17px, 2.1vh, 23px); color: var(--navy);
+    font-variant-numeric: tabular-nums;
+  }
+  .fn-tier.t3 .fn-v { color: #fff; }
+  .fn-v em { font-style: normal; font-size: 0.68em; margin-left: 2px; }
+  .fn-d {
+    display: block; margin-top: 4px;
+    font-size: clamp(12.6px, 1.35vh, 14.2px); color: var(--muted); line-height: 1.6;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .fn-tier.t3 .fn-d { color: rgba(255,255,255,0.8); }
+
+  .som-stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: clamp(12px, 1.8vh, 20px); }
+  .som-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: clamp(13px, 1.8vh, 19px) 18px;
+  }
+  .som-card .sm-yr {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12px;
+    color: var(--accent); letter-spacing: 0.04em;
+  }
+  .som-card .sm-v {
+    display: block; margin-top: 5px;
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: clamp(18px, 2.2vh, 24px); color: var(--navy);
+  }
+  .som-card .sm-v em { font-style: normal; font-size: 0.62em; margin-left: 2px; }
+  .som-card .sm-d { display: block; margin-top: 4px; font-size: clamp(12.4px, 1.3vh, 13.6px); color: var(--muted); line-height: 1.55; }
+
   /* ---------- Screen shots (검증한 것 / 만들고 있는 것) ---------- */
   .shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .shot-card {
@@ -723,6 +775,8 @@
     .base-grid { grid-template-columns: 1fr; }
     .unit-grid { grid-template-columns: repeat(2, 1fr); }
     .mkt-grid { grid-template-columns: 1fr; }
+    .fn-tier.t2, .fn-tier.t3 { max-width: 100%; }
+    .som-stages { grid-template-columns: 1fr; }
     .bp-parts { grid-template-columns: 1fr; }
     .loop-step { grid-template-columns: 1fr; gap: 12px; }
     .ll-arrow { display: none; }
@@ -948,7 +1002,7 @@
                 <span class="li-next"><strong>KS 규격에 어긋나지 않는지 확인</strong>한 값만 반영했습니다.</span>
               </li>
               <li><strong>로컬 데이터 저장을 기반</strong>으로 오프라인에서도 문제없이 사용 가능하도록 설계했습니다. 현장은 인터넷이 안 되는 경우가 비일비재하기 때문입니다.</li>
-              <li>유입도 SNS 릴스로 작게 검증했습니다. 집행한 광고비는 <strong>10만원</strong>이 전부입니다.</li>
+              <li>유입도 SNS 릴스로 작게 검증했습니다. 광고는 <strong>일주일만 돌리고 껐고</strong>, 집행한 금액은 10만원이 전부입니다.</li>
             </ul>
           </div>
         </div>
@@ -1003,7 +1057,7 @@
       <div class="block-head reveal">
         <span class="eyebrow" style="--dot:#21A99B;"><span class="dot"></span> Measure · 데이터 확인</span>
         <h2>작게 만든 MVP만으로 실사용 수요를 검증했습니다</h2>
-        <p>광고비 10만원으로 출시 한 달 만에 실사용자가 모였고, 출시 이후에도 현장에서 계속 쓰이고 있습니다.</p>
+        <p>광고는 일주일만 돌리고 껐습니다. 10만원으로 한 달 만에 실사용자가 모였고, 지금은 유튜브 알고리즘을 타고 광고 없이도 매일 늘고 있습니다.</p>
       </div>
 
       <div class="stat-panel reveal">
@@ -1012,7 +1066,7 @@
             <span><span class="count" data-count="1000">0</span>+</span>
           </div>
           <div class="l">누적 다운로드
-            <span class="sub">출시 1개월, 광고비 10만원</span>
+            <span class="sub">출시 1개월, 광고는 일주일 10만원</span>
           </div>
         </div>
         <div class="stat-cell">
@@ -1034,7 +1088,7 @@
         </div>
         <div class="stat-cell">
           <div class="v"><span><span class="won">₩</span><span class="count" data-count="100000">0</span></span></div>
-          <div class="l">광고 집행비<span class="sub">소액으로만 테스트</span></div>
+          <div class="l">광고 집행비<span class="sub">일주일 집행 후 중단</span></div>
         </div>
       </div>
 
@@ -1047,7 +1101,7 @@
         </span>
         <span class="vc-body">
           <span class="vc-label">YOUTUBE SHORTS</span>
-          <span class="vc-title">광고비 10만원, 이런 영상으로 현장에 알려졌습니다</span>
+          <span class="vc-title">광고를 껐는데도, 이런 영상이 계속 사람을 데려옵니다</span>
           <span class="vc-more">영상 보러가기
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
           </span>
@@ -1149,6 +1203,61 @@
       </div>
 
       <p class="mkt-src reveal">시장 규모·성장 전망은 한국건설산업연구원(CERIK) 지표 연계 추정, 종사자·사업체 수는 통계청 전국사업체조사 및 공공데이터 기준입니다.</p>
+    </div>
+  </section>
+
+  <!-- TAM / SAM / SOM -->
+  <section class="block" id="tam">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#7C3AED;"><span class="dot"></span> TAM · SAM · SOM</span>
+        <h2>시장을 세 겹으로 나눠서 봅니다</h2>
+        <p>전체 시장에서 우리가 실제로 닿을 수 있는 범위를 추리고, 그중 먼저 가져올 범위를 다시 좁혔습니다.</p>
+      </div>
+
+      <div class="funnel">
+        <div class="fn-tier t1 reveal">
+          <span class="fn-tag">TAM</span>
+          <span class="fn-body">
+            <span class="fn-v">38.5<em>조원</em></span>
+            <span class="fn-d">국내 인테리어·리모델링 및 주거 유지보수 전체 시장. 2030년 약 46조원, 연평균 약 7% 성장 전망</span>
+          </span>
+        </div>
+        <div class="fn-tier t2 reveal">
+          <span class="fn-tag">SAM</span>
+          <span class="fn-body">
+            <span class="fn-v">380<em>억 ~ 500억원</em></span>
+            <span class="fn-d">종사자 24.7만 명, 시공 사업체 약 4.5만 개소를 모바일 실측·적산 소프트웨어 시장으로 환산한 규모</span>
+          </span>
+        </div>
+        <div class="fn-tier t3 reveal">
+          <span class="fn-tag">SOM</span>
+          <span class="fn-body">
+            <span class="fn-v">1,400<em>명</em></span>
+            <span class="fn-d">경북 거점에서 검증한 뒤 영남권·전국으로 넓혀 2028년까지 확보할 유료 구독자 목표. 사업체 기준 침투율 약 3.1%</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="som-stages">
+        <div class="som-card reveal">
+          <span class="sm-yr">2026 · 1단계</span>
+          <span class="sm-v">60<em>명</em></span>
+          <span class="sm-d">경북 거점에서 유료 전환과 BM을 실증합니다.</span>
+        </div>
+        <div class="som-card reveal">
+          <span class="sm-yr">2027 · 2단계</span>
+          <span class="sm-v">600<em>명</em></span>
+          <span class="sm-d">영남권을 넓히고 수도권 온라인 유입을 시작합니다.</span>
+        </div>
+        <div class="som-card reveal">
+          <span class="sm-yr">2028 · 3단계</span>
+          <span class="sm-v">1,400<em>명</em></span>
+          <span class="sm-d">전국 시공팀과 자재상 연계 발주까지 잇습니다.</span>
+        </div>
+      </div>
+
+      <p class="mkt-src reveal">TAM·SAM은 한국건설산업연구원(CERIK) 지표와 통계청 전국사업체조사를 바탕으로 환산한 추정치이며, SOM과 단계별 수치는 확정된 실적이 아니라 목표치입니다.</p>
     </div>
   </section>
 
