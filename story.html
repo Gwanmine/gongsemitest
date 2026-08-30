@@ -495,6 +495,46 @@
     word-break: keep-all; overflow-wrap: break-word;
   }
 
+  /* ---------- Adoption (현장의 반응) ---------- */
+  .adopt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .adopt-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: clamp(16px, 2.2vh, 26px) clamp(18px, 2vw, 26px);
+  }
+  .adopt-card .ad-v {
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: clamp(26px, 3.4vh, 38px); color: var(--navy);
+    font-variant-numeric: tabular-nums; line-height: 1.15;
+  }
+  .adopt-card .ad-v em { font-style: normal; font-size: 0.5em; margin-left: 3px; }
+  .adopt-card .ad-l {
+    display: block; margin-top: clamp(5px, 0.8vh, 9px);
+    font-size: clamp(14px, 1.55vh, 16px); font-weight: 800; color: var(--navy);
+  }
+  .adopt-card .ad-d {
+    display: block; margin-top: clamp(6px, 0.9vh, 10px);
+    font-size: clamp(13.2px, 1.4vh, 14.6px); color: var(--muted); line-height: 1.65;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  /* why transparency helped instead of hurting */
+  .adopt-why {
+    display: flex; align-items: flex-start; gap: clamp(12px, 1.8vw, 22px);
+    margin-top: clamp(12px, 1.8vh, 20px);
+    padding: clamp(15px, 2.1vh, 22px) clamp(18px, 2.2vw, 28px);
+    background: var(--panel-navy); border-radius: var(--radius-md); color: #fff;
+  }
+  .adopt-why .aw-tag {
+    flex-shrink: 0; padding: 5px 12px; border-radius: 999px;
+    background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.24);
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 12px; letter-spacing: 0.05em;
+  }
+  .adopt-why p {
+    font-size: clamp(13.8px, 1.5vh, 15.6px); line-height: 1.72;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .adopt-why p + p { margin-top: 6px; }
+
   /* ---------- Screen shots (검증한 것 / 만들고 있는 것) ---------- */
   .shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .shot-card {
@@ -830,6 +870,7 @@
     .som-stages { grid-template-columns: 1fr; }
     .flow-grid { grid-template-columns: 1fr; }
     .flow-notes { grid-template-columns: 1fr; }
+    .adopt-grid { grid-template-columns: 1fr; }
     .bp-parts { grid-template-columns: 1fr; }
     .loop-step { grid-template-columns: 1fr; gap: 12px; }
     .ll-arrow { display: none; }
@@ -1206,6 +1247,40 @@
           <p>고쳐야 할 부위의 자재 수량이 현장에서 잡히니 발주가 그날 나갑니다. 대기 없이 이어집니다.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- ADOPTION -->
+  <section class="block" id="adoption">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#0F766E;"><span class="dot"></span> Adoption · 현장의 반응</span>
+        <h2>"계산이 다 보이면 시공자가 손해 아닌가요?"</h2>
+        <p>가장 많이 받는 질문입니다. 단가가 드러나면 깎이니 현장에서 반발이 클 거라는 이야기인데, 실제로는 반대였습니다.</p>
+      </div>
+
+      <div class="adopt-grid">
+        <div class="adopt-card reveal">
+          <div class="ad-v">+30<em>% 이상</em></div>
+          <span class="ad-l">계약 체결이 늘었습니다</span>
+          <span class="ad-d">근거가 보이는 견적은 고객이 믿고 결정합니다. 값을 깎이는 게 아니라, 미루던 계약이 그 자리에서 성사됩니다.</span>
+        </div>
+        <div class="adopt-card reveal">
+          <div class="ad-v">로스율<em> 감소</em></div>
+          <span class="ad-l">버리는 자재가 줄었습니다</span>
+          <span class="ad-d">모자라면 공사가 멈추니 늘 넉넉하게 잡던 여유분이 있었습니다. 그 여유분이 줄면서 쓰지 않고 실어 나가던 자재값이 그대로 남습니다.</span>
+        </div>
+      </div>
+
+      <div class="adopt-why reveal">
+        <span class="aw-tag">WHY</span>
+        <span>
+          <p>투명해지면 손해라는 건 <strong>계약이 이미 성사됐다고 가정할 때</strong> 이야기입니다. 현장에서 실제로 새던 건 깎인 단가가 아니라, 설명이 길어져 흐지부지된 계약과 남아서 버려지던 자재였습니다.</p>
+          <p>개구부를 빼고 발주 단위로 정확히 뽑으면 여유분을 무리하게 잡을 이유가 없어집니다. 고객은 근거를 보고 빨리 결정하고, 시공자는 안 쓰는 자재를 사지 않습니다. 양쪽 다 남는 구조라 현장에서 먼저 받아들였습니다.</p>
+        </span>
+      </div>
+
+      <p class="mkt-src reveal">계약 체결 증가율은 거점 시공팀이 공셈이 도입 전후를 비교해 알려준 수치이며, 표본이 크지 않은 현장 응답 기준입니다.</p>
     </div>
   </section>
 
