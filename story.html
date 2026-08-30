@@ -403,6 +403,13 @@
     background: #fff; border: 1px solid var(--border);
     border-radius: var(--radius-md);
   }
+  .fn-tier, .som-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .fn-tier:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(124,58,237,0.3); }
+  .fn-tier.t3:hover { box-shadow: 0 18px 42px rgba(18,42,74,0.3); border-color: transparent; }
+  .som-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(124,58,237,0.3); }
+  @media (prefers-reduced-motion: reduce) {
+    .fn-tier:hover, .som-card:hover { transform: none; }
+  }
   /* white -> tint -> navy, so the funnel reads as narrowing and deepening */
   .fn-tier.t1 { background: #fff; }
   .fn-tier.t2 { max-width: 86%; background: var(--navy-tint); border-color: transparent; }
