@@ -583,6 +583,12 @@
     border-radius: var(--radius-md); overflow: hidden;
     display: flex; flex-direction: column;
   }
+  /* same lift as the funnel cards, in this section's own amber */
+  .shot-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
+  .shot-card:hover { transform: translateY(-5px); border-color: #E5A32E; box-shadow: 0 0 0 3px rgba(229,163,46,0.18), var(--shadow-md); }
+  @media (prefers-reduced-motion: reduce) {
+    .shot-card:hover { transform: none; }
+  }
   .shot-media {
     position: relative;
     height: clamp(180px, 32vh, 300px);
