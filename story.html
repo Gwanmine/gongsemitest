@@ -225,6 +225,11 @@
     display: flex; align-items: center; justify-content: space-between; gap: 10px;
     font-variant-numeric: tabular-nums; white-space: nowrap;
   }
+  /* Manrope has no won sign, so borrow the body face for it */
+  .stat-cell .won {
+    font-family: "Pretendard Variable", Pretendard, "Malgun Gothic", sans-serif;
+    margin-right: 1px;
+  }
   .stat-cell .l { margin-top: 8px; font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.6; }
   .stat-cell .sub {
     display: block; margin-top: 5px;
@@ -704,7 +709,7 @@
       </div>
 
       <div class="brand-panel reveal">
-        <p class="bp-lead">그런데 투자사들을 만나면서 같은 말을 반복해서 들었습니다. <strong>"이름만 봐서는 이 앱이 뭘 하는 앱인지 모르겠다."</strong> 공간을 다룬다는 건 담겼지만, 정작 현장에서 무엇을 해주는지가 빠져 있었습니다.</p>
+        <p class="bp-lead">그런데 투자사(VC)들을 만나면서 같은 말을 반복해서 들었습니다. <strong>"이름만 봐서는 이 앱이 뭘 하는 앱인지 모르겠다."</strong> 공간을 다룬다는 건 담겼지만, 정작 현장에서 무엇을 해주는지가 빠져 있었습니다.</p>
 
         <div class="bp-name">
           <span class="bp-old"><span class="bp-tag">舊</span>공간작업실</span>
@@ -839,7 +844,7 @@
           </div>
         </div>
         <div class="stat-cell">
-          <div class="v">10만원</div>
+          <div class="v"><span><span class="won">₩</span><span class="count" data-count="100000">0</span></span></div>
           <div class="l">광고 집행비<span class="sub">소액으로만 테스트</span></div>
         </div>
       </div>
