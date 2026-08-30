@@ -404,9 +404,9 @@
     border-radius: var(--radius-md);
   }
   .fn-tier, .som-card { transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease; }
-  .fn-tier:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(124,58,237,0.3); }
-  .fn-tier.t3:hover { box-shadow: 0 18px 42px rgba(18,42,74,0.3); border-color: transparent; }
-  .som-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(124,58,237,0.3); }
+  .fn-tier:hover { transform: translateY(-4px); border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.15), var(--shadow-md); }
+  .fn-tier.t3:hover { border-color: rgba(255,255,255,0.55); box-shadow: 0 0 0 3px rgba(124,58,237,0.3), 0 18px 42px rgba(18,42,74,0.32); }
+  .som-card:hover { transform: translateY(-4px); border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.15), var(--shadow-md); }
   @media (prefers-reduced-motion: reduce) {
     .fn-tier:hover, .som-card:hover { transform: none; }
   }
@@ -1444,8 +1444,8 @@
         <div class="fn-tier t3 reveal">
           <span class="fn-tag">SOM</span>
           <span class="fn-body">
-            <span class="fn-v">1,400<em>명</em></span>
-            <span class="fn-d">2028년까지 확보할 <strong>유료 구독자</strong> 목표. 사업체 기준 침투율 약 3.1%로 잡은 보수적인 수치입니다</span>
+            <span class="fn-v">2,000<em>명</em></span>
+            <span class="fn-d">2028년까지 확보할 <strong>유료 구독자</strong> 목표. 전국 시공 사업체 4.5만 개소 기준 침투율 약 4.4%</span>
           </span>
         </div>
       </div>
@@ -1454,17 +1454,17 @@
       <div class="som-stages">
         <div class="som-card reveal">
           <span class="sm-yr">2026 · 1단계</span>
-          <span class="sm-v">60<em>명</em></span>
+          <span class="sm-v">100<em>명</em></span>
           <span class="sm-d">전국에서 이미 들어오고 있는 사용자 중 유료 전환이 되는지를 먼저 확인합니다.</span>
         </div>
         <div class="som-card reveal">
           <span class="sm-yr">2027 · 2단계</span>
-          <span class="sm-v">600<em>명</em></span>
+          <span class="sm-v">1,000<em>명</em></span>
           <span class="sm-d">개인에서 팀 단위 사용으로 넓히고 자재상 연계를 붙입니다.</span>
         </div>
         <div class="som-card reveal">
           <span class="sm-yr">2028 · 3단계</span>
-          <span class="sm-v">1,400<em>명</em></span>
+          <span class="sm-v">2,000<em>명</em></span>
           <span class="sm-d">계산에서 발주까지 이어지는 구조로 자리잡습니다.</span>
         </div>
       </div>
