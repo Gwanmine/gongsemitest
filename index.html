@@ -24,6 +24,8 @@
     --white: #FFFFFF;
     --accent: #A88D81;
     --accent-tint: #F3ECE8;
+    /* deeper accent for icon strokes - plain --accent only hit 2.7:1 on the tint */
+    --accent-deep: #7E6155;
     --muted: #5B6472;
     --border: #E5E8ED;
     --live: #2FAE66;
@@ -447,7 +449,8 @@
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .feature-card .fc-icon svg { width: 24px; height: 24px; color: var(--accent); }
+  .feature-card .fc-icon svg { width: 24px; height: 24px; color: var(--accent-deep); }
+  .feature-card .fc-icon svg .duo { fill: currentColor; opacity: 0.3; stroke: none; }
   .feature-card h3 { font-size: clamp(16px, 1.7vh, 18px); margin-bottom: clamp(6px, 1vh, 10px); }
   .feature-card p { font-size: clamp(12.5px, 1.35vh, 14.5px); color: var(--muted); line-height: 1.58; }
   /* base pill - used in the feature cards and beside the simulation eyebrow */
@@ -1115,13 +1118,13 @@
       <!-- 첫 줄은 이미 쓰고 있는 기능, 둘째 줄은 학습 중·출시 예정 -->
       <div class="feature-grid">
         <div class="feature-card reveal">
-          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 7h6M9 11h6M9 15h3"/><rect x="4" y="3" width="16" height="18" rx="2"/></svg></div></div>
+          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect class="duo" x="4.5" y="2.5" width="15" height="19" rx="2.6"/><rect x="4.5" y="2.5" width="15" height="19" rx="2.6"/><path d="M8 6.8h8"/><path d="M8.3 12.4h.01M12 12.4h.01M15.7 12.4h.01M8.3 16.6h.01M12 16.6h.01M15.7 16.6h.01"/></svg></div></div>
           <h3>자재 계산 · 견적 자동화</h3>
           <p>현장 규격만 입력하면 KS 규격·표준품셈 기반으로 자재 수량을 산출하고 견적까지 바로 만들어, 계산기 두드릴 시간을 줄여줍니다.</p>
         </div>
 
         <div class="feature-card reveal">
-          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div></div>
+          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect class="duo" x="3.2" y="4.6" width="17.6" height="16.8" rx="2.4"/><rect x="3.2" y="4.6" width="17.6" height="16.8" rx="2.4"/><path d="M3.2 9.8h17.6M8.2 2.6v4M15.8 2.6v4"/><path d="M8.4 13.6h.01M12 13.6h.01M15.6 13.6h.01M8.4 17.4h.01M12 17.4h.01"/></svg></div></div>
           <h3>작업기록 · 일정 관리</h3>
           <p>현장 작업 이력과 스케줄을 앱 하나로 모아 관리할 수 있습니다. 노트가 젖거나 빠뜨릴 걱정이 없습니다.</p>
         </div>
@@ -1134,7 +1137,7 @@
 
         <div class="feature-card reveal">
           <div class="fc-top">
-            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path class="duo" d="M5 3.6h11a3 3 0 0 1 3 3v6.2a3 3 0 0 1-3 3h-4.6L7 19.4v-3.6H5a3 3 0 0 1-3-3V6.6a3 3 0 0 1 3-3Z"/><path d="M5 3.6h11a3 3 0 0 1 3 3v6.2a3 3 0 0 1-3 3h-4.6L7 19.4v-3.6H5a3 3 0 0 1-3-3V6.6a3 3 0 0 1 3-3z"/><path d="M7.4 8.4v2.8M10.5 6.9v5.8M13.6 8.4v2.8"/></svg></div>
             <span class="fc-badge"><span class="live-dot-sm"></span>학습 중</span>
           </div>
           <h3>현장 은어까지 알아듣는 공담이</h3>
@@ -1143,7 +1146,7 @@
 
         <div class="feature-card reveal">
           <div class="fc-top">
-            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg></div>
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path class="duo" d="M9.4 3.4h5.2l1.7 2.6H20a2 2 0 0 1 2 2v10.4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.7z"/><path d="M9.4 3.4h5.2l1.7 2.6H20a2 2 0 0 1 2 2v10.4a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h3.7z"/><circle cx="12" cy="13.2" r="3.8"/></svg></div>
             <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
           </div>
           <h3>마감재 시뮬레이션</h3>
@@ -1152,7 +1155,7 @@
 
         <div class="feature-card reveal">
           <div class="fc-top">
-            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></div>
+            <div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path class="duo" d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12l8.73-5.04M12 22.08V12"/></svg></div>
             <span class="fc-badge is-soon"><span class="soon-dot"></span>출시 예정</span>
           </div>
           <h3>3D 모델링 · 인테리어 가상 조감도</h3>

@@ -24,6 +24,8 @@
     --white: #FFFFFF;
     --accent: #A88D81;
     --accent-tint: #F3ECE8;
+    /* deeper accent for icon strokes - plain --accent only hit 2.7:1 on the tint */
+    --accent-deep: #7E6155;
     --muted: #5B6472;
     --border: #E5E8ED;
     --panel-navy: linear-gradient(135deg, #3A6BA8 0%, #21497E 100%);
@@ -341,11 +343,12 @@
   }
   .unit-card .uc-icon {
     width: clamp(34px, 4.4vh, 44px); height: clamp(34px, 4.4vh, 44px);
-    border-radius: 12px; background: var(--accent-tint); color: var(--accent);
+    border-radius: 12px; background: var(--accent-tint); color: var(--accent-deep);
     display: flex; align-items: center; justify-content: center;
     margin-bottom: clamp(9px, 1.4vh, 14px); flex-shrink: 0;
   }
   .unit-card .uc-icon svg { width: 20px; height: 20px; }
+  .unit-card .uc-icon svg .duo { fill: currentColor; opacity: 0.3; stroke: none; }
   .unit-card h3 { font-size: clamp(15px, 1.7vh, 17px); margin-bottom: clamp(6px, 0.9vh, 9px); }
   .unit-card p {
     color: var(--muted); font-size: clamp(13.2px, 1.4vh, 14.6px); line-height: 1.62;
@@ -1268,27 +1271,27 @@
 
       <div class="unit-grid">
         <div class="unit-card reveal">
-          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96L12 12l8.73-5.04M12 22.08V12"/></svg></span>
+          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path class="duo" d="M2.8 7.6h18.4v11a2 2 0 0 1-2 2H4.8a2 2 0 0 1-2-2z"/><path d="M2.8 7.6h18.4v11a2 2 0 0 1-2 2H4.8a2 2 0 0 1-2-2z"/><rect x="2" y="3.4" width="20" height="4.2" rx="1.1"/><path d="M9.8 11.6h4.4"/></svg></span>
           <h3>발주 단위로 변환</h3>
           <p>헤베·평으로 끝내지 않고 실제 주문 단위까지 계산합니다.</p>
           <span class="uc-eg">타일 박스 · 석고보드 3×6, 3×8 장 · 다루끼 단 · 도배 롤 · 페인트 말, 통</span>
         </div>
 
         <div class="unit-card reveal">
-          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l9 5-9 5-9-5z"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5"/></svg></span>
+          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path class="duo" d="M12 2.4 21.4 7 12 11.6 2.6 7z"/><path d="M12 2.4 21.4 7 12 11.6 2.6 7z"/><path d="M2.6 12 12 16.6 21.4 12M2.6 17 12 21.6 21.4 17"/></svg></span>
           <h3>부자재까지 같이</h3>
           <p>본자재만 뽑아두면 결국 현장에서 한 번 더 셉니다. 붙는 것까지 함께 산출합니다.</p>
           <span class="uc-eg">드라이픽스 · 줄눈제 포대 수 · 피스 · 본드</span>
         </div>
 
         <div class="unit-card reveal">
-          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="9" y="9" width="10" height="12" rx="1"/><path d="M12 15h.01"/></svg></span>
+          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect class="duo" x="2.8" y="2.8" width="18.4" height="18.4" rx="2.2"/><rect x="2.8" y="2.8" width="18.4" height="18.4" rx="2.2"/><path d="M9.6 21.2V10.4a1.2 1.2 0 0 1 1.2-1.2h6.2a1.2 1.2 0 0 1 1.2 1.2v10.8"/><path d="M12.4 15.6h.01"/></svg></span>
           <h3>문·창은 자동으로 빼고</h3>
           <p>현장 계산에서 실수가 가장 많이 나는 지점입니다. 개구부를 탭 한 번으로 순면적에서 제외합니다.</p>
         </div>
 
         <div class="unit-card reveal">
-          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M12 9v6M9 12h6"/></svg></span>
+          <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect class="duo" x="6.4" y="2.4" width="11.2" height="19.2" rx="2.8"/><rect x="6.4" y="2.4" width="11.2" height="19.2" rx="2.8"/><path d="M10.6 5.4h2.8M11.2 18.6h1.6"/></svg></span>
           <h3>쓰던 폰 그대로</h3>
           <p>기기마다 스캔 방식은 다르지만 나오는 값은 같습니다. 라이다가 있으면 방을 훑는 것만으로, 없으면 카메라로 짚어가며 잽니다.</p>
           <span class="uc-eg">iOS · 안드로이드 모두 지원<br />기종 때문에 못 쓰는 일 없이</span>
