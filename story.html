@@ -118,10 +118,10 @@
     align-items: center;
   }
   .page-hero h1 { font-size: clamp(32px, 4.4vw, 50px); line-height: 1.25; margin: 20px 0 18px; text-wrap: balance; }
-  .page-hero p { color: var(--muted); font-size: 18.5px; line-height: 1.8; max-width: 820px; }
+  .page-hero p { color: var(--muted); font-size: 18.5px; line-height: 1.7; max-width: 820px; }
   /* one sentence per line, so the wrap does not fall mid-thought */
   .page-hero p span { display: block; word-break: keep-all; overflow-wrap: break-word; }
-  .page-hero p span + span { margin-top: 4px; }
+  .page-hero p span + span { margin-top: 2px; }
   /* brand mark on the right of the intro */
   .ph-mark {
     display: flex; align-items: center; justify-content: center;
@@ -458,6 +458,7 @@
     display: block; margin-top: 5px;
     font-family: "Manrope", sans-serif; font-weight: 800;
     font-size: clamp(18px, 2.2vh, 24px); color: #7C3AED;
+    font-variant-numeric: tabular-nums;
   }
   .som-card .sm-v em { font-style: normal; font-size: 0.62em; margin-left: 2px; }
   /* the three stages deepen in the same hue, so growth reads at a glance */
@@ -964,10 +965,11 @@
         <p>
           <span>시작은 제가 인테리어를 맡겨본 일이었습니다.</span>
           <span>시공하시는 분들은 아직도 종이와 머릿속으로 계산하고 계셨습니다.</span>
-          <span>왜 앱을 안 쓰시냐 여쭤보니 "그런 건 없다", "머릿속으로 다 된다"는 답이 돌아왔습니다.</span>
+          <span>왜 앱을 안 쓰시냐 여쭤보니 "있어도 쓸 이유가 없다", "머릿속으로 다 된다"는 답이 돌아왔습니다.</span>
           <span>찾기도 어렵고, 있어도 자재마다 따로 놀고 값이 안 맞는다는 뜻이었습니다.</span>
           <span>맡긴 쪽에선 확인할 방법이 없어 넘어갔고, 끝나면 쓰고 남은 자재를 실어 가셨습니다.</span>
           <span>그 장면이 걸려서 몇 달 동안 현장을 따라다녔고, 거기서 본 것을 정리했습니다.</span>
+          <span><strong>그렇게 말씀하셨던 분들이 지금은 제일 잘 쓰십니다.</strong></span>
         </p>
       </div>
       <div class="ph-mark">
@@ -1458,17 +1460,17 @@
       <div class="som-stages">
         <div class="som-card reveal">
           <span class="sm-yr">2026 · 1단계</span>
-          <span class="sm-v">100<em>명</em></span>
+          <span class="sm-v"><span class="count" data-count="100">0</span><em>명</em></span>
           <span class="sm-d">개인도 팀도 이미 쓸 수 있는 상태입니다. 그중 유료 전환이 얼마나 되는지를 먼저 확인합니다.</span>
         </div>
         <div class="som-card reveal">
           <span class="sm-yr">2027 · 2단계</span>
-          <span class="sm-v">1,000<em>명</em></span>
+          <span class="sm-v"><span class="count" data-count="1000">0</span><em>명</em></span>
           <span class="sm-d">남은 공간 스캐닝 기술을 붙여 상용화합니다.</span>
         </div>
         <div class="som-card reveal">
           <span class="sm-yr">2028 · 3단계</span>
-          <span class="sm-v">2,000<em>명</em></span>
+          <span class="sm-v"><span class="count" data-count="2000">0</span><em>명</em></span>
           <span class="sm-d">계산에서 발주까지 이어지는 구조로 자리잡습니다.</span>
         </div>
       </div>
