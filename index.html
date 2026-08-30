@@ -18,6 +18,8 @@
     --navy: #122A4A;
     --navy-2: #1B3A63;
     --navy-tint: #EEF2F7;
+    --blue: #3A6BA8;
+    --blue-2: #2F5B92;
     --black: #111315;
     --white: #FFFFFF;
     --accent: #A88D81;
@@ -140,8 +142,11 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     white-space: nowrap;
   }
-  .btn-primary { background: var(--navy); color: #fff; box-shadow: var(--shadow-md); }
-  .btn-primary:hover { background: var(--navy-2); transform: translateY(-2px); }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 10px 26px rgba(58,107,168,0.30); }
+  .btn-primary:hover { background: var(--blue-2); transform: translateY(-2px); box-shadow: 0 14px 32px rgba(58,107,168,0.38); }
+  /* the download glyph leads the label, so it dips instead of sliding right */
+  .btn .ico-dl { transform: none; }
+  .btn:hover .ico-dl { transform: translateY(2px); }
   .btn-ghost { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
   .btn-ghost:hover { border-color: var(--navy); transform: translateY(-2px); }
 
@@ -167,7 +172,8 @@
   .brand { display: flex; align-items: center; gap: 10px; }
   .brand img { height: 46px; width: auto; }
 
-  nav.main-nav { display: flex; align-items: center; gap: 34px; }
+  /* nothing sits to the right of the nav on desktop now, so it rides the right edge */
+  nav.main-nav { display: flex; align-items: center; gap: 34px; margin-left: auto; }
   nav.main-nav a { font-weight: 600; font-size: 15px; color: var(--black); opacity: 0.75; transition: opacity 0.2s ease, color 0.2s ease; }
   nav.main-nav a:hover { opacity: 1; color: var(--navy); }
 
@@ -964,7 +970,6 @@
       <a href="story.html">개발 이야기</a>
     </nav>
     <div class="header-actions">
-      <a href="#cta" class="btn btn-primary btn-sm">다운로드</a>
       <button class="burger" id="burgerBtn" aria-label="메뉴 열기"><span></span></button>
     </div>
   </div>
@@ -988,7 +993,10 @@
         <h1>줄자 대신 스캔 한 번,<br />견적서까지 <span class="accent">한 번에</span></h1>
         <p class="lead">공셈이는 현장 스캔만으로 도면과 3D 모델을 만들고, 자재 계산·견적까지 자동으로 처리하는 AI 업무 파트너입니다.</p>
         <div class="cta-row">
-          <a href="#cta" class="btn btn-primary">다운로드</a>
+          <a href="#cta" class="btn btn-primary">
+            <svg class="ico-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v10.5"/><path d="M7.5 9.5l4.5 4.5 4.5-4.5"/><path d="M4.5 19.5h15"/></svg>
+            다운로드
+          </a>
           <a href="story.html" class="btn btn-ghost">개발 이야기 보러가기
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
           </a>

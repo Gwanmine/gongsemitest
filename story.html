@@ -18,6 +18,8 @@
     --navy: #122A4A;
     --navy-2: #1B3A63;
     --navy-tint: #EEF2F7;
+    --blue: #3A6BA8;
+    --blue-2: #2F5B92;
     --black: #111315;
     --white: #FFFFFF;
     --accent: #A88D81;
@@ -82,8 +84,11 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
     white-space: nowrap;
   }
-  .btn-primary { background: var(--navy); color: #fff; box-shadow: var(--shadow-md); }
-  .btn-primary:hover { background: var(--navy-2); transform: translateY(-2px); }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 10px 26px rgba(58,107,168,0.30); }
+  .btn-primary:hover { background: var(--blue-2); transform: translateY(-2px); box-shadow: 0 14px 32px rgba(58,107,168,0.38); }
+  /* the download glyph leads the label, so it dips instead of sliding right */
+  .btn .ico-dl { transform: none; }
+  .btn:hover .ico-dl { transform: translateY(2px); }
   .btn-ghost { background: #fff; color: var(--navy); border: 1.5px solid var(--border); }
   .btn-ghost:hover { border-color: var(--navy); transform: translateY(-2px); }
 
