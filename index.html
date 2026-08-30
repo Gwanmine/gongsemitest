@@ -413,17 +413,10 @@
   .features { background: var(--navy-tint); }
   .simulation { background: var(--navy-tint); }
   .features .section-head { margin-bottom: clamp(10px, 1.6vh, 32px); }
-  /* 공담이 face above the heading - the icon art is an opaque white square,
-     so it sits in a white plate and is zoomed past its own margin */
-  .head-mascot {
-    display: block; overflow: hidden;
-    width: clamp(48px, 6.4vh, 68px); height: clamp(48px, 6.4vh, 68px);
-    margin: 0 auto clamp(8px, 1.3vh, 14px);
-    border-radius: 50%; background: #fff;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-sm);
-  }
-  .head-mascot img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.32); }
+  /* the 공담이 card shows his face instead of a glyph; the art is an opaque
+     white square, so it gets a white plate and is zoomed past its own margin */
+  .feature-card .fc-icon.is-mascot { background: #fff; border: 1px solid var(--border); overflow: hidden; }
+  .feature-card .fc-icon.is-mascot img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.3); }
   .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.6vh, 18px); }
   .feature-card {
     background: #fff;
@@ -552,8 +545,7 @@
     animation: simHint 1.6s ease-in-out infinite;
     transition: opacity 0.35s ease, transform 0.35s ease;
   }
-  /* the cursor's tip is already top-left, so it points back at the 자재 적용
-     button - same direction the chip nudges */
+  /* a plain left arrow, pointing at the 자재 적용 button the chip nudges toward */
   .sim-hint svg { width: 14px; height: 14px; }
   /* fades away once they have flipped it themselves */
   .sim-demo.touched .sim-hint { opacity: 0; transform: rotate(-6deg) scale(0.9); animation: none; }
@@ -1046,7 +1038,10 @@
       <div class="section-head reveal">
         <span class="eyebrow"><span class="dot"></span> 현장에서 반복되는 일</span>
         <h2>아직도 현장에<br />수첩 들고 다니시나요?</h2>
-        <p>자재 계산은 머릿속으로, 일정은 기억력으로. 아니면 계산기 따로, 캘린더 따로, 메모 따로. 이제 그러실 필요 없습니다.</p>
+        <p>
+          <span>자재 계산은 머릿속으로, 일정은 기억력으로. 아니면 계산기 따로, 캘린더 따로, 메모 따로.</span>
+          <span>이제 그러실 필요 없습니다.</span>
+        </p>
       </div>
 
       <div class="problem-grid">
@@ -1078,7 +1073,6 @@
   <section class="features" id="features">
     <div class="wrap">
       <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
-        <span class="head-mascot"><img src="assets/img/gongdami-icon.png" alt="AI 현장비서 공담이" /></span>
         <span class="eyebrow"><span class="dot"></span> 핵심 기능</span>
         <h2>스캔부터 견적까지,<br />앱 하나로 끝</h2>
         <p>기술자가 현장에만 온전히 집중할 수 있도록, 서류와 계산은 공셈이가 처리합니다.</p>
@@ -1099,7 +1093,7 @@
         </div>
 
         <div class="feature-card reveal">
-          <div class="fc-top"><div class="fc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-8.75 8.5A8.5 8.5 0 1 1 21 11.5z"/><path d="M8 12h.01M12 12h.01M16 12h.01"/></svg></div></div>
+          <div class="fc-top"><div class="fc-icon is-mascot"><img src="assets/img/gongdami-icon.png" alt="" /></div></div>
           <h3>AI 챗봇 · 음성 비서 공담이</h3>
           <p>시공 관련 궁금한 점은 언제든 공담이에게 물어보세요. 손이 바쁠 땐 음성으로도 이용할 수 있습니다.</p>
         </div>
@@ -1164,7 +1158,7 @@
               <button class="active" data-state="before">촬영 원본</button>
               <button data-state="after">자재 적용</button>
             </div>
-            <span class="sim-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 3l13 8.4-5.7 1.1 2.7 5.4-2.7 1.3-2.6-5.4L6 18z"/></svg>클릭!</span>
+            <span class="sim-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>클릭!</span>
           </div>
           <div class="sim-viewport">
             <div class="sim-layer before show"></div>
