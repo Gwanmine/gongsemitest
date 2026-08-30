@@ -509,6 +509,8 @@
     border-bottom: 1px solid var(--border);
   }
   .bp-lead strong { color: var(--navy); }
+  .bp-lead span { display: block; word-break: keep-all; overflow-wrap: break-word; }
+  .bp-lead span + span { margin-top: 4px; }
   .bp-name {
     display: flex; flex-wrap: wrap; align-items: center; gap: clamp(12px, 1.6vw, 22px);
     padding-bottom: clamp(16px, 2.4vh, 26px);
@@ -703,13 +705,16 @@
   <section class="block" id="brand">
     <div class="wrap">
       <div class="block-head reveal">
-        <span class="eyebrow" style="--dot:#A88D81;"><span class="dot"></span> Naming · 서비스명을 바꾼 이유</span>
+        <span class="eyebrow" style="--dot:#D2568C;"><span class="dot"></span> Naming · 서비스명을 바꾼 이유</span>
         <h2>처음 이름은 '공간작업실'이었습니다</h2>
         <p>공간에서 작업하니까 공간작업실. 그때는 그 이름이면 충분하다고 생각했습니다.</p>
       </div>
 
       <div class="brand-panel reveal">
-        <p class="bp-lead">그런데 투자사(VC)들을 만나면서 같은 말을 반복해서 들었습니다. <strong>"이름만 봐서는 이 앱이 뭘 하는 앱인지 모르겠다."</strong> 공간을 다룬다는 건 담겼지만, 정작 현장에서 무엇을 해주는지가 빠져 있었습니다.</p>
+        <p class="bp-lead">
+          <span>그런데 투자사(VC)들을 만나면서 같은 말을 반복해서 들었습니다. <strong>"이름만 봐서는 이 앱이 뭘 하는 앱인지 모르겠다."</strong></span>
+          <span>공간을 다룬다는 건 담겼지만, 정작 현장에서 무엇을 해주는지가 빠져 있었습니다.</span>
+        </p>
 
         <div class="bp-name">
           <span class="bp-old"><span class="bp-tag">舊</span>공간작업실</span>
