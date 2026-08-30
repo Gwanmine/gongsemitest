@@ -379,6 +379,24 @@
     word-break: keep-all; overflow-wrap: break-word;
   }
   .mkt-card .mk-l strong { color: var(--navy); }
+  /* the two growth figures carry a rising badge and the section's green */
+  .mkt-card .mk-top { display: flex; align-items: center; gap: clamp(8px, 1vw, 13px); }
+  .mkt-card.is-growth .mk-v { color: #15803D; }
+  .mk-rise {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: clamp(28px, 3.4vh, 34px); height: clamp(28px, 3.4vh, 34px);
+    border-radius: 50%; flex-shrink: 0;
+    background: rgba(21, 128, 61, 0.10);
+    border: 1px solid rgba(21, 128, 61, 0.30);
+    color: #15803D;
+    animation: mkRise 2.1s ease-in-out infinite;
+  }
+  .mk-rise svg { width: 55%; height: 55%; }
+  @keyframes mkRise {
+    0%, 100% { transform: translateY(0); }
+    45%      { transform: translateY(-5px); }
+  }
+  @media (prefers-reduced-motion: reduce) { .mk-rise { animation: none; } }
   /* who this is actually for */
   .mkt-focus {
     display: flex; align-items: flex-start; gap: clamp(12px, 1.6vw, 20px);
@@ -1519,16 +1537,16 @@
       </div>
 
       <div class="mkt-grid">
-        <div class="mkt-card reveal">
-          <div class="mk-v">38.5<em>조원</em></div>
+        <div class="mkt-card is-growth reveal">
+          <div class="mk-top"><div class="mk-v"><span class="count" data-count="38.5">0.0</span><em>조원</em></div><span class="mk-rise" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6 4 4 6-6"/><path d="M14 9h6v6"/></svg></span></div>
           <div class="mk-l">2026년 국내 인테리어·리모델링 시장 규모.<br /><strong>2030년 약 46조원</strong>, 연평균 약 7% 성장 전망</div>
         </div>
-        <div class="mkt-card reveal">
-          <div class="mk-v">25<em>%+</em></div>
+        <div class="mkt-card is-growth reveal">
+          <div class="mk-top"><div class="mk-v"><span class="count" data-count="25">0</span><em>%+</em></div><span class="mk-rise" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6 4 4 6-6"/><path d="M14 9h6v6"/></svg></span></div>
           <div class="mk-l">준공 <strong>30년 이상 노후 주택</strong> 비중.<br />재건축 대신 욕실·주방·도배 같은 부분 시공으로</div>
         </div>
         <div class="mkt-card reveal">
-          <div class="mk-v">24.7<em>만 명</em></div>
+          <div class="mk-top"><div class="mk-v"><span class="count" data-count="24.7">0.0</span><em>만 명</em></div></div>
           <div class="mk-l">실내건축·건축마무리 공사업 <strong>종사자</strong>.<br />공셈이가 매일 마주하는 사람들입니다</div>
         </div>
       </div>
@@ -1963,11 +1981,15 @@
     if (!counters.length) return;
 
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const fmt = (n) => n.toLocaleString('en-US');
+    // a data-count of "38.5" keeps one decimal all the way up, not just at the end
+    const fmtFor = (dp) => (n) => n.toLocaleString('en-US', { minimumFractionDigits: dp, maximumFractionDigits: dp });
 
     function run(el) {
-      const target = parseInt(el.dataset.count, 10);
+      const raw = el.dataset.count;
+      const target = parseFloat(raw);
       if (!isFinite(target)) return;
+      const dp = (raw.split('.')[1] || '').length;
+      const fmt = fmtFor(dp);
       if (reduce) { el.textContent = fmt(target); return; }
 
       const duration = 1600;
@@ -1978,10 +2000,10 @@
         if (start === null) start = ts;
         const p = Math.min((ts - start) / duration, 1);
         const eased = 1 - Math.pow(1 - p, 3);
-        el.textContent = fmt(Math.round(target * eased));
+        el.textContent = fmt(target * eased);
         if (p < 1) el._raf = requestAnimationFrame(step);
       }
-      el.textContent = '0';
+      el.textContent = fmt(0);
       el._raf = requestAnimationFrame(step);
     }
 
