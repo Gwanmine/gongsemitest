@@ -496,6 +496,14 @@
     padding: clamp(22px, 3.4vh, 40px) clamp(24px, 3vw, 44px);
     box-shadow: var(--shadow-sm);
   }
+  /* the line that sets up why the name changed */
+  .bp-lead {
+    color: var(--muted); font-size: clamp(14.5px, 1.6vh, 16.5px); line-height: 1.75;
+    padding-bottom: clamp(14px, 2.2vh, 24px);
+    margin-bottom: clamp(14px, 2.2vh, 24px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bp-lead strong { color: var(--navy); }
   .bp-name {
     display: flex; flex-wrap: wrap; align-items: center; gap: clamp(12px, 1.6vw, 22px);
     padding-bottom: clamp(16px, 2.4vh, 26px);
@@ -668,7 +676,7 @@
       </div>
 
       <div class="loop-legend">
-        <span class="ll-title">이 페이지를 읽는 순서</span>
+        <span class="ll-title">제품 개발 루프 · 아래에서 순서대로 다룹니다</span>
         <div class="ll-row">
           <div class="ll-item"><span class="en">PROBLEM</span><span class="ko">문제 정의</span></div>
           <div class="ll-arrow">→</div>
@@ -682,6 +690,44 @@
           <div class="ll-arrow">→</div>
           <div class="ll-item"><span class="en">LEARN</span><span class="ko">확대·수정·중단</span></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NAMING -->
+  <section class="block" id="brand">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#A88D81;"><span class="dot"></span> Naming · 서비스명을 바꾼 이유</span>
+        <h2>처음 이름은 '공간작업실'이었습니다</h2>
+        <p>공간에서 작업하니까 공간작업실. 그때는 그 이름이면 충분하다고 생각했습니다.</p>
+      </div>
+
+      <div class="brand-panel reveal">
+        <p class="bp-lead">그런데 투자사들을 만나면서 같은 말을 반복해서 들었습니다. <strong>"이름만 봐서는 이 앱이 뭘 하는 앱인지 모르겠다."</strong> 공간을 다룬다는 건 담겼지만, 정작 현장에서 무엇을 해주는지가 빠져 있었습니다.</p>
+
+        <div class="bp-name">
+          <span class="bp-old"><span class="bp-tag">舊</span>공간작업실</span>
+          <span class="bp-arrow">→</span>
+          <span class="bp-new">공셈이 <em>GONGSEMI</em></span>
+        </div>
+
+        <div class="bp-parts">
+          <div class="bp-part">
+            <span class="ch">空</span>
+            <span class="t"><span class="k">공간</span><span class="d">시공이 이루어지는 공간</span></span>
+          </div>
+          <div class="bp-part">
+            <span class="ch">셈</span>
+            <span class="t"><span class="k">계산</span><span class="d">현장에서 필요한 계산</span></span>
+          </div>
+          <div class="bp-part">
+            <span class="ch">이</span>
+            <span class="t"><span class="k">파트너</span><span class="d">작업자 곁에서 함께 일하는 AI</span></span>
+          </div>
+        </div>
+
+        <p class="bp-note">단순한 명칭 교체가 아니라 서비스의 방향성을 명확히 하기 위한 결정이었습니다. '공간작업실'의 정체성은 이어가면서 '시공현장을 위한 AI 업무 파트너'라는 지향점을 이름에서부터 전달합니다. 자재 계산으로 들어오더라도 단순 계산기 앱에 머물지 않고, 현장 업무 생산성을 높이는 플랫폼으로 확장해 나갈 기반입니다.</p>
       </div>
     </div>
   </section>
@@ -1042,42 +1088,6 @@
           </ul>
           <span class="soon-chip"><span class="d"></span>출시 예정</span>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- BRAND -->
-  <section class="block" id="brand">
-    <div class="wrap">
-      <div class="block-head reveal">
-        <span class="eyebrow" style="--dot:#A88D81;"><span class="dot"></span> Brand · 이름을 바꾼 이유</span>
-        <h2>'공간작업실'에서 '공셈이'로</h2>
-        <p>단순한 명칭 교체가 아니라, 서비스의 방향성을 명확히 하기 위한 결정이었습니다.</p>
-      </div>
-
-      <div class="brand-panel reveal">
-        <div class="bp-name">
-          <span class="bp-old"><span class="bp-tag">舊</span>공간작업실</span>
-          <span class="bp-arrow">→</span>
-          <span class="bp-new">공셈이 <em>GONGSEMI</em></span>
-        </div>
-
-        <div class="bp-parts">
-          <div class="bp-part">
-            <span class="ch">空</span>
-            <span class="t"><span class="k">공간</span><span class="d">시공이 이루어지는 공간</span></span>
-          </div>
-          <div class="bp-part">
-            <span class="ch">셈</span>
-            <span class="t"><span class="k">계산</span><span class="d">현장에서 필요한 계산</span></span>
-          </div>
-          <div class="bp-part">
-            <span class="ch">이</span>
-            <span class="t"><span class="k">파트너</span><span class="d">작업자 곁에서 함께 일하는 AI</span></span>
-          </div>
-        </div>
-
-        <p class="bp-note">기존 '공간작업실'의 정체성을 계승하면서도 '시공현장을 위한 AI 업무 파트너'라는 지향점을 보다 직관적으로 전달합니다. 자재 계산 기능으로 유입되더라도 단순 계산기 앱에 머물지 않고, 현장 업무 생산성을 높이는 플랫폼으로 확장해 나갈 브랜드 기반을 마련하고자 했습니다.</p>
       </div>
     </div>
   </section>
