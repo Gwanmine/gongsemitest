@@ -514,11 +514,23 @@
     padding: clamp(16px, 2.2vh, 26px) clamp(18px, 2vw, 26px);
   }
   .adopt-card .ad-v {
+    display: flex; align-items: center; gap: 9px;
     font-family: "Manrope", sans-serif; font-weight: 800;
     font-size: clamp(26px, 3.4vh, 38px); color: var(--navy);
     font-variant-numeric: tabular-nums; line-height: 1.15;
   }
+  .adopt-card .ad-fig { display: inline-flex; align-items: baseline; }
   .adopt-card .ad-v em { font-style: normal; font-size: 0.5em; margin-left: 3px; }
+  /* same reading as the metric section: green rises, blue falls */
+  .adopt-card .ad-v.is-up { color: #15803D; }
+  .adopt-card .ad-v.is-down { color: #1D4ED8; }
+  .adopt-card .ad-ico {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 1.05em; height: 1.05em; border-radius: 50%; flex-shrink: 0;
+  }
+  .adopt-card .ad-ico svg { width: 0.58em; height: 0.58em; }
+  .adopt-card .ad-v.is-up .ad-ico { background: #E6F6EC; border: 1px solid rgba(22,163,74,0.28); }
+  .adopt-card .ad-v.is-down .ad-ico { background: #E9F2FF; border: 1px solid rgba(37,99,235,0.28); }
   .adopt-card .ad-l {
     display: block; margin-top: clamp(5px, 0.8vh, 9px);
     font-size: clamp(14px, 1.55vh, 16px); font-weight: 800; color: var(--navy);
@@ -939,7 +951,8 @@
         </div>
         <h1>현장에서 확인한 문제로 시작했습니다</h1>
         <p>
-          <span>시작은 제가 인테리어를 맡겨본 일이었습니다. 시공하시는 분들은 아직도 종이와 머릿속으로 계산하고 계셨습니다.</span>
+          <span>시작은 제가 인테리어를 맡겨본 일이었습니다.</span>
+          <span>시공하시는 분들은 아직도 종이와 머릿속으로 계산하고 계셨습니다.</span>
           <span>왜 앱을 안 쓰시냐 여쭤보니 "그런 건 없다", "머릿속으로 다 된다"는 답이 돌아왔습니다.</span>
           <span>찾기도 어렵고, 있어도 자재마다 따로 놀고 값이 안 맞는다는 뜻이었습니다.</span>
           <span>맡긴 쪽에선 확인할 방법이 없어 넘어갔고, 끝나면 쓰고 남은 자재를 실어 가셨습니다.</span>
@@ -1015,7 +1028,7 @@
     <div class="wrap">
       <div class="block-head reveal">
         <span class="eyebrow" style="--dot:#F97316;"><span class="dot"></span> Traction · 어디서 시작했나</span>
-        <h2>서울이 아니라 경북 포항·경주에서 시작했습니다</h2>
+        <h2>수도권이 아니라 경북 포항·경주에서 시작했습니다</h2>
         <p>큰 시장부터 두드리는 대신, 시공자와 자재상이 서로 이름을 아는 동네에서 먼저 확인하기로 했습니다.</p>
       </div>
 
@@ -1272,12 +1285,18 @@
 
       <div class="adopt-grid">
         <div class="adopt-card reveal">
-          <div class="ad-v">+30<em>% 이상</em></div>
+          <div class="ad-v is-up">
+            <span class="ad-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg></span>
+            <span class="ad-fig">+<span class="count" data-count="30">0</span><em>% 이상</em></span>
+          </div>
           <span class="ad-l">계약 체결이 늘었습니다</span>
           <span class="ad-d">근거가 보이는 견적은 고객이 믿고 결정합니다. 값을 깎이는 게 아니라, 미루던 계약이 그 자리에서 성사됩니다.</span>
         </div>
         <div class="adopt-card reveal">
-          <div class="ad-v">로스율<em> 감소</em></div>
+          <div class="ad-v is-down">
+            <span class="ad-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg></span>
+            <span class="ad-fig">로스율<em> 감소</em></span>
+          </div>
           <span class="ad-l">버리는 자재가 줄었습니다</span>
           <span class="ad-d">모자라면 공사가 멈추니 늘 넉넉하게 잡던 여유분이 있었습니다. 그 여유분이 줄면서 쓰지 않고 실어 나가던 자재값이 그대로 남습니다.</span>
         </div>
@@ -1286,8 +1305,8 @@
       <div class="adopt-why reveal">
         <span class="aw-tag">WHY</span>
         <span>
-          <p>투명해지면 손해라는 건 <strong>계약이 이미 성사됐다고 가정할 때</strong> 이야기입니다. 현장에서 실제로 새던 건 깎인 단가가 아니라,<br />설명이 길어져 흐지부지된 계약과 남아서 버려지던 자재였습니다.</p>
-          <p>개구부를 빼고 발주 단위로 정확히 뽑으면 여유분을 무리하게 잡을 이유가 없어집니다. 고객은 근거를 보고 빨리 결정하고,<br />시공자는 안 쓰는 자재를 사지 않습니다. 양쪽 다 남는 구조라 현장에서 먼저 받아들였습니다.</p>
+          <p>투명해지면 손해라는 건 <strong>계약이 이미 성사됐다고 가정할 때</strong> 이야기입니다.<br />현장에서 실제로 새던 건 깎인 단가가 아니라, 설명이 길어져 흐지부지된 계약과 남아서 버려지던 자재였습니다.</p>
+          <p>개구부를 빼고 발주 단위로 정확히 뽑으면 여유분을 무리하게 잡을 이유가 없어집니다.<br />고객은 근거를 보고 빨리 결정하고, 시공자는 안 쓰는 자재를 사지 않습니다.<br />양쪽 다 남는 구조라 현장에서 먼저 받아들였습니다.</p>
         </span>
       </div>
 
