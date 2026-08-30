@@ -1023,6 +1023,28 @@
     .lightbox, .lightbox img { transition: none; }
   }
 
+  /* ---------- Back to top ---------- */
+  .to-top {
+    position: fixed; z-index: 90;
+    right: clamp(14px, 2.2vw, 30px); bottom: clamp(14px, 2.6vh, 32px);
+    width: 46px; height: 46px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.94);
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    color: var(--navy); cursor: pointer;
+    box-shadow: 0 8px 24px rgba(17, 19, 21, 0.14);
+    opacity: 0; visibility: hidden; transform: translateY(10px);
+    transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  }
+  .to-top.show { opacity: 1; visibility: visible; transform: translateY(0); }
+  .to-top:hover { background: #fff; border-color: var(--blue); color: var(--blue); transform: translateY(-3px); }
+  .to-top svg { width: 20px; height: 20px; }
+  @media (prefers-reduced-motion: reduce) {
+    .to-top { transition: opacity 0.25s ease, visibility 0.25s ease; }
+    .to-top.show, .to-top:hover { transform: none; }
+  }
+
   /* ---------- Responsive ---------- */
   @media (max-width: 960px) {
     html { scroll-snap-type: none; }
@@ -1885,6 +1907,10 @@
   </div>
 </footer>
 
+<button class="to-top" id="toTop" type="button" aria-label="맨 위로 이동">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V6"/><path d="M5 13l7-7 7 7"/></svg>
+</button>
+
 <script>
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries) => {
@@ -2029,6 +2055,29 @@
       else if (e.key === 'ArrowLeft') show(index - 1, true);
       else if (e.key === 'ArrowRight') show(index + 1, true);
     });
+  })();
+
+  // the browser restores the old scroll position on reload, which drops you
+  // mid-page; start at the top unless a hash asked for somewhere else
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.addEventListener('load', () => { if (!location.hash) window.scrollTo(0, 0); });
+
+  // floating way back up. one predicate, evaluated from both a scroll listener
+  // and an observer on the first screen, so it holds whichever one the browser
+  // delivers first inside the snap container
+  (function () {
+    const btn = document.getElementById('toTop');
+    const first = document.querySelector('main > section');
+    if (!btn) return;
+    const update = () => btn.classList.toggle('show', window.scrollY > window.innerHeight * 0.6);
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    if (first && 'IntersectionObserver' in window) {
+      new IntersectionObserver(update, { threshold: [0, 0.5, 1] }).observe(first);
+    }
+    update();
+    // 17 snapped screens make a smooth run to the top a strobe, so jump
+    btn.addEventListener('click', () => window.scrollTo(0, 0));
   })();
 
 </script>
