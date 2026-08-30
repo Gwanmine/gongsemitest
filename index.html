@@ -120,6 +120,9 @@
   /* one sentence per line, so the wrap does not fall mid-thought */
   .section-head p span { display: block; word-break: keep-all; overflow-wrap: break-word; }
   .section-head p span + span { margin-top: 3px; }
+  /* the origin story runs longer than the other section leads, so it gets a
+     wider measure and a tighter gap before the cards */
+  #story .section-head { max-width: 780px; margin-bottom: clamp(14px, 2.4vh, 44px); }
 
   .btn {
     display: inline-flex;
@@ -1248,8 +1251,10 @@
         <h2>"그런 건 없다"는 말에서<br />시작했습니다</h2>
         <p>
           <span>인테리어를 맡겨보니, 시공하시는 분들은 아직도 종이와 머릿속으로 계산하고 계셨습니다.</span>
-          <span>왜 앱을 안 쓰시냐 여쭤봤습니다. <strong>"그런 건 없다", "머릿속으로 다 된다"</strong></span>
-          <span>그 말이 걸려서, 몇 달 동안 직접 현장을 따라다녔습니다.</span>
+          <span>왜 앱을 안 쓰시냐 여쭤보니 <strong>"그런 건 없다", "머릿속으로 다 된다"</strong>는 답이 돌아왔습니다.</span>
+          <span>맡긴 쪽에선 계산이 맞는지 알 방법이 없어 그런가 보다 하고 넘어갔습니다.</span>
+          <span>그리고 공사가 끝나면 쓰고 남은 자재를 실어 가시는 걸 여러 번 봤습니다.</span>
+          <span>그 장면이 계속 걸려서, 몇 달 동안 직접 현장을 따라다녔습니다.</span>
         </p>
       </div>
 
