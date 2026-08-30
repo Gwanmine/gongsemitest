@@ -460,6 +460,10 @@
     font-size: clamp(18px, 2.2vh, 24px); color: #7C3AED;
   }
   .som-card .sm-v em { font-style: normal; font-size: 0.62em; margin-left: 2px; }
+  /* the three stages deepen in the same hue, so growth reads at a glance */
+  .som-stages .som-card:nth-child(1) .sm-yr, .som-stages .som-card:nth-child(1) .sm-v { color: #8B5CF6; }
+  .som-stages .som-card:nth-child(2) .sm-yr, .som-stages .som-card:nth-child(2) .sm-v { color: #6D28D9; }
+  .som-stages .som-card:nth-child(3) .sm-yr, .som-stages .som-card:nth-child(3) .sm-v { color: #4C1D95; }
   .som-card .sm-d { display: block; margin-top: 4px; font-size: clamp(12.4px, 1.3vh, 13.6px); color: var(--muted); line-height: 1.55; }
 
   /* ---------- Workflow before / after ---------- */
