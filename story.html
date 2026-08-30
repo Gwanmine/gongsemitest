@@ -488,10 +488,14 @@
     font-variant-numeric: tabular-nums;
   }
   .som-card .sm-v em { font-style: normal; font-size: 0.62em; margin-left: 2px; }
-  /* the three stages deepen in the same hue, so growth reads at a glance */
-  .som-stages .som-card:nth-child(1) .sm-yr, .som-stages .som-card:nth-child(1) .sm-v { color: #8B5CF6; }
-  .som-stages .som-card:nth-child(2) .sm-yr, .som-stages .som-card:nth-child(2) .sm-v { color: #6D28D9; }
-  .som-stages .som-card:nth-child(3) .sm-yr, .som-stages .som-card:nth-child(3) .sm-v { color: #4C1D95; }
+  /* year + stage keep the accent label colour; only the target numbers carry
+     the ramp, in three separate hues so the three cards do not blur together */
+  .som-stages .som-card:nth-child(1) .sm-v { color: #0284C7; }
+  .som-stages .som-card:nth-child(2) .sm-v { color: #7C3AED; }
+  .som-stages .som-card:nth-child(3) .sm-v { color: #15803D; }
+  .som-stages .som-card:nth-child(1):hover { border-color: #0284C7; box-shadow: 0 0 0 3px rgba(2,132,199,0.15), var(--shadow-md); }
+  .som-stages .som-card:nth-child(2):hover { border-color: #7C3AED; box-shadow: 0 0 0 3px rgba(124,58,237,0.15), var(--shadow-md); }
+  .som-stages .som-card:nth-child(3):hover { border-color: #15803D; box-shadow: 0 0 0 3px rgba(21,128,61,0.15), var(--shadow-md); }
   .som-card .sm-d { display: block; margin-top: 4px; font-size: clamp(12.4px, 1.3vh, 13.6px); color: var(--muted); line-height: 1.55; }
 
   /* ---------- Workflow before / after ---------- */
@@ -1818,7 +1822,7 @@
         </div>
         <div class="price-card reveal">
           <div class="pc-name">PREMIUM</div>
-          <div class="pc-price">약 49,900원</div>
+          <div class="pc-price">약 49,000원</div>
           <div class="pc-period">해당 기능 출시 시점 제공</div>
           <ul>
             <li>공간스캐닝 · 2D 도면 · 3D 모델</li>
