@@ -444,6 +444,57 @@
   .som-card .sm-v em { font-style: normal; font-size: 0.62em; margin-left: 2px; }
   .som-card .sm-d { display: block; margin-top: 4px; font-size: clamp(12.4px, 1.3vh, 13.6px); color: var(--muted); line-height: 1.55; }
 
+  /* ---------- Workflow before / after ---------- */
+  .flow-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .flow-col {
+    display: flex; flex-direction: column;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: clamp(15px, 2.1vh, 24px) clamp(18px, 2vw, 24px);
+  }
+  .flow-col.after { background: var(--panel-navy); border-color: transparent; color: #fff; }
+  .fl-tag {
+    display: inline-flex; align-self: flex-start; align-items: center;
+    padding: 4px 11px; border-radius: 999px;
+    background: var(--navy-tint); color: var(--muted);
+    font-size: 11.5px; font-weight: 800; letter-spacing: 0.02em;
+    margin-bottom: clamp(9px, 1.4vh, 14px);
+  }
+  .flow-col.after .fl-tag { background: rgba(255,255,255,0.18); color: #fff; }
+  .fl-steps { list-style: none; display: flex; flex-direction: column; gap: clamp(5px, 0.8vh, 9px); }
+  .fl-steps li {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: clamp(13.2px, 1.4vh, 14.8px); line-height: 1.6; color: var(--navy);
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .flow-col.after .fl-steps li { color: rgba(255,255,255,0.94); }
+  /* 23.7px == the li line box, so the number sits on the first line */
+  .fl-steps li span.n {
+    flex-shrink: 0; width: 23.7px; height: 23.7px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--navy-tint); color: var(--navy);
+    font-family: "Manrope", sans-serif; font-weight: 800; font-size: 11px;
+  }
+  .flow-col.after .fl-steps li span.n { background: rgba(255,255,255,0.2); color: #fff; }
+  .fl-time {
+    margin-top: auto; padding-top: clamp(10px, 1.5vh, 15px);
+    font-weight: 800; font-size: clamp(14px, 1.6vh, 16.5px); color: var(--muted);
+  }
+  .flow-col.after .fl-time { color: #fff; }
+  .fl-time strong { font-family: "Manrope", sans-serif; }
+
+  .flow-notes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: clamp(12px, 1.8vh, 18px); }
+  .flow-note {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: clamp(13px, 1.8vh, 18px) 20px;
+  }
+  .flow-note h3 { font-size: clamp(14.5px, 1.6vh, 16.5px); margin-bottom: 5px; }
+  .flow-note p {
+    color: var(--muted); font-size: clamp(12.8px, 1.35vh, 14.2px); line-height: 1.6;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+
   /* ---------- Screen shots (검증한 것 / 만들고 있는 것) ---------- */
   .shot-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
   .shot-card {
@@ -777,6 +828,8 @@
     .mkt-grid { grid-template-columns: 1fr; }
     .fn-tier.t2, .fn-tier.t3 { max-width: 100%; }
     .som-stages { grid-template-columns: 1fr; }
+    .flow-grid { grid-template-columns: 1fr; }
+    .flow-notes { grid-template-columns: 1fr; }
     .bp-parts { grid-template-columns: 1fr; }
     .loop-step { grid-template-columns: 1fr; gap: 12px; }
     .ll-arrow { display: none; }
@@ -953,9 +1006,9 @@
           <div>
             <h3>현장에서 시간과 비용이 새는 지점</h3>
             <ul>
-              <li><strong>현장 기록의 취약성</strong> · 현장 노트가 물에 젖어 계산·기록이 유실되거나, 정작 필요할 때 노트를 안 가져와 이전 내역을 확인하지 못하는 일이 잦습니다. 반면 휴대폰은 누구나 늘 소지합니다.</li>
+              <li><strong>현장 기록의 취약성</strong> · 현장 노트가 물에 젖어 계산·기록이 유실되거나, 정작 필요할 때 노트를 안 가져와 이전 내역을 확인하지 못하는 일이 잦습니다. 반면 휴대폰은 다들 늘 가지고 계신데, 정작 일에는 안 쓰시더라고요.</li>
               <li><strong>계산·기록의 비효율</strong> · 면적·수량·로스율 계산이 계산기·엑셀·수첩에 흩어져 있어 매번 도구를 바꿔가며 작업하고 결과를 따로 옮겨 적어야 합니다. 장갑을 끼거나 양손이 바빠 입력 자체가 번거롭고, 눈대중으로 넘어가 과부족 발주·재작업으로 이어집니다.</li>
-              <li><strong>견적이 늦어지는 문제</strong> · 현장에서 잰 값을 사무실에서 다시 정리해야 견적이 나옵니다. 고객은 당일에 답을 못 받고 며칠을 기다리며, 그 사이 다른 곳으로 가버리는 일도 생깁니다.</li>
+              <li><strong>견적이 늦어지는 문제</strong> · 현장에서 잰 값을 사무실에서 다시 정리해야 견적이 나옵니다. 고객은 당일에 답을 못 받는 경우가 많고, 견적을 받기까지 빠르면 다음 날, 늦으면 사흘까지 걸립니다.</li>
               <li><strong>소통·실측의 한계</strong> · 현장은 지역 방언·은어('헤베', '사메다' 등)로 소통해 기존 AI 앱은 질문을 잘 알아듣지 못하고, 실측은 수기나 외부 스캐닝에 의존해 비용·정확도에 한계가 있습니다.</li>
             </ul>
           </div>
@@ -1107,6 +1160,52 @@
           </span>
         </span>
       </a>
+    </div>
+  </section>
+
+  <!-- WORKFLOW -->
+  <section class="block tint" id="flow">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#4F46E5;"><span class="dot"></span> Workflow · 일하는 순서가 바뀌었습니다</span>
+        <h2>사흘 걸리던 견적이 그 자리에서 나옵니다</h2>
+        <p>기능이 하나 늘어난 게 아니라, 견적에서 계약까지 가는 순서 자체가 짧아졌습니다.</p>
+      </div>
+
+      <div class="flow-grid">
+        <div class="flow-col before reveal">
+          <span class="fl-tag">기존 방식</span>
+          <ul class="fl-steps">
+            <li><span class="n">1</span>견적 요청</li>
+            <li><span class="n">2</span>현장 실측 · 고객 요청사항과 자재 확인</li>
+            <li><span class="n">3</span>자재 실물이나 샘플을 보여드리고 다시 연락</li>
+            <li><span class="n">4</span>사무실에서 자재별 단가 찾아가며 견적서 작성</li>
+          </ul>
+          <div class="fl-time">빠르면 다음 날, 늦으면 <strong>사흘</strong></div>
+        </div>
+
+        <div class="flow-col after reveal">
+          <span class="fl-tag">공셈이를 쓴 뒤</span>
+          <ul class="fl-steps">
+            <li><span class="n">1</span>견적 요청</li>
+            <li><span class="n">2</span>현장 실측</li>
+            <li><span class="n">3</span>그 자리에서 견적 안내 · 자재를 입힌 이미지까지 함께</li>
+            <li><span class="n">4</span>계약 체결 · 일정 조율 · 시공</li>
+          </ul>
+          <div class="fl-time">당일, 빠르면 <strong>10분</strong> 내외</div>
+        </div>
+      </div>
+
+      <div class="flow-notes">
+        <div class="flow-note reveal">
+          <h3>말로 설명하지 않아도 됩니다</h3>
+          <p>자재를 입힌 화면을 같이 보면 고객이 바로 이해합니다. 설득하는 자리가 고르는 자리로 바뀝니다.</p>
+        </div>
+        <div class="flow-note reveal">
+          <h3>다음 날 바로 착수합니다</h3>
+          <p>고쳐야 할 부위의 자재 수량이 현장에서 잡히니 발주가 그날 나갑니다. 대기 없이 이어집니다.</p>
+        </div>
+      </div>
     </div>
   </section>
 
