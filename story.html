@@ -105,7 +105,8 @@
   header.site .bar { display: flex; align-items: center; justify-content: space-between; height: 76px; }
   .brand { display: flex; align-items: center; gap: 10px; }
   .brand img { height: 46px; width: auto; }
-  nav.main-nav { display: flex; align-items: center; gap: 30px; }
+  /* nothing sits to the right of the nav now, so it rides the right edge */
+  nav.main-nav { display: flex; align-items: center; gap: 30px; margin-left: auto; }
   nav.main-nav a { font-weight: 600; font-size: 15px; color: var(--black); opacity: 0.75; transition: opacity 0.2s ease, color 0.2s ease; }
   nav.main-nav a:hover { opacity: 1; color: var(--navy); }
   .btn-sm { padding: 11px 22px; font-size: 14.5px; }
@@ -947,9 +948,6 @@
       <a href="#market">시장</a>
       <a href="#metrics">지표 체계</a>
     </nav>
-    <div class="header-actions">
-      <a href="index.html#cta" class="btn btn-primary btn-sm">다운로드</a>
-    </div>
   </div>
 </header>
 
