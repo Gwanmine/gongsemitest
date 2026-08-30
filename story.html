@@ -564,16 +564,17 @@
   }
   .adopt-card .ad-fig { display: inline-flex; align-items: baseline; }
   .adopt-card .ad-v em { font-style: normal; font-size: 0.5em; margin-left: 3px; }
-  /* same reading as the metric section: green rises, blue falls */
+  /* green for the figure that rose; red for the one that fell, since blue read
+     as neutral rather than as a reduction */
   .adopt-card .ad-v.is-up { color: #15803D; }
-  .adopt-card .ad-v.is-down { color: #1D4ED8; }
+  .adopt-card .ad-v.is-down { color: #DC2626; }
   .adopt-card .ad-ico {
     display: inline-flex; align-items: center; justify-content: center;
     width: 1.05em; height: 1.05em; border-radius: 50%; flex-shrink: 0;
   }
   .adopt-card .ad-ico svg { width: 0.58em; height: 0.58em; }
   .adopt-card .ad-v.is-up .ad-ico { background: #E6F6EC; border: 1px solid rgba(22,163,74,0.28); }
-  .adopt-card .ad-v.is-down .ad-ico { background: #E9F2FF; border: 1px solid rgba(37,99,235,0.28); }
+  .adopt-card .ad-v.is-down .ad-ico { background: #FDECEC; border: 1px solid rgba(220,38,38,0.30); }
   .adopt-card .ad-l {
     display: block; margin-top: clamp(5px, 0.8vh, 9px);
     font-size: clamp(14px, 1.55vh, 16px); font-weight: 800; color: var(--navy);
@@ -1449,7 +1450,7 @@
         <div class="adopt-card reveal">
           <div class="ad-v is-down">
             <span class="ad-ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg></span>
-            <span class="ad-fig">로스율<em> 감소</em></span>
+            <span class="ad-fig">LOSS<em> (로스율) 감소</em></span>
           </div>
           <span class="ad-l">버리는 자재가 줄었습니다</span>
           <span class="ad-d">모자라면 공사가 멈추니 늘 넉넉하게 잡던 여유분이 있었습니다. 그 여유분이 줄면서 쓰지 않고 실어 나가던 자재값이 그대로 남습니다.</span>
