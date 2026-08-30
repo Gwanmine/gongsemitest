@@ -899,6 +899,130 @@
   footer.site .brand-text p.former { font-size: 12px; color: #8C95A3; margin-top: 3px; }
   footer.site .copyright { font-size: 12.5px; color: var(--muted); }
 
+  /* ---------- Admin dashboards ---------- */
+  #admin .block-head p span { display: block; word-break: keep-all; overflow-wrap: break-word; }
+  .adm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 1.8vw, 22px); }
+  .adm-card {
+    background: #fff; border: 1px solid var(--border);
+    border-radius: var(--radius-md); overflow: hidden;
+    display: flex; flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+  .adm-card:hover { transform: translateY(-5px); border-color: #0891B2; box-shadow: 0 0 0 3px rgba(8,145,178,0.16), var(--shadow-md); }
+  .adm-shot {
+    position: relative; cursor: zoom-in;
+    height: clamp(150px, 29vh, 300px);
+    background: var(--navy-tint); overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  /* nudge the crop in so the KPI row is legible at this size */
+  .adm-shot img { width: 128%; height: 128%; object-fit: cover; object-position: left top; display: block; }
+  .adm-zoom {
+    position: absolute; right: 10px; bottom: 10px;
+    display: inline-flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border-radius: 999px;
+    background: rgba(255,255,255,0.94); color: var(--navy);
+    font-size: 11.5px; font-weight: 700; letter-spacing: -0.01em;
+    box-shadow: 0 4px 14px rgba(17,19,21,0.16);
+  }
+  .adm-zoom svg { width: 12px; height: 12px; }
+  .adm-body { padding: clamp(12px, 1.7vh, 18px) clamp(14px, 1.4vw, 20px) clamp(13px, 1.9vh, 20px); display: flex; flex-direction: column; gap: clamp(8px, 1.2vh, 13px); }
+  .adm-body h3 { font-size: clamp(14.5px, 1.65vh, 17px); }
+  .adm-kpis { display: flex; gap: clamp(10px, 1.2vw, 20px); flex-wrap: wrap; }
+  .adm-kpi { display: flex; flex-direction: column; gap: 1px; }
+  .adm-kpi .k-v {
+    font-family: 'Manrope', 'Pretendard', sans-serif;
+    font-weight: 800; font-size: clamp(17px, 2.2vh, 23px);
+    letter-spacing: -0.02em; color: #0E7490; font-variant-numeric: tabular-nums;
+  }
+  .adm-kpi .k-v em { font-style: normal; font-size: 0.62em; font-weight: 700; margin-left: 1px; }
+  .adm-kpi .k-l { font-size: clamp(10.5px, 1.25vh, 12px); color: var(--muted); font-weight: 600; }
+  .adm-body p {
+    font-size: clamp(11.8px, 1.4vh, 13.5px); color: var(--muted); line-height: 1.55;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  @media (prefers-reduced-motion: reduce) { .adm-card:hover { transform: none; } }
+
+  /* ---------- Lightbox (full-size dashboard viewer) ---------- */
+  .lightbox {
+    position: fixed; inset: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: center;
+    padding: clamp(16px, 4vw, 56px);
+    background: rgba(10, 18, 30, 0.62);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
+  }
+  .lightbox.open { opacity: 1; visibility: visible; }
+  .lightbox img {
+    max-width: 100%; max-height: 100%;
+    width: auto; height: auto;
+    border-radius: 14px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+    transform: scale(0.97);
+    transition: transform 0.25s ease, opacity 0.18s ease;
+    cursor: default;
+  }
+  .lightbox.open img { transform: scale(1); }
+  .lightbox img.swapping { opacity: 0; }
+
+  /* flip between the language screenshots without leaving the viewer */
+  .lightbox-nav {
+    position: absolute; top: 50%; z-index: 2;
+    transform: translateY(-50%);
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: var(--navy); cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .lightbox-nav.prev { left: clamp(8px, 2.4vw, 28px); }
+  .lightbox-nav.next { right: clamp(8px, 2.4vw, 28px); }
+  .lightbox-nav:hover { background: #fff; transform: translateY(-50%) scale(1.07); }
+  .lightbox-nav svg { width: 22px; height: 22px; }
+  .lightbox-label {
+    position: absolute; bottom: clamp(14px, 2.6vw, 30px); left: 50%; z-index: 2;
+    transform: translateX(-50%);
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 16px; border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    font-size: 13px; font-weight: 700; color: var(--navy);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.24);
+    white-space: nowrap;
+  }
+  .lightbox-label .lb-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  /* on a phone the arrows would sit on top of the screenshot, so drop them
+     onto the bottom row either side of the language label (swipe also works) */
+  @media (max-width: 640px) {
+    .lightbox-nav {
+      top: auto; bottom: 14px; transform: none;
+      width: 40px; height: 40px;
+    }
+    .lightbox-nav:hover { transform: none; }
+    .lightbox-nav svg { width: 19px; height: 19px; }
+    .lightbox-nav.prev { left: 50%; margin-left: -108px; }
+    .lightbox-nav.next { right: 50%; margin-right: -108px; }
+    .lightbox-label { bottom: 19px; }
+  }
+  .lightbox-close {
+    position: absolute; top: clamp(14px, 2.4vw, 26px); right: clamp(14px, 2.4vw, 26px);
+    width: 44px; height: 44px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    color: var(--navy); cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.28);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .lightbox-close:hover { background: #fff; transform: scale(1.06); }
+  .lightbox-close svg { width: 20px; height: 20px; }
+  @media (prefers-reduced-motion: reduce) {
+    .lightbox, .lightbox img { transition: none; }
+  }
+
   /* ---------- Responsive ---------- */
   @media (max-width: 960px) {
     html { scroll-snap-type: none; }
@@ -922,6 +1046,8 @@
     .loop-step { grid-template-columns: 1fr; gap: 12px; }
     .ll-arrow { display: none; }
     .ll-item { flex: 1 1 calc(50% - 4px); }
+    .adm-grid { grid-template-columns: 1fr; }
+    .adm-shot { height: 180px; }
     .shot-grid { grid-template-columns: 1fr; }
     .shot-media { height: 240px; }
   }
@@ -1610,6 +1736,54 @@
     </div>
   </section>
 
+  <!-- ADMIN DASHBOARDS -->
+  <section class="block" id="admin">
+    <div class="wrap">
+      <div class="block-head reveal">
+        <span class="eyebrow" style="--dot:#0891B2;"><span class="dot"></span> Instrumentation · 지표를 보는 화면</span>
+        <h2>앞의 지표는 목록이 아니라 매일 열어보는 화면입니다</h2>
+        <p>
+          <span>정의만 해두고 보지 않으면 지표가 아닙니다.</span>
+          <span>계산기 사용과 AI 처리를 각각 관리자 화면에서 직접 계측하고 있습니다.</span>
+        </p>
+      </div>
+
+      <div class="adm-grid">
+        <div class="adm-card reveal">
+          <div class="adm-shot">
+            <img src="assets/img/admin-calc-stats.png" alt="계산기 사용 통계 관리자 화면 · 총 진입 810회, 총 저장 288회, 저장률 36%" />
+            <span class="adm-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8.5v5M8.5 11h5"/></svg>크게 보기</span>
+          </div>
+          <div class="adm-body">
+            <h3>계산기 사용 통계</h3>
+            <div class="adm-kpis">
+              <span class="adm-kpi"><span class="k-v">36<em>%</em></span><span class="k-l">저장률</span></span>
+              <span class="adm-kpi"><span class="k-v">810<em>회</em></span><span class="k-l">총 진입</span></span>
+              <span class="adm-kpi"><span class="k-v">13<em>/13</em></span><span class="k-l">활성 계산기</span></span>
+            </div>
+            <p>Primary Metric으로 잡은 '계산 → 작업기록 저장' 전환이 곧 이 화면의 저장률입니다. 계산기별로 어디까지 쓰이는지, 한 번도 안 쓰인 게 있는지까지 봅니다.</p>
+          </div>
+        </div>
+
+        <div class="adm-card reveal">
+          <div class="adm-shot">
+            <img src="assets/img/admin-ai-stats.png" alt="AI 대시보드 관리자 화면 · 총 대화 58건, 로컬 처리 11건, 누적 사용 비용 504원" />
+            <span class="adm-zoom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5M11 8.5v5M8.5 11h5"/></svg>크게 보기</span>
+          </div>
+          <div class="adm-body">
+            <h3>AI 대시보드</h3>
+            <div class="adm-kpis">
+              <span class="adm-kpi"><span class="k-v">11<em>/47</em></span><span class="k-l">로컬 처리 / API 호출</span></span>
+              <span class="adm-kpi"><span class="k-v"><em>₩</em>504</span><span class="k-l">누적 AI 사용 비용</span></span>
+              <span class="adm-kpi"><span class="k-v">3<em>건</em></span><span class="k-l">확인 필요한 에러</span></span>
+            </div>
+            <p>대화 한 건마다 어느 모델로 갔고 토큰과 비용이 얼마였는지 남깁니다. 단순한 질문은 로컬로 빼서 API 비용을 눌러두고, 에러는 따로 세워 Guardrail로 봅니다.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- PRICING -->
   <section class="block tint" id="pricing">
     <div class="wrap">
@@ -1682,6 +1856,21 @@
   </section>
 
 </main>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="관리자 화면 크게 보기">
+  <button class="lightbox-close" type="button" aria-label="닫기">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="lightbox-nav prev" type="button" aria-label="이전 화면">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+  </button>
+  <img id="lightboxImg" src="" alt="" />
+  <button class="lightbox-nav next" type="button" aria-label="다음 화면">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+  </button>
+  <span class="lightbox-label" id="lightboxLabel"><span class="lb-dot"></span><span class="lb-text"></span></span>
+</div>
+
 
 <footer class="site">
   <div class="wrap bar">
@@ -1775,6 +1964,74 @@
     }, { threshold: 0.5 });
     counters.forEach(el => countIO.observe(el));
   })();
+  // full-size viewer for the admin dashboards
+  (function () {
+    const box = document.getElementById('lightbox');
+    const boxImg = document.getElementById('lightboxImg');
+    const shots = [...document.querySelectorAll('.adm-shot img')];
+    if (!box || !boxImg || !shots.length) return;
+    const closeBtn = box.querySelector('.lightbox-close');
+    const prevBtn = box.querySelector('.lightbox-nav.prev');
+    const nextBtn = box.querySelector('.lightbox-nav.next');
+    const labelText = box.querySelector('.lightbox-label .lb-text');
+    const names = shots.map(img => {
+      const h3 = img.closest('.adm-card').querySelector('h3');
+      return h3 ? h3.textContent.trim() : '';
+    });
+    let index = 0;
+    let lastFocused = null;
+
+    // a single dashboard needs no paging
+    if (shots.length < 2) [prevBtn, nextBtn].forEach(b => b && b.remove());
+
+    function show(i, animate) {
+      index = (i + shots.length) % shots.length;
+      const apply = () => {
+        boxImg.src = shots[index].src;
+        boxImg.alt = shots[index].alt;
+        if (labelText) labelText.textContent = names[index] || '';
+        boxImg.classList.remove('swapping');
+      };
+      if (animate) { boxImg.classList.add('swapping'); setTimeout(apply, 120); }
+      else apply();
+    }
+    function openBox(i) {
+      lastFocused = document.activeElement;
+      show(i, false);
+      box.classList.add('open');
+      document.documentElement.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+    function closeBox() {
+      if (!box.classList.contains('open')) return;
+      box.classList.remove('open');
+      document.documentElement.style.overflow = '';
+      if (lastFocused && lastFocused.focus) lastFocused.focus();
+    }
+
+    shots.forEach((img, i) => {
+      const shot = img.parentElement;
+      shot.setAttribute('role', 'button');
+      shot.setAttribute('tabindex', '0');
+      shot.addEventListener('click', () => openBox(i));
+      shot.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBox(i); }
+      });
+    });
+
+    closeBtn.addEventListener('click', closeBox);
+    if (prevBtn) prevBtn.addEventListener('click', () => show(index - 1, true));
+    if (nextBtn) nextBtn.addEventListener('click', () => show(index + 1, true));
+    // only the backdrop itself closes, so the buttons stay clickable
+    box.addEventListener('click', (e) => { if (e.target === box) closeBox(); });
+    document.addEventListener('keydown', (e) => {
+      if (!box.classList.contains('open')) return;
+      if (e.key === 'Escape') closeBox();
+      else if (e.key === 'ArrowLeft') show(index - 1, true);
+      else if (e.key === 'ArrowRight') show(index + 1, true);
+    });
+  })();
+
 </script>
 
 </body>
