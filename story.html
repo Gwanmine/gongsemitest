@@ -393,15 +393,19 @@
   }
 
   /* ---------- TAM / SAM / SOM ---------- */
-  .funnel { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, 1.2vh, 13px); }
+  .funnel { display: flex; flex-direction: column; align-items: center; gap: clamp(7px, 1vh, 13px); }
+  /* this section runs long, so its heading gives back room on short screens */
+  .block-head:has(+ .funnel) { margin-bottom: clamp(12px, 1.8vh, 36px); }
   .fn-tier {
     width: 100%;
     display: flex; align-items: center; gap: clamp(12px, 1.8vw, 24px);
-    padding: clamp(13px, 1.9vh, 21px) clamp(18px, 2.4vw, 30px);
+    padding: clamp(11px, 1.6vh, 21px) clamp(18px, 2.4vw, 30px);
     background: #fff; border: 1px solid var(--border);
     border-radius: var(--radius-md);
   }
-  .fn-tier.t2 { max-width: 86%; }
+  /* white -> tint -> navy, so the funnel reads as narrowing and deepening */
+  .fn-tier.t1 { background: #fff; }
+  .fn-tier.t2 { max-width: 86%; background: var(--navy-tint); border-color: transparent; }
   .fn-tier.t3 { max-width: 72%; background: var(--panel-navy); border-color: transparent; color: #fff; }
   .fn-tag {
     flex-shrink: 0; width: 52px;
@@ -425,11 +429,18 @@
   }
   .fn-tier.t3 .fn-d { color: rgba(255,255,255,0.8); }
 
-  .som-stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: clamp(12px, 1.8vh, 20px); }
+  /* the stage numbers are subscribers, not downloads - say so before them */
+  .som-lead {
+    margin-top: clamp(12px, 1.8vh, 20px);
+    font-size: clamp(13.2px, 1.4vh, 14.6px); color: var(--muted); line-height: 1.6;
+    word-break: keep-all; overflow-wrap: break-word;
+  }
+  .som-lead strong { color: var(--navy); }
+  .som-stages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: clamp(8px, 1.2vh, 13px); }
   .som-card {
     background: #fff; border: 1px solid var(--border);
     border-radius: var(--radius-md);
-    padding: clamp(13px, 1.8vh, 19px) 18px;
+    padding: clamp(11px, 1.5vh, 19px) 18px;
   }
   .som-card .sm-yr {
     display: inline-flex; align-items: center; gap: 6px;
@@ -1138,7 +1149,7 @@
           <span class="uc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/><path d="M12 9v6M9 12h6"/></svg></span>
           <h3>쓰던 폰 그대로</h3>
           <p>기기마다 스캔 방식은 다르지만 나오는 값은 같습니다. 라이다가 있으면 방을 훑는 것만으로, 없으면 카메라로 짚어가며 잽니다.</p>
-          <span class="uc-eg">iOS · 안드로이드 모두 지원 · 기종 때문에 못 쓰는 일 없이</span>
+          <span class="uc-eg">iOS · 안드로이드 모두 지원<br />기종 때문에 못 쓰는 일 없이</span>
           <span class="soon-chip"><span class="d"></span>출시 예정</span>
         </div>
       </div>
@@ -1240,7 +1251,7 @@
       <div class="flow-notes">
         <div class="flow-note reveal">
           <h3>말로 설명하지 않아도 됩니다</h3>
-          <p>자재를 입힌 화면을 같이 보면 고객이 바로 이해합니다. 설득하는 자리가 고르는 자리로 바뀝니다.</p>
+          <p>자재를 입힌 화면을 같이 보면 고객이 바로 이해합니다.<br />설득하는 자리가 고르는 자리로 바뀝니다.</p>
         </div>
         <div class="flow-note reveal">
           <h3>다음 날 바로 착수합니다</h3>
@@ -1275,8 +1286,8 @@
       <div class="adopt-why reveal">
         <span class="aw-tag">WHY</span>
         <span>
-          <p>투명해지면 손해라는 건 <strong>계약이 이미 성사됐다고 가정할 때</strong> 이야기입니다. 현장에서 실제로 새던 건 깎인 단가가 아니라, 설명이 길어져 흐지부지된 계약과 남아서 버려지던 자재였습니다.</p>
-          <p>개구부를 빼고 발주 단위로 정확히 뽑으면 여유분을 무리하게 잡을 이유가 없어집니다. 고객은 근거를 보고 빨리 결정하고, 시공자는 안 쓰는 자재를 사지 않습니다. 양쪽 다 남는 구조라 현장에서 먼저 받아들였습니다.</p>
+          <p>투명해지면 손해라는 건 <strong>계약이 이미 성사됐다고 가정할 때</strong> 이야기입니다. 현장에서 실제로 새던 건 깎인 단가가 아니라,<br />설명이 길어져 흐지부지된 계약과 남아서 버려지던 자재였습니다.</p>
+          <p>개구부를 빼고 발주 단위로 정확히 뽑으면 여유분을 무리하게 잡을 이유가 없어집니다. 고객은 근거를 보고 빨리 결정하고,<br />시공자는 안 쓰는 자재를 사지 않습니다. 양쪽 다 남는 구조라 현장에서 먼저 받아들였습니다.</p>
         </span>
       </div>
 
@@ -1408,30 +1419,31 @@
           <span class="fn-tag">SOM</span>
           <span class="fn-body">
             <span class="fn-v">1,400<em>명</em></span>
-            <span class="fn-d">경북 거점에서 검증한 뒤 영남권·전국으로 넓혀 2028년까지 확보할 유료 구독자 목표. 사업체 기준 침투율 약 3.1%</span>
+            <span class="fn-d">2028년까지 확보할 <strong>유료 구독자</strong> 목표. 사업체 기준 침투율 약 3.1%로 잡은 보수적인 수치입니다</span>
           </span>
         </div>
       </div>
 
+      <div class="som-lead reveal">아래는 <strong>유료 구독자</strong> 목표입니다. 무료 사용자는 별개로, 이미 SNS를 타고 전국에서 들어오고 있습니다.</div>
       <div class="som-stages">
         <div class="som-card reveal">
           <span class="sm-yr">2026 · 1단계</span>
           <span class="sm-v">60<em>명</em></span>
-          <span class="sm-d">경북 거점에서 유료 전환과 BM을 실증합니다.</span>
+          <span class="sm-d">전국에서 이미 들어오고 있는 사용자 중 유료 전환이 되는지를 먼저 확인합니다.</span>
         </div>
         <div class="som-card reveal">
           <span class="sm-yr">2027 · 2단계</span>
           <span class="sm-v">600<em>명</em></span>
-          <span class="sm-d">영남권을 넓히고 수도권 온라인 유입을 시작합니다.</span>
+          <span class="sm-d">개인에서 팀 단위 사용으로 넓히고 자재상 연계를 붙입니다.</span>
         </div>
         <div class="som-card reveal">
           <span class="sm-yr">2028 · 3단계</span>
           <span class="sm-v">1,400<em>명</em></span>
-          <span class="sm-d">전국 시공팀과 자재상 연계 발주까지 잇습니다.</span>
+          <span class="sm-d">계산에서 발주까지 이어지는 구조로 자리잡습니다.</span>
         </div>
       </div>
 
-      <p class="mkt-src reveal">TAM·SAM은 한국건설산업연구원(CERIK) 지표와 통계청 전국사업체조사를 바탕으로 환산한 추정치이며, SOM과 단계별 수치는 확정된 실적이 아니라 목표치입니다.</p>
+      <p class="mkt-src reveal">TAM·SAM은 한국건설산업연구원(CERIK) 지표와 통계청 전국사업체조사를 바탕으로 환산한 추정치이며, SOM과 단계별 수치는 확정된 실적이 아니라 목표치입니다. 앞서 나온 1,000명은 누적 다운로드로, 유료 구독자 수와는 다른 지표입니다.</p>
     </div>
   </section>
 
